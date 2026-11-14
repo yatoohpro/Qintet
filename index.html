@@ -3353,6 +3353,17 @@ try{document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenEle
 function boot(data){S=(data&&data.v===2&&data.teams)?data:load();if(S){NAMES=null;migrate();save()}render()}
 try{window.claude?.hot?.snapshot(()=>S||{})}catch(e){}
 if(window.claude?.hot?.ready)window.claude.hot.ready(boot);else boot(window.claude?.hot?.data??{});
+/* Fichiers du club publiés sur le site (dossier data/) : chargés automatiquement et mis à jour quand ils changent */
+const PACK_BASE=window.__desktop?'https://yatoohpro.github.io/Qintet/':'';
+async function syncPack(){if(location.protocol==='file:'&&!window.__desktop)return;let n=0;
+  for(const f of ['data/joueurs.txt','data/logos.zip','data/champions.zip','data/pack.zip']){try{
+    const r=await fetch(PACK_BASE+f+'?v='+Date.now(),{cache:'no-store'});if(!r.ok)continue;
+    const b=await r.blob();if(b.size<10)continue;const sig=(r.headers.get('last-modified')||'')+'|'+b.size,k='quintet-pack:'+f;
+    let old=null;try{old=localStorage.getItem(k)}catch(e){}if(old===sig)continue;
+    const kind=f.includes('logos')?'logo':f.includes('champions')?'champ':undefined;
+    await importFiles([new File([b],f.split('/').pop())],kind);try{localStorage.setItem(k,sig)}catch(e){}n++}catch(e){}}
+  if(n){PV=null;PVD=null;IMPREP=null;if(S)save();render();toast('Fichiers du club mis à jour depuis le site.','gold')}}
+setTimeout(syncPack,800);
 </script>
 <script>
 /* Application installable : service worker, bouton d'installation, conseil iPhone */
