@@ -2258,6 +2258,8 @@ async function importFiles(files,kind){const items=[],bad=[];
   /* un logo peut porter le sigle (T1A.png) ou le nom complet de l'équipe (T1 Esports Academy.png) */
   const fz=x=>x.normalize('NFD').toLowerCase().replace(/e-?sports?|gaming|team|club/g,'').replace(/[^a-z0-9]/g,''),byName={};
   LEAGUES.forEach(l=>l.t.forEach(d=>byName[fz(d[0])]=d[1].toUpperCase()));if(S)S.teams.forEach(t=>byName[fz(t.name)]=t.tag.toUpperCase());
+  /* équipes présentes seulement dans le fichier de joueurs (ex. nouvelles équipes NACL) */
+  try{Object.values(fileTeams()).forEach(L=>L.forEach(d=>{const tg=String(d[1]).toUpperCase();tags.add(tg);byName[fz(d[0])]=tg}))}catch(e){}
   const nrm=x=>String(x).normalize('NFD').toLowerCase().replace(/[^a-z0-9]/g,''),tn={};tags.forEach(t=>tn[nrm(t)]=t);
   /* sigle ou nom d'équipe : exact (T1.A = T1A = t1a), puis nom complet, puis mots parasites retirés, puis petites fautes */
   const teamOf=(base,loose)=>{const u=base.toUpperCase();if(tags.has(u))return u;if(tn[nrm(base)])return tn[nrm(base)];if(byName[fz(base)])return byName[fz(base)];
@@ -3357,8 +3359,8 @@ if(window.claude?.hot?.ready)window.claude.hot.ready(boot);else boot(window.clau
 const PACK_BASE=window.__desktop?'https://yatoohpro.github.io/Qintet/':'';
 async function syncPack(){if(location.protocol==='file:'&&!window.__desktop)return;let n=0;
   for(const f of ['data/joueurs.txt','data/logos.zip','data/champions.zip','data/pack.zip']){try{
-    const r=await fetch(PACK_BASE+f+'?v='+Date.now(),{cache:'no-store'});if(!r.ok)continue;
-    const b=await r.blob();if(b.size<10)continue;const sig=(r.headers.get('last-modified')||'')+'|'+b.size,k='quintet-pack:'+f;
+    const r=await fetch(PACK_BASE+f+'?v='+Date.now(),{cache:'no-store'});if(!r.ok)continue;if(f!=='data/joueurs.txt'&&!DATA){}
+    const b=await r.blob();if(b.size<10)continue;const sig=(r.headers.get('last-modified')||'')+'|'+b.size,k='quintet-pack2:'+f;
     let old=null;try{old=localStorage.getItem(k)}catch(e){}if(old===sig)continue;
     const kind=f.includes('logos')?'logo':f.includes('champions')?'champ':undefined;
     await importFiles([new File([b],f.split('/').pop())],kind);try{localStorage.setItem(k,sig)}catch(e){}n++}catch(e){}}
