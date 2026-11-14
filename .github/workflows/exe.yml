@@ -1,0 +1,73 @@
+name: Quintet.exe
+
+# Fabrique Quintet.exe à chaque mise à jour du jeu et le publie dans les Releases.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'manifest.webmanifest'
+      - 'icons/**'
+      - 'launcher/**'
+      - '.github/workflows/exe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Préparer le jeu et l'icône
+        run: |
+          mkdir -p launcher/web
+          cp index.html manifest.webmanifest launcher/web/
+          cp -r icons launcher/web/
+          go install github.com/tc-hib/go-winres@latest
+          cd launcher
+          "$(go env GOPATH)/bin/go-winres" simply --icon ../icons/icon-512.png --manifest gui \
+            --product-name "Quintet" --file-description "Quintet - Esport Manager" \
+            --product-version "1.0.${{ github.run_number }}" --file-version "1.0.${{ github.run_number }}" \
+            --original-filename Quintet.exe --arch amd64
+
+      - name: Compiler Quintet.exe
+        working-directory: launcher
+        env:
+          GOOS: windows
+          GOARCH: amd64
+          CGO_ENABLED: '0'
+        run: go build -trimpath -ldflags "-s -w -H windowsgui" -o ../Quintet.exe .
+
+      - name: Préparer l'archive
+        run: |
+          mkdir Quintet
+          cp Quintet.exe launcher/LISEZMOI.txt Quintet/
+          zip -r Quintet-Windows.zip Quintet
+
+      - name: Déplacer l'étiquette « latest »
+        run: |
+          git tag -f latest
+          git push -f origin latest
+
+      - name: Publier la release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Quintet pour Windows
+          make_latest: true
+          body: |
+            Téléchargez **Quintet.exe** et double-cliquez dessus. Aucune installation.
+
+            Le jeu se met à jour tout seul à chaque lancement avec Internet : inutile de retélécharger ce fichier.
+            Au premier lancement, Windows peut afficher « Windows a protégé votre ordinateur » : cliquez sur
+            « Informations complémentaires », puis « Exécuter quand même ».
+          files: |
+            Quintet.exe
+            Quintet-Windows.zip

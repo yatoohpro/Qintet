@@ -4,6 +4,8 @@ Jeu de gestion d'équipe esport League of Legends, jouable dans le navigateur, i
 
 **Jouer :** https://yatoohpro.github.io/Qintet/
 
+**Windows :** [télécharger Quintet.exe](https://github.com/yatoohpro/Qintet/releases/latest/download/Quintet.exe) (se met à jour tout seul à chaque lancement).
+
 ## Installer
 - **Android (Chrome)** : bouton « Installer l'application » sur l'écran d'accueil du jeu, ou menu ⋮ → « Installer l'application ».
 - **iPhone (Safari)** : bouton Partager → « Sur l'écran d'accueil ».

@@ -1,0 +1,39 @@
+QUINTET - ESPORT MANAGER (Windows)
+==================================
+
+Lancer le jeu
+-------------
+Double-cliquez sur Quintet.exe. Le jeu s'ouvre dans sa propre fenetre
+(sans barre d'adresse). Aucune installation n'est necessaire.
+
+Au premier lancement, Windows peut afficher "Windows a protege votre ordinateur" :
+le fichier n'est pas signe numeriquement. Cliquez sur "Informations complementaires",
+puis "Executer quand meme".
+
+Configuration requise
+---------------------
+Windows 10 ou 11 avec Microsoft Edge (installe d'origine). A defaut, le jeu
+utilise Google Chrome ou Brave, sinon le navigateur par defaut.
+
+Sauvegardes
+-----------
+Les parties sont enregistrees automatiquement dans :
+  %LOCALAPPDATA%\Quintet\profil
+Elles sont conservees d'une session a l'autre. Pour les transferer sur un autre
+appareil : Parties > "Exporter en fichier", puis "Importer un fichier de partie".
+
+Fermer le jeu
+-------------
+Fermez simplement la fenetre. Le programme s'arrete tout seul environ une minute
+apres.
+
+Mises a jour
+------------
+A chaque lancement avec Internet, Quintet recupere automatiquement la derniere
+version du jeu sur https://yatoohpro.github.io/Qintet/ . Vous n'avez jamais besoin
+de retelecharger Quintet.exe. Sans connexion, la derniere version recuperee est utilisee.
+
+Jouer hors ligne
+----------------
+Le jeu fonctionne sans connexion. Seules les polices d'ecriture viennent d'Internet :
+hors ligne, des polices de remplacement sont utilisees.
