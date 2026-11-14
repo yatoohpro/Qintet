@@ -2273,7 +2273,7 @@ async function importFiles(files,kind){const items=[],bad=[];
   /* le fichier de joueurs d'abord, pour connaître les pseudos avant de trier les photos */
   items.sort((x,y)=>/\.(txt|csv)$/i.test(y.name)-/\.(txt|csv)$/i.test(x.name));
   const pseudos=()=>new Set();let known=null;const PP={};
-  for(const it of items){if(it.name.includes('__MACOSX'))continue;const m=it.name.match(/([^\/\\]+)\.([a-z0-9]+)$/i);if(!m)continue;const base=m[1],ext=m[2].toLowerCase();
+  for(const it of items){if(it.name.includes('__MACOSX'))continue;const m=it.name.match(/([^\/\\]+)\.([a-z0-9]+)$/i);if(!m)continue;const base=m[1].replace(/#U([0-9a-f]{4})/gi,(x,c)=>String.fromCharCode(parseInt(c,16))),ext=m[2].toLowerCase();
     try{
       if(ext==='txt'||ext==='csv'){const txt=await(await it.get()).text();if(txt.split('\n').some(l=>l.split('|').length>=5)){DATA=txt;IMPREP=null;try{localStorage.setItem(DKEY,txt)}catch(e){}nd++;if(S)msgD=' Partie en cours : '+importNames(txt)}else bad.push(base+'.'+ext);continue}
       if(!/^(png|jpe?g|webp|gif|svg)$/.test(ext))continue;
