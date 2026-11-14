@@ -3358,7 +3358,7 @@ if(window.claude?.hot?.ready)window.claude.hot.ready(boot);else boot(window.clau
 /* Fichiers du club publiés sur le site (dossier data/) : chargés automatiquement et mis à jour quand ils changent */
 const PACK_BASE=window.__desktop?'https://yatoohpro.github.io/Qintet/':'';
 async function syncPack(){if(location.protocol==='file:'&&!window.__desktop)return;let n=0;
-  for(const f of ['data/joueurs.txt','data/logos.zip','data/champions.zip','data/pack.zip']){try{
+  for(const f of ['data/joueurs.txt','data/logos.zip','data/champions.zip',...Array.from({length:9},(_,i)=>'data/champions-'+(i+1)+'.zip'),'data/pack.zip']){try{
     const r=await fetch(PACK_BASE+f+'?v='+Date.now(),{cache:'no-store'});if(!r.ok)continue;if(f!=='data/joueurs.txt'&&!DATA){}
     const b=await r.blob();if(b.size<10)continue;const sig=(r.headers.get('last-modified')||'')+'|'+b.size,k='quintet-pack2:'+f;
     let old=null;try{old=localStorage.getItem(k)}catch(e){}if(old===sig)continue;
