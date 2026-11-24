@@ -30,9 +30,9 @@ var onlineURLs = []string{"https://yatoohpro.github.io/Qintet/index.html", "http
 
 func cacheFile() string { return filepath.Join(filepath.Dir(profileDir()), "index-en-ligne.html") }
 
-// Télécharge la dernière version en ligne (4 s max) et la garde en cache pour les lancements hors ligne.
+// Télécharge la dernière version en ligne (12 s max) et la garde en cache pour les lancements hors ligne.
 func refresh() {
-	cl := &http.Client{Timeout: 4 * time.Second}
+	cl := &http.Client{Timeout: 12 * time.Second}
 	for _, u := range onlineURLs {
 		r, err := cl.Get(u + "?t=" + time.Now().Format("20060102150405"))
 		if err != nil {
@@ -69,6 +69,10 @@ func main() {
 	sub, _ := fs.Sub(webFS, "web")
 	files := http.FileServer(http.FS(sub))
 	mux := http.NewServeMux()
+	mux.HandleFunc("/__refresh", func(w http.ResponseWriter, r *http.Request) {
+		refresh()
+		w.WriteHeader(http.StatusNoContent)
+	})
 	mux.HandleFunc("/__ping", func(w http.ResponseWriter, r *http.Request) {
 		lastPing.Store(time.Now().Unix())
 		w.WriteHeader(http.StatusNoContent)

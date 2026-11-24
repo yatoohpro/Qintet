@@ -1877,6 +1877,10 @@ h1,.cs-h1,.mk-title,.mo-name,.ts-title{-webkit-text-fill-color:#f4f0ff!important
 .sf-ci{display:flex;flex-direction:column;min-width:0}.sf-ci b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sf-ci small{font-size:.74rem;color:var(--muted)}
 .sf-cq{display:flex;flex-direction:column;align-items:flex-end;line-height:1.1}.sf-cq b{font-family:var(--title);font-size:1.4rem}.sf-cq span{font-size:.72rem;font-weight:700}
 @media(max-width:700px){.sf-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.sf-c{grid-template-columns:44px minmax(0,1fr) auto}.sf-c .btn{grid-column:1/-1}.sf-c svg,.sf-c img{width:44px;height:44px}}
+.db-tw p.tw-long{white-space:pre-line}.db-tw p.cl{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.tw-more{background:none;border:0;padding:0;margin-top:4px;color:#a78bfa;font-weight:700;font-size:.78rem;cursor:pointer}
+.qv{position:fixed;left:12px;bottom:10px;z-index:5;font-size:.68rem;color:var(--muted);opacity:.7}
+.upd{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:300;display:flex;gap:12px;align-items:center;padding:10px 16px;border-radius:12px;background:#1c1530;border:1px solid #a78bfa;box-shadow:0 10px 40px rgba(0,0,0,.6);font-weight:600}
 </style>
 </head>
 <body>
@@ -2206,7 +2210,7 @@ function genStaff(role,q){q=Math.round(clamp(q,35,92));
 function staffFee(x){return Math.round(x.salary*5)}
 function refreshStaffPool(){const base=LG[S.lg].lvl-18;S.staffPool=[];['coach','coach','coach','analyst','analyst','analyst','psy','psy'].forEach(r=>S.staffPool.push(genStaff(r,base+rnd(-14,16))))}
 function hireStaff(id){const x=S.staffPool.find(y=>y.id===id);if(!x||S.budget<staffFee(x))return false;S.budget-=staffFee(x);S.staffPool=S.staffPool.filter(y=>y!==x);
-  const old=S.staff[x.role];if(old)news(old.name+' ('+STAFF[x.role].n.toLowerCase()+') quitte le club.');S.staff[x.role]=x;news(x.name+' rejoint le staff comme '+STAFF[x.role].n.toLowerCase()+'.');SFX.cash();toast(x.name+' rejoint le staff.');return true}
+  const old=S.staff[x.role];if(old)news(old.name+' ('+STAFF[x.role].n.toLowerCase()+') quitte le club.');S.staff[x.role]=x;news(x.name+' rejoint le staff comme '+STAFF[x.role].n.toLowerCase()+'.');staffTweet(x);SFX.cash();toast(x.name+' rejoint le staff.');return true}
 function fireStaff(role){const x=S.staff[role];if(!x)return false;const fee=Math.round(x.salary*x.contract*2);if(S.budget<fee)return false;S.budget-=fee;S.staff[role]=null;news(x.name+' est remercié ('+ke(fee)+' d\'indemnités).');return true}
 function extendStaff(role){const x=S.staff[role];if(!x||x.contract>=3)return false;const fee=Math.round(x.salary*3);if(S.budget<fee)return false;S.budget-=fee;x.contract+=2;return true}
 function staffNewSeason(){Object.keys(S.staff).forEach(r=>{const x=S.staff[r];if(!x)return;x.contract--;x.age++;
@@ -3003,7 +3007,7 @@ function rivalCheck(ur,won){const oid=ur.h===S.U?ur.a:ur.h,h=S.h2h[oid],o=T(oid)
 /* 10. Palmarès du coach */
 function coachPanel(){const m=S.mgr||{nick:'Coach',style:''},car=S.stat.career||{},H=S.honors||[],titles=H.filter(x=>x.p===1).length,fm=Object.entries(S.formed||{}).sort((a,b)=>b[1]-a[1]).slice(0,3);
   return '<section class="panel cp"><div class="row sp"><h2>Palmarès du coach</h2><span class="muted small">'+esc(m.nick)+(m.style&&MSTYLE[m.style]?' · '+MSTYLE[m.style][0]:'')+(m.age?' · '+m.age+' ans':'')+'</span></div><div class="cp-k"><div><b class="num gold">'+titles+'</b><span>Titres</span></div><div><b class="num">'+(S.history?S.history.length:0)+'</b><span>Saisons terminées</span></div><div><b class="num">'+(car.g?Math.round(100*(car.w||0)/car.g)+' %':'—')+'</b><span>Victoires</span></div><div><b class="num">'+(S.streak?S.streak.b:0)+'</b><span>Meilleure série</span></div></div>'+
-    '<div class="rs-cap">Joueurs formés</div>'+(fm.length?'<div class="cp-f">'+fm.map(([n,v])=>'<span><b>'+esc(n)+'</b> +'+v.toFixed(1)+' niveaux</span>').join('')+'</div>':'<div class="muted small">Les progressions de vos joueurs s\'afficheront ici en fin de saison.</div>')+'</section>'}
+    '<div class="rs-cap">Joueurs formés</div>'+(fm.length?'<div class="cp-f">'+fm.map(([n,v])=>'<span><b>'+esc(n)+'</b> +'+v.toFixed(1)+' niveaux</span>').join('')+'</div>':'<div class="muted small">Les progressions de vos joueurs s\'afficheront ici en fin de saison.</div>')+'<div class="muted small">Version du jeu : '+QV+'</div></section>'}
 /* 11. Relations entre joueurs */
 const relKey=(a,b)=>[a.name,b.name].sort().join('|');
 function relOf(a,b){S.rel=S.rel||{};const k=relKey(a,b);if(S.rel[k]==null)S.rel[k]=[-1,0,0,0,1,1,1,2][hsh(k)%8];return S.rel[k]}
@@ -3047,6 +3051,7 @@ setTimeout(()=>{
     replay(){const M=U.M;if(!M||!M.sim.done)return;M.rpl={list:hlList(M),k:-1,t0:performance.now()}},
     tmout(){const M=U.M;if(!M||M.stage!=='live'||M.sim.done||M.dec||M.toUsed)return;M.toUsed=1;M.dec=timeoutDec(M)},
     patchok(){const P=S.patches&&S.patches[0];if(P)S.patchSeen=P.p+'-'+P.s},
+    twopen(a){U.twOpen=U.twOpen===+a?null:+a},
     learn(a){const p=S.players[+a],e=document.querySelector('#learnSel');if(!p||!e||p.learn)return;p.learn={c:e.value,w:3};news(p.name+' commence à travailler '+e.value+'.')}});
   const _ch=ACT.choose;ACT.choose=a=>{const M=U.M;if(M&&M.dec&&M.dec.to){const o=M.dec.opts[+a];if(!o)return;o.f();M.note='Temps mort : '+o.t.toLowerCase()+'.';M.dec=null;return}_ch(a)};
   const _np=newPatch;newPatch=function(){_np.apply(this,arguments);try{patchTweets()}catch(e){}};
@@ -3091,6 +3096,14 @@ function vStaff(){const R=['coach','analyst','psy'],f=n=>n.toLocaleString('fr-FR
     '<div class="rs-cap">Candidats · '+L.length+'</div><div class="sf-cands">'+cand+'</div><div class="muted small">Recruter à un poste occupé remplace le titulaire sans indemnité. La liste est renouvelée chaque saison.</div></section>';
   const head='<div class="rs-top"><div class="row" style="gap:12px"><h2>Staff</h2><span class="muted">'+fil.length+' / 3 postes</span><span class="gold">'+ke(S.budget)+'</span></div><div class="row" style="gap:14px"><span class="muted small">Qualité moyenne <b>'+(aq||'—')+'</b></span><span class="muted small">Masse salariale <b>'+f(Math.round(staffSalary()*10)/10)+' k€/sem.</b></span><span class="muted small">Bonus en match <b>+'+analystBonus().toFixed(1)+'</b></span></div></div>';
   return '<div class="rs">'+head+'<div class="rs-grid"><section class="rs-panel"><div class="rs-cards sf-cards">'+R.map(card).join('')+'</div><div class="muted small">Le staff agit chaque semaine : progression des joueurs, préparation des matchs, moral et récupération. Cliquez sur un poste pour voir sa fiche et ses candidats.</div></section>'+detail+'</div></div>'}
+
+/* ---------- Version et mise à jour ---------- */
+const QV='2026.11.24-6';
+async function checkUpdate(){try{if(location.protocol==='file:'&&!window.__desktop)return;const base=window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'';const r=await fetch(base+'index.html?v='+Date.now(),{cache:'no-store'});if(!r.ok)return;const t=await r.text(),m=t.match(/const QV='([^']+)'/);
+  if(m&&m[1]!==QV&&!document.querySelector('.upd')){document.body.insertAdjacentHTML('beforeend','<div class="upd" role="status">Nouvelle version disponible ('+m[1]+')<button class="btn sm pri" id="updGo">Mettre à jour</button></div>');
+    document.getElementById('updGo').onclick=async()=>{try{if(typeof save==='function'&&S)save()}catch(e){}if(window.__desktop){try{const x=await fetch('/__refresh',{cache:'no-store'});if(x.ok){location.reload();return}}catch(e){}document.open();document.write(t.replace('<meta charset="utf-8">','<meta charset="utf-8">\n<script>window.__desktop=1<\/script>'));document.close();return}
+      try{const rs=await navigator.serviceWorker?.getRegistrations?.();(rs||[]).forEach(x=>x.update())}catch(e){}location.reload()}}}catch(e){}}
+setTimeout(checkUpdate,2500);setInterval(checkUpdate,10*60*1000);
 /* ---------- Partie en continu : chrono, déplacements des 10 joueurs ---------- */
 const SECMIN=1.1,NEXT_T=[4,8,11,13.5,16,19,21.5,23.5,26,29.5,32],DEC_T=[0,6.6,9.6,12.2,14.6,17.6,20.1,22.1,24.6,28.1,30.6];
 const FOUNT={b:[.06,.94],r:[.94,.06]},CAMPS_B=[[.24,.42],[.22,.57],[.36,.6],[.55,.75],[.63,.85],[.44,.81]];
@@ -3248,9 +3261,17 @@ const TWH={'Le Nexus Insider':'@NexusInsider','Faille Hebdo':'@FailleHebdo','@Ri
 function addTweet(o){if(!S.tw)S.tw=[];const big=o.tid!=null&&S.teams[o.tid]?clamp(teamOvr(S.teams[o.tid])-55,5,40):12,mine=o.mine?3:1;
   o.id=S.nx++;o.s=S.season;o.w=S.week;o.likes=Math.round(big*rnd(40,160)*mine);o.rts=Math.round(o.likes*rnd(.12,.3));o.rep=Math.round(o.likes*rnd(.03,.1));
   S.tw.unshift(o);if(S.tw.length>60)S.tw.length=60}
-function txTweet(p,from,to,fee){try{const F=from!=null?T(from):null,D=to!=null?T(to):null,mine=from===S.U||to===S.U,rl=ROLE_FR[p.role];
-  if(D)addTweet({who:D.name,handle:'@'+String(D.tag).replace(/\W/g,''),tid:D.id,ver:1,kind:'off',mine,txt:pick(['OFFICIEL ✍️ Bienvenue à '+p.name+' ! Notre nouveau '+rl+' arrive'+(F?' en provenance de '+F.name:' libre de tout contrat')+'. 💜','C\'est signé ! '+p.name+' ('+rl+') rejoint '+D.name+'.'+(fee?' Transfert estimé à '+ke(fee)+'.':''),'🚨 '+p.name+' est un joueur de '+D.name+' ! Bienvenue à la maison.'])});
-  else if(F)addTweet({who:F.name,handle:'@'+String(F.tag).replace(/\W/g,''),tid:F.id,ver:1,kind:'off',mine,txt:'Merci pour tout, '+p.name+' 🙏 Notre '+rl+' quitte le club. Bonne suite !'});
+function annTxt(D,p,F,fee){const rl=ROLE_FR[p.role],o=Math.round(ovr(p)),tg='#'+String(D.tag).replace(/\W/g,'')+'WIN',tr=TRAITS[traitOf(p)]?TRAITS[traitOf(p)][0].toLowerCase():'';
+  const intro=pick(['📢 OFFICIEL\n\n'+D.name+' est fier d\'annoncer l\'arrivée de '+p.name+' au poste de '+rl+' !','🚨 C\'EST OFFICIEL 🚨\n\n'+p.name+' rejoint '+D.name+' et prend place dans notre effectif au poste de '+rl+'.','✍️ SIGNATURE\n\nNous avons le plaisir d\'accueillir '+p.name+', notre nouveau '+rl+' !']);
+  const from=F?'Âgé de '+p.age+' ans, '+p.name+' arrive en provenance de '+F.name+(F.lg!==D.lg?' ('+F.lg+')':'')+(fee?' pour un transfert estimé à '+ke(fee):'')+'.':'Âgé de '+p.age+' ans, '+p.name+' nous rejoint libre de tout contrat.';
+  const prof=o>=80?'Joueur de très haut niveau ('+o+'), il arrive avec l\'ambition de soulever des trophées.':o>=70?'Solide ('+o+') et '+(p.pot-o>=6?'avec une belle marge de progression':'expérimenté')+', il apporte exactement ce qu\'il nous manquait.':'Jeune talent ('+o+', potentiel '+Math.round(p.pot)+'), nous croyons beaucoup en lui pour les saisons à venir.';
+  const quote=pick(['« Je suis ravi de rejoindre ce projet. J\'ai hâte de rencontrer les fans et de tout donner sur la Faille. »','« Ce club a une vraie ambition et je veux en faire partie. Rendez-vous sur la scène ! »','« Quand '+D.name+' m\'a appelé, je n\'ai pas hésité une seconde. On va faire de grandes choses. »']);
+  return intro+'\n\n'+from+' '+prof+(tr&&tr!=='professionnel'?' Côté caractère : '+tr+'.':'')+'\n\n'+p.name+' : '+quote+'\n\nBienvenue à la maison, '+p.name+' ! 💜 '+tg}
+function byeTxt(F,p){const rl=ROLE_FR[p.role];return '📢 COMMUNIQUÉ\n\n'+F.name+' annonce le départ de '+p.name+', notre '+rl+'.\n\nMerci pour ton engagement, pour chaque victoire et chaque moment partagé avec nos fans sous ces couleurs. Le club te souhaite le meilleur pour la suite de ta carrière.\n\nMerci pour tout, '+p.name+' 🙏'}
+function staffTweet(x){try{const t=me(),I=STAFF[x.role];addTweet({who:t.name,handle:'@'+String(t.tag).replace(/\W/g,''),tid:t.id,ver:1,kind:'off',mine:1,txt:'📢 OFFICIEL · STAFF\n\n'+t.name+' est heureux d\'annoncer l\'arrivée de '+x.name+' au poste d\''+I.n.toLowerCase().replace(/^entraîneur/,'entraîneur')+'.\n\nÂgé de '+x.age+' ans, '+x.name+' aura pour mission : '+I.d.charAt(0).toLowerCase()+I.d.slice(1)+'\n\n« Je suis impatient de me mettre au travail avec les joueurs. Le potentiel de ce groupe est énorme. »\n\nBienvenue dans la famille, '+x.name+' ! 💜'})}catch(e){}}
+function txTweet(p,from,to,fee){try{const F=from!=null?T(from):null,D=to!=null?T(to):null,mine=from===S.U||to===S.U;
+  if(D)addTweet({who:D.name,handle:'@'+String(D.tag).replace(/\W/g,''),tid:D.id,ver:1,kind:'off',long:1,mine,txt:annTxt(D,p,F,fee)});
+  else if(F)addTweet({who:F.name,handle:'@'+String(F.tag).replace(/\W/g,''),tid:F.id,ver:1,kind:'off',long:1,mine,txt:byeTxt(F,p)});
   if(D&&F&&Math.random()<.6)addTweet({who:pick(['Le Nexus Insider','Mercato LoL FR','Baron Report']),kind:'press',mine,txt:'Mouvement '+(F.lg===D.lg?F.lg:F.lg+' → '+D.lg)+' : '+p.name+' ('+F.tag+') file chez '+D.tag+'.'+(fee?' Montant : '+ke(fee)+'.':'')+' Votre avis ? 👇'})}catch(e){}}
 function txRec(p,from,to,fee){txTweet(p,from,to,fee);S.tx.unshift({s:S.season,w:S.week,n:p.name,r:p.role,f:from,t:to,fee,u:from===S.U||to===S.U});if(S.tx.length>80)S.tx.length=80}
 const tagOf=id=>id==null?'Libre':T(id).tag;
@@ -3710,7 +3731,7 @@ function randEvents(played){const t=me(),ps=t.roster.map(id=>S.players[id]).filt
   let tot=E.reduce((s,e)=>s+e[0],0),r=Math.random()*tot,ch=E[0];for(const e of E){r-=e[0];if(r<=0){ch=e;break}}
   const m=ch[1]();if(!m)return;if(m.k!=='info'){m.ev=1;m.exp=1}addMail(m);if(m.k!=='info')news('Événement : '+m.subj+'.')}
 function evMail(m,c,done){if(!m.k||m.k.indexOf('ev_')!==0)return false;
-  if(m.k==='ev_ret'){const p=S.players[m.pid];if(c==='yes'&&p){const q=Math.round(clamp(ovr(p)-8,40,90)),x={id:S.sid++,role:'analyst',src:'file',name:p.name,q,age:p.age,salary:Math.round((1+Math.pow(Math.max(0,q-38),1.35)*.075)*10)/10,contract:2};const old=S.staff.analyst;S.staff.analyst=x;done(p.name+' devient votre analyste (niveau '+q+')'+(old?', à la place de '+old.name:'')+'.')}else done('Vous lui souhaitez bonne chance pour la suite.');return true}
+  if(m.k==='ev_ret'){const p=S.players[m.pid];if(c==='yes'&&p){const q=Math.round(clamp(ovr(p)-8,40,90)),x={id:S.sid++,role:'analyst',src:'file',name:p.name,q,age:p.age,salary:Math.round((1+Math.pow(Math.max(0,q-38),1.35)*.075)*10)/10,contract:2};const old=S.staff.analyst;S.staff.analyst=x;staffTweet(x);done(p.name+' devient votre analyste (niveau '+q+')'+(old?', à la place de '+old.name:'')+'.')}else done('Vous lui souhaitez bonne chance pour la suite.');return true}
   if(m.k==='ev_clause'){const p=S.players[m.pid],t=me(),B=S.teams[m.tid];if(!p||p.team!==S.U){done('Le joueur n\'est plus au club.');return true}
     if(c==='raise'){const a=Math.round(p.salary*1.3*10)/10;if(Math.random()<.6){p.salary=a;EVMOR(p,8);done(p.name+' reste : salaire porté à '+a+' k€ par semaine.')}else{c='go';m.res=null}}
     if(c==='go'){S.budget+=m.amt;t.roster=t.roster.filter(x=>x!==p.id);p.team=B.id;B.roster.push(p.id);if(ovr(p)>ovr(S.players[B.lineup[p.role]]))B.lineup[p.role]=p.id;p.salary=salaryFor(p);p.contract=3;ensureLineup(t);delete S.tlist[p.id];txRec(p,S.U,B.id,m.amt);done(p.name+' part chez '+B.name+'. Le club encaisse '+ke(m.amt)+'.')}return true}const t=me(),p=m.pid?S.players[m.pid]:null,R=Math.random;
@@ -3800,7 +3821,7 @@ function vQG(){if(S.phase==='offseason')return vOff();
   const nf=n=>n>=1000?(n/1000).toFixed(1).replace('.0','')+' k':String(n||0);
   const feed=card('Fil d\'actu','<button class="btn sm ghost" data-act="tab" data-arg="mercato">Mercato</button>','<div class="db-feed">'+tws.map(x=>{const h=hsh(x.who)%360,lk=x.lid!=null?(S.leaks||[]).find(l=>l.id===x.lid):null,stt=lk&&lk.st==='ok'?'<span class="tw-st ok">Confirmé</span>':lk&&lk.st==='no'?'<span class="tw-st no">Démenti</span>':x.kind==='leak'?'<span class="tw-st">Rumeur · '+dots(x.conf||2,5)+'</span>':'';
     return '<div class="db-tw'+(x.mine?' mine':'')+'">'+(x.tid!=null&&S.teams[x.tid]?'<span class="db-av cr">'+crest(S.teams[x.tid],38)+'</span>':'<span class="db-av" style="--h:'+h+'">'+esc(x.who.replace(/^@/,'').slice(0,1).toUpperCase())+'</span>')+
-      '<div><div class="tw-hd"><b>'+esc(x.who)+'</b>'+(x.ver||x.kind==='press'?'<i class="tw-v" title="Compte vérifié">✓</i>':'')+'<small>'+esc(x.handle||TWH[x.who]||'@'+x.who.replace(/\W/g,''))+' · sem. '+x.w+'</small></div><p>'+esc(x.txt)+'</p>'+stt+
+      '<div><div class="tw-hd"><b>'+esc(x.who)+'</b>'+(x.ver||x.kind==='press'?'<i class="tw-v" title="Compte vérifié">✓</i>':'')+'<small>'+esc(x.handle||TWH[x.who]||'@'+x.who.replace(/\W/g,''))+' · sem. '+x.w+'</small></div><p class="'+(x.long?'tw-long':'')+(x.long&&U.twOpen!==x.id?' cl':'')+'">'+esc(x.txt)+'</p>'+(x.long?'<button class="tw-more" data-act="twopen" data-arg="'+x.id+'">'+(U.twOpen===x.id?'Réduire':'Lire l\'annonce')+'</button>':'')+stt+
       (x.likes?'<div class="tw-ft"><span>💬 '+nf(x.rep)+'</span><span>🔁 '+nf(x.rts)+'</span><span>♥ '+nf(x.likes)+'</span></div>':'')+'</div></div>'}).join('')+'</div>');
   const table=card('Classement','<span class="db-meta">'+esc(S.lg)+'</span>','<div class="db-tab">'+st0.map((x,i)=>'<div class="db-tr'+(x.id===S.U?' me':'')+'"><span class="num">'+(i+1)+'</span>'+crest(x,22)+'<span class="db-tn">'+tlink(x,esc(x.name))+'</span><span class="num">'+x.w+'</span><span class="num muted">'+x.l+'</span></div>').join('')+'</div>');
   const extra=(pressPanel(fx)||'')+(S.intl?'<section class="panel"><h2>Tableau · '+esc(S.intl.name)+'</h2>'+bracketHTML(S.intl.rounds,null,true)+'</section>':'');
@@ -3850,7 +3871,7 @@ setTimeout(()=>{Object.assign(ACT,{
   const _sg=ACT.startgame;ACT.startgame=a=>{if(a===''||a==null||!U.mstyle)return;_sg(a);S.mgr={nick:(U.mgrNick||'').trim()||'Coach',age:+U.mgrAge||null,style:U.mstyle};news('Le coach '+S.mgr.nick+' ('+MSTYLE[S.mgr.style][0].toLowerCase()+') prend les commandes de '+me().name+'.')};
   const _r=render;render=function(){_r();try{musSync();musBtn()}catch(e){}try{const M=U.M;if(M&&M.stage==='live'&&(M.dec||M.sim.done)&&innerWidth<=820){const key=M.sim.done?'end'+M.n:'d'+M.sim.i+'-'+M.n;if(M.scrolled!==key){M.scrolled=key;const el=document.querySelector('.bc-dec,.bc-end'),bc=document.querySelector('.bc');if(el&&bc)bc.scrollTo({top:Math.max(0,el.offsetTop-70),behavior:'smooth'})}}}catch(e){}};render()},0);
 function musBtn(){const b=document.querySelector('[data-act=snd]');if(b&&!document.querySelector('[data-act=mus]'))b.insertAdjacentHTML('afterend','<button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'" title="Musique">'+(MUS.on?'Musique : oui':'Musique : non')+'</button>');
-  if(U.screen==='menu'&&!document.querySelector('.ts-mus')){const m=document.querySelector('.ts');if(m)m.insertAdjacentHTML('beforeend','<div class="ts-mus"><button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'">'+(MUS.on?'♪ Musique : oui':'♪ Musique : non')+'</button><button class="btn sm" data-act="snd" aria-pressed="'+SND.on+'">'+(SND.on?'Sons : oui':'Sons : non')+'</button><small>Musiques : « Cyber March », iamoneabe · « Cyber Runner », ansimuz (CC0)</small></div>')}}
+  if(U.screen==='menu'&&!document.querySelector('.ts-mus')){const m=document.querySelector('.ts');if(m)m.insertAdjacentHTML('beforeend','<div class="ts-mus"><button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'">'+(MUS.on?'♪ Musique : oui':'♪ Musique : non')+'</button><button class="btn sm" data-act="snd" aria-pressed="'+SND.on+'">'+(SND.on?'Sons : oui':'Sons : non')+'</button><small>Musiques : « Cyber March », iamoneabe · « Cyber Runner », ansimuz (CC0) · version '+QV+'</small></div>')}}
 /* pop-up des événements */
 const isPop=m=>(m.ev||m.k==='clash'||m.k==='leave')&&!m.seen&&(m.st!=='done'||m.pop);
 function evPopup(){const m=S&&S.mail.find(isPop);if(!m)return'';const p=m.pid?S.players[m.pid]:null,tg=MAILT[m.k]||MAILT.info,ans=m.st==='done';
