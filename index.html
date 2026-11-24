@@ -1951,6 +1951,7 @@ body[data-scr=menu]::after,body[data-scr=start]::after{background:linear-gradien
 .bc-art .dart{transform:none!important;width:100%!important;height:100%!important}
 .bc-ch{position:absolute;right:8px;bottom:8px;z-index:2;border-radius:50%;overflow:hidden;width:30px;height:30px;box-shadow:0 0 0 2px rgba(255,255,255,.6)}.bc-art .bc-ch img,.bc-art .bc-ch svg{width:30px!important;height:30px!important;transform:none!important;border-radius:50%!important}
 .bc-card:hover .dart{filter:brightness(1.15) saturate(1.1)}
+.mus-ind{width:100%;text-align:right;font-size:.74rem;font-weight:700;color:#c4b5fd}.mus-ind.blocked{color:#f5c451}.mus-ind.err{color:#ff5d6c}
 </style>
 </head>
 <body>
@@ -3169,7 +3170,7 @@ function vStaff(){const R=['coach','analyst','psy'],f=n=>n.toLocaleString('fr-FR
   return '<div class="rs">'+head+'<div class="rs-grid"><section class="rs-panel"><div class="rs-cards sf-cards">'+R.map(card).join('')+'</div><div class="muted small">Le staff agit chaque semaine : progression des joueurs, préparation des matchs, moral et récupération. Cliquez sur un poste pour voir sa fiche et ses candidats.</div></section>'+detail+'</div></div>'}
 
 /* ---------- Version et mise à jour ---------- */
-const QV='2026.11.24-9';
+const QV='2026.11.24-10';
 async function checkUpdate(){try{if(location.protocol==='file:'&&!window.__desktop)return;const base=window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'';const r=await fetch(base+'index.html?v='+Date.now(),{cache:'no-store'});if(!r.ok)return;const t=await r.text(),m=t.match(/const QV='([^']+)'/);
   if(m&&m[1]!==QV&&!document.querySelector('.upd')){document.body.insertAdjacentHTML('beforeend','<div class="upd" role="status">Nouvelle version disponible ('+m[1]+')<button class="btn sm pri" id="updGo">Mettre à jour</button></div>');
     document.getElementById('updGo').onclick=async()=>{try{if(typeof save==='function'&&S)save()}catch(e){}if(window.__desktop){try{const x=await fetch('/__refresh',{cache:'no-store'});if(x.ok){location.reload();return}}catch(e){}document.open();document.write(t.replace('<meta charset="utf-8">','<meta charset="utf-8">\n<script>window.__desktop=1<\/script>'));document.close();return}
@@ -3270,6 +3271,20 @@ function decArt(title){const m=DA_MAP.find(x=>x[0].test(title))||[0,'obj','targe
   return '<svg class="dart" viewBox="0 0 320 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="'+id+'b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+th[2]+'"/><stop offset="1" stop-color="#07060c"/></linearGradient><radialGradient id="'+id+'r" cx=".5" cy=".55" r=".55"><stop offset="0" stop-color="'+th[0]+'" stop-opacity=".75"/><stop offset=".55" stop-color="'+th[1]+'" stop-opacity=".18"/><stop offset="1" stop-color="'+th[1]+'" stop-opacity="0"/></radialGradient><linearGradient id="'+id+'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="'+th[0]+'"/></linearGradient><filter id="'+id+'f" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'+
     '<rect width="320" height="160" fill="url(#'+id+'b)"/><path d="M-10 170 330 -10M40 170 380 -10M-60 170 280 -10" stroke="'+th[0]+'" stroke-opacity=".12" stroke-width="10"/><rect width="320" height="160" fill="url(#'+id+'r)"/>'+sp+
     '<g fill="url(#'+id+'g)" color="'+th[0]+'" filter="url(#'+id+'f)" transform="translate(0 0)">'+glyph+'</g></svg>'}
+
+/* ---------- Musique : gestionnaire unique (menu, partie, match) ---------- */
+const TRK={menu:'audio/menu.mp3',hub:'audio/hub.mp3',match:'audio/match.mp3'};
+function trackWant(){if(!MUS.on||typeof U==='undefined')return{};const M=U.M;if(M&&M.stage==='live'&&!M.sim.done)return{match:.5};if(M)return{};if(U.screen==='game'&&S)return{hub:.42};return{menu:.6}}
+function mkAudio(k){const a=new Audio(),srcs=window.__desktop&&typeof PACK_BASE!=='undefined'?[TRK[k],PACK_BASE+TRK[k]]:[TRK[k]];let i=0;a.loop=true;a.preload='auto';a.volume=0;a.src=srcs[0];
+  a.onerror=()=>{i++;if(i<srcs.length){a.src=srcs[i];if((MUS.want||{})[k]){const p=a.play();if(p&&p.catch)p.catch(()=>{})}}else{MUS.st='err';musInd()}};a.onplaying=()=>{MUS.st='ok';musInd()};return a}
+function musInd(){const t=MUS.on?(MUS.st==='blocked'?'Cliquez n\'importe où pour lancer la musique':MUS.st==='err'?'Musique introuvable : vérifiez votre connexion':MUS.st==='ok'?'♪ Musique en cours':''):'Musique coupée';
+  document.querySelectorAll('.mus-ind').forEach(e=>{e.textContent=t;e.className='mus-ind '+(MUS.st||'')});document.querySelectorAll('[data-act=mus]').forEach(b=>{b.title=t})}
+setTimeout(()=>{['el','h','m'].forEach(k=>{try{if(MUS[k]){MUS[k].pause();MUS[k]=null}}catch(e){}});MUS.a={};
+  musSync=function(){const W=trackWant();MUS.want=W;Object.keys(TRK).forEach(k=>{const v=W[k]||0;let a=MUS.a[k];if(v>0&&!a)a=MUS.a[k]=mkAudio(k);if(!a)return;
+    if(v>0&&a.paused){const p=a.play();if(p&&p.catch)p.catch(e=>{if(e&&e.name==='NotAllowedError'){MUS.st='blocked';musInd()}})}
+    clearInterval(a._t);a._t=setInterval(()=>{const d=v-a.volume;if(Math.abs(d)<.03){a.volume=v;clearInterval(a._t);if(!v&&!a.paused)a.pause();return}a.volume=clamp(a.volume+Math.sign(d)*.03,0,1)},60)});musInd()};
+  ['pointerdown','keydown','touchend'].forEach(ev=>document.addEventListener(ev,()=>{try{musSync()}catch(e){}},true));
+  try{musSync()}catch(e){}},0);
 /* ---------- Partie en continu : chrono, déplacements des 10 joueurs ---------- */
 const SECMIN=1.1,NEXT_T=[4,8,11,13.5,16,19,21.5,23.5,26,29.5,32],DEC_T=[0,6.6,9.6,12.2,14.6,17.6,20.1,22.1,24.6,28.1,30.6];
 const FOUNT={b:[.06,.94],r:[.94,.06]},CAMPS_B=[[.24,.42],[.22,.57],[.36,.6],[.55,.75],[.63,.85],[.44,.81]];
@@ -4036,9 +4051,9 @@ setTimeout(()=>{Object.assign(ACT,{
   mus(){MUS.on=!MUS.on;try{localStorage.setItem('quintet-mus',MUS.on?'1':'0')}catch(e){}}});
   const _lg=ACT.lg;ACT.lg=a=>{_lg(a);U.pick=null};
   const _sg=ACT.startgame;ACT.startgame=a=>{if(a===''||a==null||!U.mstyle)return;_sg(a);S.mgr={nick:(U.mgrNick||'').trim()||'Coach',age:+U.mgrAge||null,style:U.mstyle};news('Le coach '+S.mgr.nick+' ('+MSTYLE[S.mgr.style][0].toLowerCase()+') prend les commandes de '+me().name+'.')};
-  const _r=render;render=function(){_r();try{document.body.dataset.scr=U.screen==='game'?'game':U.screen;musSync();musBtn()}catch(e){}try{const M=U.M;if(M&&M.stage==='live'&&(M.dec||M.sim.done)&&innerWidth<=820){const key=M.sim.done?'end'+M.n:'d'+M.sim.i+'-'+M.n;if(M.scrolled!==key){M.scrolled=key;const el=document.querySelector('.bc-dec,.bc-end'),bc=document.querySelector('.bc');if(el&&bc)bc.scrollTo({top:Math.max(0,el.offsetTop-70),behavior:'smooth'})}}}catch(e){}};render()},0);
+  const _r=render;render=function(){_r();try{document.body.dataset.scr=U.screen==='game'?'game':U.screen;musSync();musBtn();musInd()}catch(e){}try{const M=U.M;if(M&&M.stage==='live'&&(M.dec||M.sim.done)&&innerWidth<=820){const key=M.sim.done?'end'+M.n:'d'+M.sim.i+'-'+M.n;if(M.scrolled!==key){M.scrolled=key;const el=document.querySelector('.bc-dec,.bc-end'),bc=document.querySelector('.bc');if(el&&bc)bc.scrollTo({top:Math.max(0,el.offsetTop-70),behavior:'smooth'})}}}catch(e){}};render()},0);
 function musBtn(){const b=document.querySelector('[data-act=snd]');if(b&&!document.querySelector('[data-act=mus]'))b.insertAdjacentHTML('afterend','<button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'" title="Musique">'+(MUS.on?'Musique : oui':'Musique : non')+'</button>');
-  if(U.screen==='menu'&&!document.querySelector('.ts-mus')){const m=document.querySelector('.ts');if(m)m.insertAdjacentHTML('beforeend','<div class="ts-mus"><button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'">'+(MUS.on?'♪ Musique : oui':'♪ Musique : non')+'</button><button class="btn sm" data-act="snd" aria-pressed="'+SND.on+'">'+(SND.on?'Sons : oui':'Sons : non')+'</button><small>Musiques : « Cyber March », iamoneabe · « Synthwave 421k », The Cynic Project · « Cyber Runner », ansimuz (CC0) · version '+QV+'</small></div>')}}
+  if(U.screen==='menu'&&!document.querySelector('.ts-mus')){const m=document.querySelector('.ts');if(m)m.insertAdjacentHTML('beforeend','<div class="ts-mus"><button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'">'+(MUS.on?'♪ Musique : oui':'♪ Musique : non')+'</button><button class="btn sm" data-act="snd" aria-pressed="'+SND.on+'">'+(SND.on?'Sons : oui':'Sons : non')+'</button><span class="mus-ind"></span><small>Musiques : « Cyber March », iamoneabe · « Synthwave 421k », The Cynic Project · « Cyber Runner », ansimuz (CC0) · version '+QV+'</small></div>')}}
 /* pop-up des événements */
 const isPop=m=>(m.ev||m.k==='clash'||m.k==='leave')&&!m.seen&&(m.st!=='done'||m.pop);
 function evPopup(){const m=S&&S.mail.find(isPop);if(!m)return'';const p=m.pid?S.players[m.pid]:null,tg=MAILT[m.k]||MAILT.info,ans=m.st==='done';
