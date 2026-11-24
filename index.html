@@ -1833,6 +1833,26 @@ h1,.cs-h1,.mk-title,.mo-name,.ts-title{-webkit-text-fill-color:#f4f0ff!important
 .tw-st{display:inline-block;margin-top:5px;font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);letter-spacing:.04em}.tw-st.ok{background:rgba(63,214,143,.15);color:#3fd68f}.tw-st.no{background:rgba(255,93,108,.15);color:#ff5d6c}
 .db-tw.mine{background:rgba(139,92,246,.08);border-radius:8px;padding-left:6px;padding-right:6px}
 .bc-end.win::before,.bc-end.loss::before{content:none;display:none}
+.inf-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.inf{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.inf b{font-family:var(--title)}.inf small{line-height:1.4}.inf-eff{font-size:.8rem;color:#c4b5fd;font-weight:600}
+.inf-lv{display:flex;gap:4px}.inf-lv i{width:18px;height:6px;border-radius:3px;background:rgba(255,255,255,.12)}.inf-lv i.on{background:#a78bfa}.inf-lv i.wip{background:repeating-linear-gradient(45deg,#f5c451 0 3px,transparent 3px 6px)}
+.inf .btn,.inf .pill{margin-top:auto;align-self:flex-start}
+@media(max-width:1000px){.inf-grid{grid-template-columns:1fr 1fr}}@media(max-width:520px){.inf-grid{grid-template-columns:1fr}}
+.cer-ov{z-index:220;background:radial-gradient(800px 500px at 50% 30%,rgba(245,196,81,.18),transparent 60%),rgba(6,4,14,.9)}
+.cer{width:min(820px,100%);max-height:calc(100vh - 32px);overflow-y:auto;display:flex;flex-direction:column;gap:18px;padding:22px 24px;border-radius:18px;background:linear-gradient(180deg,#1c1530,#100c1d);border:1px solid rgba(245,196,81,.45);box-shadow:0 30px 90px rgba(0,0,0,.7),0 0 60px rgba(245,196,81,.15)}
+.cer-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#f5c451}
+.cer-dots{display:flex;gap:5px}.cer-dots i{width:22px;height:4px;border-radius:2px;background:rgba(255,255,255,.15)}.cer-dots i.ok{background:rgba(245,196,81,.5)}.cer-dots i.on{background:#f5c451}
+.cer-body{display:flex;flex-direction:column;align-items:center;gap:16px;min-height:300px;justify-content:center;text-align:center}
+.cer-k{font-family:var(--title);font-size:1.9rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:linear-gradient(180deg,#fff3c4,#f5c451);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cer-champ{display:flex;flex-direction:column;align-items:center;gap:10px}.cer-champ b{font-family:var(--title);font-size:1.6rem;text-transform:uppercase}
+.cer-card{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 12px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(245,196,81,.3);border-bottom:3px solid var(--rc);min-width:0}
+.cer-card small{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rc)}.cer-card b{font-family:var(--title);font-size:1rem;text-transform:uppercase;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cer-card span{font-size:.74rem;color:var(--muted)}
+.cer-card.big{padding:20px 34px}.cer-card.big b{font-size:1.5rem}.cer-card.mine{box-shadow:0 0 0 2px #a78bfa,0 0 30px rgba(139,92,246,.4)}
+.cer-five{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;width:100%}
+.cer-btns{display:flex;justify-content:space-between}
+@media(prefers-reduced-motion:no-preference){.cer-body>*{animation:cerin .5s ease-out both}.cer-body>*:nth-child(2){animation-delay:.15s}.cer-five>*{animation:cerin .45s ease-out both}.cer-five>*:nth-child(2){animation-delay:.1s}.cer-five>*:nth-child(3){animation-delay:.2s}.cer-five>*:nth-child(4){animation-delay:.3s}.cer-five>*:nth-child(5){animation-delay:.4s}@keyframes cerin{from{opacity:0;transform:translateY(18px) scale(.96)}}}
+@media(max-width:640px){.cer-five{grid-template-columns:repeat(2,minmax(0,1fr))}.cer-k{font-size:1.4rem}}
 </style>
 </head>
 <body>
@@ -1915,7 +1935,7 @@ function teamOvr(t){return ROLES.reduce((s,r)=>s+ovr(S.players[t.lineup[r]]),0)/
 function lgWage(lg){const ts=S.teams.filter(t=>t.lg===lg);if(!ts.length)return 20;return ts.reduce((s,t)=>s+t.roster.reduce((a,id)=>a+(S.players[id]?S.players[id].salary:0),0),0)/ts.length}
 function startBudget(lg){return Math.round(60+lgWage(lg)*5)}
 function spBase(){const L=LG[S.lg],t=S.teams[S.U],own=t?t.roster.reduce((a,id)=>a+(S.players[id]?S.players[id].salary:0),0):lgWage(S.lg);return Math.max(3,(lgWage(S.lg)*.5+own*.5)*.98*(1+clamp((S.fans/L.fans-1)*.6,-.3,.6)))}
-const merchOf=()=>Math.round(S.fans/6000);
+const merchOf=()=>Math.round(S.fans/6000*(1+.15*infLv('stream')));
 function sponsorOffers(){const base=spBase();return[
   {name:'Banque Corail',kind:'Sécurité',weekly:Math.round(base*1.25),win:0,title:0},
   {name:'Volt Énergie',kind:'Équilibré',weekly:Math.round(base),win:Math.round(base/4),title:Math.round(base*2)},
@@ -2107,7 +2127,7 @@ function currentFixtures(){
   if(S.phase==='playoffs')return S.week===S.rw+1?S.playoffs.semis.map(x=>({h:x.h,a:x.a,bo:3})):[{h:S.playoffs.final.h,a:S.playoffs.final.a,bo:5}];
   return[]}
 function userFixture(){return currentFixtures().find(f=>f.h===S.U||f.a===S.U)||null}
-function trainPlayer(p,focus,boost){const o=ovr(p),ms=S.mgr?S.mgr.style:'',af=(p.age<=20?1.3:p.age<=23?1:p.age<=27?.6:p.age<=29?.3:.1)*(ms==='dev'?(p.age<=21?1.35:p.age>=26?.8:1):ms==='mot'?.9:1);let g=(Math.max(0,p.pot-o)/45*af+.03)*(boost||1);if(focus==='repos')g*=.2;
+function trainPlayer(p,focus,boost){const o=ovr(p),ms=S.mgr?S.mgr.style:'',af=(p.age<=20?1.3:p.age<=23?1:p.age<=27?.6:p.age<=29?.3:.1)*(ms==='dev'?(p.age<=21?1.35:p.age>=26?.8:1):ms==='mot'?.9:1)*(1+.1*infLv('train'));let g=(Math.max(0,p.pot-o)/45*af+.03)*(boost||1);if(focus==='repos')g*=.2;
   for(const k in p.stats)p.stats[k]=clamp(p.stats[k]+g*(focus===k?1.6:focus==='eq'?.7:.35)*rnd(.5,1.5),30,99);
   if(focus==='pool')p.pool.forEach(e=>e.m=clamp(Math.round(e.m+rnd(1,2.5)),0,100))}
 function weeklyUpdate(won,played){
@@ -2121,7 +2141,7 @@ function weeklyUpdate(won,played){
   if(typeof lifeWeek==='function')lifeWeek(won,played);
   const sal=t.roster.reduce((s,id)=>s+S.players[id].salary,0);
   let sw=0;S.spons.forEach(x=>{sw+=x.adv>0?Math.round(x.weekly/2):x.weekly;if(x.adv>0)x.adv--;if(played)x.sat=clamp(x.sat+(won?2:-2),0,100)});
-  const f={s:S.season,w:S.week,sponsor:sw,bonus:won?S.sponsor.win:0,merch:merchOf(),sal:Math.round(sal),staff:Math.round(6*LG[S.lg].f)+Math.round(staffSalary())};
+  const f={s:S.season,w:S.week,sponsor:sw,bonus:won?S.sponsor.win:0,merch:merchOf(),sal:Math.round(sal),staff:Math.round(6*LG[S.lg].f)+Math.round(staffSalary())+infUpkeep()};
   f.net=f.sponsor+f.bonus+f.merch-f.sal-f.staff;S.budget+=f.net;S.finance.push(f);if(S.finance.length>40)S.finance.shift();return f}
 function newPatch(){S.patch++;const up=[],down=[],buff=[],nerf=[];
   CHAMPS.forEach(c=>{const o=S.meta[c.n],n=clamp(Math.round(o+rnd(-3.4,3.4)),0,10);S.meta[c.n]=n;if(n-o>=3)up.push(c.n);if(o-n>=3)down.push(c.n);if(n-o>=2)buff.push([c.n,o,n]);if(o-n>=2)nerf.push([c.n,o,n])});
@@ -2150,7 +2170,7 @@ const STAFF={coach:{n:'Entraîneur principal',d:'Accélère la progression de to
   analyst:{n:'Analyste',d:'Prépare les matchs : bonus de force en match et meilleures drafts.',eff:q=>'+'+((q-45)/45).toFixed(1)+' de force en match'},
   psy:{n:'Psychologue',d:'Entretient le moral et accélère la récupération d\'énergie.',eff:q=>'+'+((q-45)/30).toFixed(1)+' de moral et +'+Math.round((q-45)/12)+' d\'énergie par semaine'}};
 const coachMultQ=q=>1+Math.max(0,q-45)/130;
-const stq=r=>(S.staff&&S.staff[r]?S.staff[r].q:45)+(S.mgr&&S.mgr.style==='ana'&&(r==='coach'||r==='analyst')?10:0);
+const stq=r=>(S.staff&&S.staff[r]?S.staff[r].q:45)+(r==='analyst'?4*infLv('video'):r==='coach'?2*infLv('video'):0)+(S.mgr&&S.mgr.style==='ana'&&(r==='coach'||r==='analyst')?10:0);
 const coachMult=()=>coachMultQ(stq('coach'));
 const analystBonus=()=>Math.max(0,stq('analyst')-45)/45;
 const staffSalary=()=>S.staff?Object.values(S.staff).reduce((t,x)=>t+(x?x.salary:0),0):0;
@@ -2797,7 +2817,7 @@ let timer=null,raf=null;
 function coachDecide(M){const dec=!M.decided[M.sim.i]&&decisionAt(M.sim,M.side);if(dec){applyDecision(M.sim,dec,dec.best);M.decided[M.sim.i]=1;M.note='Coach : '+dec.opts[dec.best].t.toLowerCase()+'.'}}
 function goLive(){const M=U.M;M.sim=simStart(M.d);M.sim.us=M.side;hardenSim(M.sim);M.stage='live';M.dec=null;M.decided={};M.note='';M.auto=M.mode==='instant';M.pos=null;M.hit=null;clearInterval(timer);
   if(M.auto){while(!M.sim.done){coachDecide(M);simStep(M.sim)}endGame();return}
-  M.clock=0;M.lt=null;M.ag=null;M.ev=null;M.nt=NEXT_T.map((t,k)=>k?t+rnd(-.7,.7):t+rnd(-1,1.5));M.endT=clamp(30.5+Math.random()*9-Math.abs(M.sim.adv)*.3,30.5,42);timer=setInterval(liveTick,50);liveTick()}
+  M.clock=0;M.lt=null;M.ag=null;M.ev=null;M.skT=null;M.nt=NEXT_T.map((t,k)=>k?t+rnd(-.7,.7):t+rnd(-1,1.5));M.endT=clamp(30.5+Math.random()*9-Math.abs(M.sim.adv)*.3,30.5,42);timer=setInterval(liveTick,50);liveTick()}
 function tick(first){const M=U.M;if(!M||M.stage!=='live'||M.dec||M.sim.done)return;
   if(!M.decided[M.sim.i]){const dec=decisionAt(M.sim,M.side);if(dec){if(M.auto)coachDecide(M);else{M.dec=dec;if(!first)render();return}}}
   if(first)return;
@@ -2852,6 +2872,61 @@ function mapBg(W){if(BG&&BG.width===W)return BG;const c=document.createElement('
   /* vignette */
   const vg=g.createRadialGradient(W/2,W/2,W*.45,W/2,W/2,W*.75);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.55)');g.fillStyle=vg;g.fillRect(0,0,W,W);
   BG=c;return c}
+/* ---------- Escarmouches pendant le match ---------- */
+function killAgents(M,dead){(dead||[]).forEach(x=>{const a=M.ag&&M.ag[x[0]][x.slice(1)];if(a){a.mode='dead';a.dp=a.p.slice();a.until=M.clock+.35;a.resp=M.clock+.35+clamp(.25+M.clock*.025,.3,1.2)}})}
+function skirmish(M){const sim=M.sim,d=sim.d,c=M.clock,kda=sim.kda,st=sim.st,o=s=>s==='b'?'r':'b',R=Math.random;let roles,li;
+  if(c<14){li=R()<.34?0:R()<.5?1:2;roles=li===0?['TOP']:li===1?['MID']:['ADC','SUP'];if(R()<.35)roles=roles.concat('JGL')}
+  else{li=Math.floor(R()*3);roles=shuffle(ROLES.slice()).slice(0,2+Math.floor(R()*2))}
+  const pw=s=>roles.reduce((a,x)=>a+ovr(pl(d,s,x)),0)/roles.length,sg=sim.us==='b'?1:sim.us==='r'?-1:0;
+  const w=R()<sig((pw('b')-pw('r'))/7+sim.adv/6+sg*(sim.mod.cur||0)*.12)?'b':'r',l=o(w),n=roles.length>1&&R()<.4?2:1;
+  const kr=pick(roles),vic=shuffle(roles.slice()).slice(0,n),dead=[],nm=(s,r)=>pl(d,s,r).name+' ('+d.picks[s][r]+')';
+  kda[d.lineup[w][kr]][0]+=n;vic.forEach(v=>{kda[d.lineup[l][v]][1]++;dead.push(l+v)});roles.filter(x=>x!==kr).forEach(x=>kda[d.lineup[w][x]][2]++);st[w].k+=n;
+  let txt=nm(w,kr)+(n>1?' réalise un doublé ':' élimine '+nm(l,vic[0])+' ')+['sur la voie du haut','au milieu','sur la voie du bas'][li]+'.';
+  if(R()<.22&&roles.length>1){const kb=pick(roles.filter(x=>!vic.includes(x))),vb=pick(roles.filter(x=>x!==kr));kda[d.lineup[l][kb]][0]++;kda[d.lineup[w][vb]][1]++;st[l].k++;dead.push(w+vb);txt+=' Échange : '+pl(d,l,kb).name+' en emporte un avec lui.'}
+  else if(roles.includes('JGL')&&c<14)txt=(roles.length>1?'Gank réussi ! ':'')+txt;
+  sim.adv+=(w==='b'?1:-1)*.22*n;const loc=along(LANES[li],laneFront(M,li));
+  sim.log.push({t:Math.floor(c),side:w,txt,loc,dead,adv:Math.round(sim.adv*10)/10,st:JSON.parse(JSON.stringify(st)),sk:1});
+  M.hit={loc,side:w,t0:Date.now(),dead};M.ev={t:c,loc,side:w,i:-1};killAgents(M,dead)}
+/* ---------- Infrastructures ---------- */
+const INFRA={train:['Salle d\'entraînement','Les joueurs progressent plus vite à l\'entraînement.',l=>'+'+l*10+' % de progression'],
+  med:['Pôle médical','Récupération plus rapide, moins de blessures et de burn-out.',l=>'+'+(l*1.5)+' énergie par semaine · −'+l*25+' % de blessures'],
+  stream:['Studio de stream','Le club gagne des fans chaque semaine et vend plus de produits dérivés.',l=>'+'+(l*.4).toFixed(1)+' % de fans par semaine · +'+l*15+' % de produits dérivés'],
+  video:['Salle d\'analyse vidéo','Votre staff lit mieux les parties : conseils plus fiables.',l=>'+'+l*4+' au niveau de l\'analyste, +'+l*2+' au coach']};
+const infLv=k=>S&&S.infra?S.infra[k]||0:0;
+const infCost=(k,l)=>Math.round(lgWage(S.lg)*[1.8,3.2,5][l]);
+const infUpkeep=()=>S&&S.infra?Math.round(Object.values(S.infra).reduce((a,l)=>a+l,0)*lgWage(S.lg)*.04):0;
+function infraWeek(){if(!S.infra)return;const q=S.infraQ||{};Object.keys(q).forEach(k=>{q[k]--;if(q[k]<=0){delete q[k];S.infra[k]++;news(INFRA[k][0]+' : travaux terminés, niveau '+S.infra[k]+'.');if(typeof addTweet==='function')addTweet({who:me().name,handle:'@'+String(me().tag).replace(/\W/g,''),tid:S.U,ver:1,kind:'off',mine:1,txt:'🏗️ Notre '+INFRA[k][0].toLowerCase()+' passe au niveau '+S.infra[k]+' ! On ne lâche rien 💪'})}})}
+function infraPanel(){if(!S.infra){S.infra={train:0,med:0,stream:0,video:0};S.infraQ={}}
+  return '<section class="panel"><div class="row sp"><h2>Infrastructures</h2><span class="muted small">Entretien : '+infUpkeep()+' k€ / semaine · travaux en 2 semaines</span></div><div class="inf-grid">'+Object.keys(INFRA).map(k=>{const l=infLv(k),q=(S.infraQ||{})[k],c=l<3?infCost(k,l):0;
+    return '<div class="inf"><div class="row sp"><b>'+INFRA[k][0]+'</b><span class="inf-lv">'+[1,2,3].map(x=>'<i class="'+(x<=l?'on':q&&x===l+1?'wip':'')+'"></i>').join('')+'</span></div><small class="muted">'+INFRA[k][1]+'</small><span class="inf-eff">'+(l?INFRA[k][2](l):'Pas encore construit')+'</span>'+
+      (q?'<span class="pill w">Travaux : encore '+q+' sem.</span>':l>=3?'<span class="pill g">Niveau maximum</span>':'<button class="btn sm'+(S.budget>=c?' on':'')+'" data-act="infra" data-arg="'+k+'"'+(S.budget>=c?'':' disabled')+'>'+(l?'Améliorer':'Construire')+' · '+ke(c)+'</button>')+'</div>'}).join('')+'</div></section>'}
+/* ---------- Cérémonie de fin de saison ---------- */
+function makeCeremony(){try{const lt=S.teams.filter(t=>t.lg===S.lg),ps=lt.flatMap(t=>t.roster.map(id=>S.players[id])),ch=S.playoffs&&S.playoffs.champion!=null?S.teams[S.playoffs.champion]:null;
+  const rankOf=t=>(S.off&&S.off.ranks?S.off.ranks.indexOf(t.id)+1:9);
+  const starters=lt.flatMap(t=>ROLES.map(r=>S.players[t.lineup[r]]).filter(Boolean));
+  const mvp=starters.slice().sort((a,b)=>(ovr(b)+Math.max(0,6-rankOf(T(b.team)))*1.2)-(ovr(a)+Math.max(0,6-rankOf(T(a.team)))*1.2))[0];
+  const rook=starters.filter(p=>p.age<=20&&p.id!==mvp.id).sort((a,b)=>ovr(b)-ovr(a))[0]||null;
+  const allp=ROLES.map(r=>starters.filter(p=>p.role===r).sort((a,b)=>ovr(b)-ovr(a))[0]).filter(Boolean);
+  const pre=lt.slice().sort((a,b)=>teamOvr(b)-teamOvr(a)),coach=lt.slice().sort((a,b)=>(pre.indexOf(b)+1-rankOf(b))-(pre.indexOf(a)+1-rankOf(a)))[0];
+  S.cer={s:S.season,lg:S.lg,ch:ch?ch.id:null,mvp:mvp&&mvp.id,rook:rook&&rook.id,all:allp.map(p=>p.id),coach:coach.id,step:0,seen:0};
+  const mine=[mvp,rook,...allp].filter(p=>p&&p.team===S.U);mine.forEach(p=>p.morale=clamp(p.morale+8,20,100));
+  if(typeof addTweet==='function'){addTweet({who:'Faille Hebdo',kind:'press',txt:'🏆 Cérémonie '+S.lg+' : '+mvp.name+' ('+T(mvp.team).tag+') est élu MVP de la saison '+S.season+' !'});if(rook)addTweet({who:'Faille Hebdo',kind:'press',txt:'⭐ Recrue de l\'année : '+rook.name+' ('+T(rook.team).tag+'), '+rook.age+' ans.'})}}catch(e){console.error(e)}}
+function cerPopup(){const C=S&&S.cer;if(!C||C.seen)return'';const st=C.step,last=4,P=id=>S.players[id];
+  const pcard=(p,lab,big)=>p?'<div class="cer-card'+(big?' big':'')+(p.team===S.U?' mine':'')+'" style="--rc:'+RC[p.role][0]+'"><small>'+lab+'</small>'+pface(p,big?120:72)+'<b>'+esc(p.name)+'</b><span>'+ROLE_FR[p.role]+' · '+esc(T(p.team).tag)+' · niveau '+Math.round(ovr(p))+'</span></div>':'';
+  let body;
+  if(st===0){const ch=C.ch!=null?S.teams[C.ch]:null;body='<div class="cer-k">Champion '+esc(C.lg)+'</div>'+(ch?'<div class="cer-champ">'+crest(ch,120)+'<b>'+esc(ch.name)+'</b>'+(ch.id===S.U?'<span class="pill g">Votre équipe !</span>':'')+'</div>':'')}
+  else if(st===1)body='<div class="cer-k">MVP de la saison</div>'+pcard(P(C.mvp),'Joueur le plus précieux',1);
+  else if(st===2)body='<div class="cer-k">Recrue de l\'année</div>'+(C.rook?pcard(P(C.rook),'20 ans ou moins',1):'<p class="muted">Aucun jeune titulaire cette saison.</p>');
+  else if(st===3)body='<div class="cer-k">Équipe-type de la saison</div><div class="cer-five">'+C.all.map(id=>pcard(P(id),ROLE_FR[P(id).role])).join('')+'</div>';
+  else{const c=S.teams[C.coach];body='<div class="cer-k">Coach de l\'année</div><div class="cer-champ">'+crest(c,100)+'<b>'+(c.id===S.U?esc(S.mgr&&S.mgr.nick||'Vous'):'Staff de '+esc(c.name))+'</b><small class="muted">A le plus dépassé les attentes avec '+esc(c.name)+'</small>'+(c.id===S.U?'<span class="pill g">C\'est vous !</span>':'')+'</div>'}
+  return '<div class="evp-ov cer-ov" role="dialog" aria-modal="true"><div class="cer"><div class="cer-top"><span>Cérémonie de fin de saison · '+esc(C.lg)+' · saison '+C.s+'</span><span class="cer-dots">'+[0,1,2,3,4].map(k=>'<i class="'+(k===st?'on':k<st?'ok':'')+'"></i>').join('')+'</span></div><div class="cer-body" key="'+st+'">'+body+'</div>'+
+    '<div class="cer-btns"><button class="btn ghost" data-act="cerskip">Passer</button><button class="btn pri" data-act="cernext">'+(st<last?'Suivant':'Terminer')+'</button></div></div></div>'}
+setTimeout(()=>{Object.assign(ACT,{
+  infra(k){if(!S.infra||S.infraQ[k]||infLv(k)>=3)return;const c=infCost(k,infLv(k));if(S.budget<c)return;S.budget-=c;S.infraQ[k]=2;news(INFRA[k][0]+' : début des travaux ('+ke(c)+').')},
+  cernext(){if(!S.cer)return;if(S.cer.step>=4)S.cer.seen=1;else S.cer.step++},cerskip(){if(S.cer)S.cer.seen=1}});
+  const _vc=vClub;vClub=function(){const h=_vc();const k=h.indexOf('</section>');return k>0?h.slice(0,k+10)+infraPanel()+h.slice(k+10):infraPanel()+h};
+  const _es=endSeason;endSeason=function(){_es.apply(this,arguments);makeCeremony()};
+  const _r=render;render=function(){_r();try{if(U.screen==='game'&&S&&!U.M&&S.cer&&!S.cer.seen&&!document.querySelector('.cer-ov')){const o=document.querySelector('.evp-ov:not(.cer-ov)');if(o)o.remove();app.insertAdjacentHTML('beforeend',cerPopup())}}catch(e){console.error(e)}}},0);
 /* ---------- Partie en continu : chrono, déplacements des 10 joueurs ---------- */
 const SECMIN=1.1,NEXT_T=[4,8,11,13.5,16,19,21.5,23.5,26,29.5,32],DEC_T=[0,6.6,9.6,12.2,14.6,17.6,20.1,22.1,24.6,28.1,30.6];
 const FOUNT={b:[.06,.94],r:[.94,.06]},CAMPS_B=[[.24,.42],[.22,.57],[.36,.6],[.55,.75],[.63,.85],[.44,.81]];
@@ -2863,10 +2938,11 @@ function liveTick(){const M=U.M;if(!M||M.stage!=='live'||M.sim.done)return;const
   const i=M.sim.i,nt=i===10?M.endT||32:(M.nt?M.nt[i]:NEXT_T[i]),dtt=i===0?0:nt-1.4;
   if(!M.decided[i]&&M.clock>=dtt){const dec=decisionAt(M.sim,M.side);if(dec){if(M.auto)coachDecide(M);else{M.dec=dec;render();return}}else M.decided[i]=1}
   M.clock=Math.min(M.clock+dt*(U.spd||1)/SECMIN,nt);
+  if(M.skT==null)M.skT=2.2+Math.random()*1.5;if(i<10&&M.clock>=M.skT&&M.clock<nt-1.2&&!(M.ev&&M.clock-M.ev.t<.9)){M.skT=M.clock+1.2+Math.random()*1.6;skirmish(M);render();return}
   if(M.clock>=nt){simStep(M.sim);const e=M.sim.log[M.sim.log.length-1];
     if(M.sim.done){const r=M.sim.res;r.dur=Math.ceil(M.clock);e.t=r.dur;M.clock=r.dur}else e.t=Math.floor(M.clock);
     M.hit={loc:e.loc,side:e.side,t0:Date.now(),dead:e.dead};M.ev={t:M.clock,loc:e.loc,side:e.side,i};
-    (e.dead||[]).forEach(x=>{const a=M.ag&&M.ag[x[0]][x.slice(1)];if(a){a.mode='dead';a.dp=a.p.slice();a.until=M.clock+.35;a.resp=M.clock+.35+clamp(.25+M.clock*.025,.3,1.2)}});
+    killAgents(M,e.dead);
     if(M.sim.done){clearInterval(timer);endGame()}render()}}
 function agInit(M){M.ag={b:{},r:{}};['b','r'].forEach(s=>ROLES.forEach((r,j)=>{M.ag[s][r]={p:FOUNT[s].slice(),mode:'walk',rc:3+Math.random()*3.5,j:j*1.7+(s==='b'?0:.9),gk:2.5+Math.random()*2}}));M.wards=[];M.marks=[]}
 function agTarget(M,s,r,a){const k=s==='b'?1:-1,c=M.clock,i=M.sim.i,ev=M.ev,o=s==='b'?'r':'b';
@@ -3400,11 +3476,11 @@ const injPill=p=>p.inj?'<span class="pill w inj" title="Indisponible : ne peut p
 function chemTxt(){const c=S.chem;return c>=75?'Excellente':c>=60?'Bonne':c>=45?'Fragile':'Mauvaise'}
 /* remplace un titulaire blessé par le meilleur remplaçant valide du même poste */
 function fixInjured(t){ROLES.forEach(r=>{const cur=S.players[t.lineup[r]];if(cur&&cur.inj){const sub=t.roster.map(id=>S.players[id]).filter(x=>x.role===r&&!x.inj&&x.id!==cur.id).sort((a,b)=>ovr(b)-ovr(a))[0];if(sub)t.lineup[r]=sub.id}})}
-function lifeWeek(won,played){if(!(S.chem>=0))S.chem=60;const t=me(),st=ROLES.map(r=>S.players[t.lineup[r]]).filter(Boolean),ps=t.roster.map(id=>S.players[id]);
+function lifeWeek(won,played){if(!(S.chem>=0))S.chem=60;try{infraWeek();const lm=infLv('med'),ls=infLv('stream');if(lm)me().roster.forEach(id=>{const q=S.players[id];q.energy=clamp(q.energy+lm*1.5,5,100)});if(ls)S.fans=Math.round(S.fans*(1+.004*ls))}catch(e){}const t=me(),st=ROLES.map(r=>S.players[t.lineup[r]]).filter(Boolean),ps=t.roster.map(id=>S.players[id]);
   /* blessures et burn-out */
   ps.forEach(p=>{if(p.inj){p.inj--;p.energy=clamp(p.energy+12,5,100);if(!p.inj){news(p.name+' est de nouveau disponible.');delete p.injWhy};return}
     p.lowE=p.energy<32?(p.lowE||0)+1:0;
-    if(p.lowE>=2&&Math.random()<.35){p.inj=ri(1,3);p.lowE=0;const burn=Math.random()<.5;addMail({k:'info',ev:1,from:'Staff médical',subj:(burn?'Burn-out':'Blessure')+' : '+p.name,pid:p.id,body:'Coach,\n\n'+p.name+' est '+(burn?'en burn-out après des semaines à bout de forces':'blessé au poignet, à force de jouer fatigué')+'. Il sera indisponible '+p.inj+' semaine'+(p.inj>1?'s':'')+'.\n\nMettez l\'équipe au repos plus souvent pour éviter que ça se reproduise.\n\nLe staff médical'});news(p.name+' est indisponible '+p.inj+' semaine'+(p.inj>1?'s':'')+' ('+(burn?'burn-out':'blessure')+').')}});
+    if(p.lowE>=2&&Math.random()<.35*(1-.25*infLv('med'))){p.inj=ri(1,3);p.lowE=0;const burn=Math.random()<.5;addMail({k:'info',ev:1,from:'Staff médical',subj:(burn?'Burn-out':'Blessure')+' : '+p.name,pid:p.id,body:'Coach,\n\n'+p.name+' est '+(burn?'en burn-out après des semaines à bout de forces':'blessé au poignet, à force de jouer fatigué')+'. Il sera indisponible '+p.inj+' semaine'+(p.inj>1?'s':'')+'.\n\nMettez l\'équipe au repos plus souvent pour éviter que ça se reproduise.\n\nLe staff médical'});news(p.name+' est indisponible '+p.inj+' semaine'+(p.inj>1?'s':'')+' ('+(burn?'burn-out':'blessure')+').')}});
   fixInjured(t);
   /* cohésion */
   const lead=st.filter(p=>traitOf(p)==='leader').length,tox=st.filter(p=>traitOf(p)==='toxique').length;
@@ -3613,7 +3689,7 @@ function evPopup(){const m=S&&S.mail.find(isPop);if(!m)return'';const p=m.pid?S.
     '<h2 id="evp-t">'+esc(m.subj)+'</h2>'+who+'<div class="evp-body">'+esc(m.body).replace(/\n/g,'<br>')+'</div>'+foot+'</div></div>'}
 setTimeout(()=>{ACT.evact=a=>{const[i,c]=a.split(':'),m=S.mail.find(x=>x.id===+i);if(!m)return;mailAct(+i,c);if(m.st==='done')m.pop=1};
 ACT.evok=a=>{const m=S.mail.find(x=>x.id===+a);if(m){m.seen=1;m.st='done';if(!m.res&&m.k==='info')m.res='Lu.'}};
-{const _r=render;render=function(){_r();const o=document.querySelector('.evp-ov');if(o)o.remove();if(U.screen==='game'&&S&&!U.M){const h=evPopup();if(h){app.insertAdjacentHTML('beforeend',h);const b=app.querySelector('.evp-ov .btn');if(b)b.focus({preventScroll:true})}}}}
+{const _r=render;render=function(){_r();const o=document.querySelector('.evp-ov:not(.cer-ov)');if(o)o.remove();if(U.screen==='game'&&S&&!U.M&&!document.querySelector('.cer-ov')){const h=evPopup();if(h){app.insertAdjacentHTML('beforeend',h);const b=app.querySelector('.evp-ov .btn');if(b)b.focus({preventScroll:true})}}}}
 render()},0);
 function lifeBonus(d,side){let b=(S.chem-60)/25;const big=S.phase!=='regular'||(d&&rivalLevel(d.teams[side==='b'?'r':'b'])>0);if(big)b+=ROLES.filter(r=>traitOf(pl(d,side,r))==='toxique').length*.35;return b}
 /* synergies de champions */
