@@ -1853,6 +1853,22 @@ h1,.cs-h1,.mk-title,.mo-name,.ts-title{-webkit-text-fill-color:#f4f0ff!important
 .cer-btns{display:flex;justify-content:space-between}
 @media(prefers-reduced-motion:no-preference){.cer-body>*{animation:cerin .5s ease-out both}.cer-body>*:nth-child(2){animation-delay:.15s}.cer-five>*{animation:cerin .45s ease-out both}.cer-five>*:nth-child(2){animation-delay:.1s}.cer-five>*:nth-child(3){animation-delay:.2s}.cer-five>*:nth-child(4){animation-delay:.3s}.cer-five>*:nth-child(5){animation-delay:.4s}@keyframes cerin{from{opacity:0;transform:translateY(18px) scale(.96)}}}
 @media(max-width:640px){.cer-five{grid-template-columns:repeat(2,minmax(0,1fr))}.cer-k{font-size:1.4rem}}
+.bc-cast{position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:2;max-width:min(520px,40%);padding:6px 14px;border-radius:99px;background:rgba(10,8,20,.85);border:1px solid rgba(245,196,81,.4);color:#ffe7a3;font-weight:700;font-size:.85rem;text-align:center}
+@media(prefers-reduced-motion:no-preference){.bc-cast{animation:bcin .35s ease-out}}
+@media(max-width:820px){.bc-cast{position:static;transform:none;max-width:none;order:1}}
+.bc-stage.rpl .bc-end,.bc-stage.rpl .bc-dec{display:none}
+.pt-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pt-row{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:.88rem}.pt-row b{flex:1}
+.db-obj .db-objs{display:flex;gap:10px;flex-wrap:wrap}.db-o{flex:1;min-width:220px;display:flex;gap:8px;align-items:center;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.04);font-size:.88rem}.db-o span{font-weight:800;color:var(--muted)}.db-o.ok{background:rgba(63,214,143,.1)}.db-o.ok span{color:#3fd68f}
+.rs-learn,.rs-rel{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.rs-learn select{background:#0f0b1c;color:var(--text);border:1px solid var(--line2);border-radius:6px;padding:5px 8px;max-width:220px}
+.rs-rl{font-size:.78rem;padding:2px 8px;border-radius:99px;background:rgba(255,255,255,.06)}.rs-rl.g{background:rgba(63,214,143,.14);color:#7de8b4}.rs-rl.q{background:rgba(78,161,255,.14);color:#9cc9ff}.rs-rl.w{background:rgba(255,93,108,.14);color:#ff9aa4}
+.rs-cl{flex-direction:row;justify-content:space-between;align-items:center}
+.cp-k{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.cp-k div{display:flex;flex-direction:column;padding:10px;border-radius:10px;background:rgba(255,255,255,.04)}.cp-k b{font-size:1.5rem;font-family:var(--title)}.cp-k span{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.cp-f{display:flex;gap:10px;flex-wrap:wrap}.cp-f span{padding:6px 10px;border-radius:8px;background:rgba(63,214,143,.1);font-size:.85rem}
+@media(max-width:600px){.cp-k{grid-template-columns:1fr 1fr}.pt-cols{grid-template-columns:1fr}}
+.wr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 14px}.wr-r{display:grid;grid-template-columns:24px 16px 30px minmax(0,1fr) 30px;gap:8px;align-items:center;padding:5px 6px;border-bottom:1px solid var(--line)}.wr-r.me{background:rgba(139,92,246,.16);border-radius:8px}
+.wr-n{display:flex;flex-direction:column;min-width:0}.wr-n b{font-size:.86rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.wr-n small{color:var(--muted);font-size:.72rem}.wr-mv{font-size:.7rem;color:var(--muted)}.wr-mv.up{color:#3fd68f}.wr-mv.down{color:#ff5d6c}.wr-mv.new{color:#f5c451}
+@media(max-width:700px){.wr{grid-template-columns:1fr}}
+.bc-stage.rpl .bc-cast{display:none}
 </style>
 </head>
 <body>
@@ -2099,6 +2115,7 @@ const DIFFS=[['Normal','Écarts de niveau décisifs, adversaire peu attentif.'],
 /* Difficulté : l'adversaire gagne un bonus caché et les avances du joueur sont écrasées */
 function hardenSim(sim){const df=S.diff||0,us=sim.us;if(!us)return;const sg=us==='b'?1:-1,k=[1,.72,.5][df],bonus=[0,2,3.6][df];
   ['dE','dM','dL'].forEach(x=>{let v=sim[x]*sg;if(v>0)v*=k;v-=bonus;sim[x]=v*sg});
+  try{const op=sim.d.teams[us==='b'?'r':'b'];if(S.riv&&S.riv[op]){sim.dE+=.5*sg;sim.dM+=.5*sg;sim.dL+=.5*sg}const P=r=>pl(sim.d,us,r);sim.dE+=relOf(P('ADC'),P('SUP'))*.25*sg+relOf(P('MID'),P('JGL'))*.2*sg;sim.dM+=relOf(P('MID'),P('JGL'))*.2*sg}catch(e){}
   const ms=S.mgr?S.mgr.style:'';if(ms==='agr')sim.dE+=1.2*sg;if(ms==='inn'){sim.dM+=1*sg;sim.dL-=.5*sg}if(ms==='equ'){sim.dE+=.35*sg;sim.dM+=.35*sg;sim.dL+=.35*sg}
   sim.opp={};[0,2,4,5,6,8,9,10].forEach(i=>sim.opp[i]=ri(0,2))}
 /* L'adversaire prédit l'option la plus jouée par vous à ce moment et joue ce qui la contre (pierre-feuille-ciseaux : 0>1>2>0) */
@@ -2391,7 +2408,7 @@ function mailAct(id,c){const m=S.mail.find(x=>x.id===id);if(!m||m.st==='done')re
   if(m.k==='raise'){if(!mine)return done('Le joueur n\'est plus au club.');
     if(c==='yes'){p.salary=m.amt;p.morale=clamp(p.morale+10,20,100);return done('Salaire porté à '+m.amt+' k€ par semaine. Le joueur est ravi.')}
     if(c==='half'){p.salary=Math.round((p.salary+m.amt)/2*10)/10;const ok=Math.random()<.6;p.morale=clamp(p.morale+(ok?3:-8),20,100);return done('Salaire porté à '+p.salary+' k€. '+(ok?'Le joueur accepte le compromis.':'Le joueur accepte, mais il est déçu.'))}
-    p.morale=clamp(p.morale-15,20,100);return done('Demande refusée. Son moral en prend un coup.')}
+    p.morale=clamp(p.morale-15,20,100);p.reask=S.week+2;return done('Demande refusée. Son moral en prend un coup. Son agent risque de revenir à la charge.')}
   if(m.k==='time'){if(!mine)return done('Le joueur n\'est plus au club.');
     if(c==='yes'){const old=S.players[t.lineup[p.role]];t.lineup[p.role]=p.id;p.morale=clamp(p.morale+12,20,100);if(old&&old.id!==p.id)old.morale=clamp(old.morale-5,20,100);return done(p.name+' est titulaire.')}
     p.morale=clamp(p.morale-12,20,100);return done('Vous lui avez demandé d\'attendre. Il est frustré.')}
@@ -2886,7 +2903,7 @@ function skirmish(M){const sim=M.sim,d=sim.d,c=M.clock,kda=sim.kda,st=sim.st,o=s
   else if(roles.includes('JGL')&&c<14)txt=(roles.length>1?'Gank réussi ! ':'')+txt;
   sim.adv+=(w==='b'?1:-1)*.22*n;const loc=along(LANES[li],laneFront(M,li));
   sim.log.push({t:Math.floor(c),side:w,txt,loc,dead,adv:Math.round(sim.adv*10)/10,st:JSON.parse(JSON.stringify(st)),sk:1});
-  M.hit={loc,side:w,t0:Date.now(),dead};M.ev={t:c,loc,side:w,i:-1};killAgents(M,dead)}
+  M.hit={loc,side:w,t0:Date.now(),dead};M.ev={t:c,loc,side:w,i:-1};killAgents(M,dead);const e=sim.log[sim.log.length-1];M.cast=castLine(e);stingFor(e)}
 /* ---------- Infrastructures ---------- */
 const INFRA={train:['Salle d\'entraînement','Les joueurs progressent plus vite à l\'entraînement.',l=>'+'+l*10+' % de progression'],
   med:['Pôle médical','Récupération plus rapide, moins de blessures et de burn-out.',l=>'+'+(l*1.5)+' énergie par semaine · −'+l*25+' % de blessures'],
@@ -2912,7 +2929,7 @@ function makeCeremony(){try{const lt=S.teams.filter(t=>t.lg===S.lg),ps=lt.flatMa
   const mine=[mvp,rook,...allp].filter(p=>p&&p.team===S.U);mine.forEach(p=>p.morale=clamp(p.morale+8,20,100));
   if(typeof addTweet==='function'){addTweet({who:'Faille Hebdo',kind:'press',txt:'🏆 Cérémonie '+S.lg+' : '+mvp.name+' ('+T(mvp.team).tag+') est élu MVP de la saison '+S.season+' !'});if(rook)addTweet({who:'Faille Hebdo',kind:'press',txt:'⭐ Recrue de l\'année : '+rook.name+' ('+T(rook.team).tag+'), '+rook.age+' ans.'})}}catch(e){console.error(e)}}
 function cerPopup(){const C=S&&S.cer;if(!C||C.seen)return'';const st=C.step,last=4,P=id=>S.players[id];
-  const pcard=(p,lab,big)=>p?'<div class="cer-card'+(big?' big':'')+(p.team===S.U?' mine':'')+'" style="--rc:'+RC[p.role][0]+'"><small>'+lab+'</small>'+pface(p,big?120:72)+'<b>'+esc(p.name)+'</b><span>'+ROLE_FR[p.role]+' · '+esc(T(p.team).tag)+' · niveau '+Math.round(ovr(p))+'</span></div>':'';
+  const pcard=(p,lab,big)=>p?'<div class="cer-card'+(big?' big':'')+(p.team===S.U?' mine':'')+'" style="--rc:'+RC[p.role][0]+'"><small>'+lab+'</small>'+pface(p,big?120:72)+'<b>'+esc(p.name)+'</b><span>'+ROLE_FR[p.role]+' · '+(p.team!=null?esc(T(p.team).tag):'retraité')+' · niveau '+Math.round(ovr(p))+'</span></div>':'';
   let body;
   if(st===0){const ch=C.ch!=null?S.teams[C.ch]:null;body='<div class="cer-k">Champion '+esc(C.lg)+'</div>'+(ch?'<div class="cer-champ">'+crest(ch,120)+'<b>'+esc(ch.name)+'</b>'+(ch.id===S.U?'<span class="pill g">Votre équipe !</span>':'')+'</div>':'')}
   else if(st===1)body='<div class="cer-k">MVP de la saison</div>'+pcard(P(C.mvp),'Joueur le plus précieux',1);
@@ -2926,7 +2943,126 @@ setTimeout(()=>{Object.assign(ACT,{
   cernext(){if(!S.cer)return;if(S.cer.step>=4)S.cer.seen=1;else S.cer.step++},cerskip(){if(S.cer)S.cer.seen=1}});
   const _vc=vClub;vClub=function(){const h=_vc();const k=h.indexOf('</section>');return k>0?h.slice(0,k+10)+infraPanel()+h.slice(k+10):infraPanel()+h};
   const _es=endSeason;endSeason=function(){_es.apply(this,arguments);makeCeremony()};
-  const _r=render;render=function(){_r();try{if(U.screen==='game'&&S&&!U.M&&S.cer&&!S.cer.seen&&!document.querySelector('.cer-ov')){const o=document.querySelector('.evp-ov:not(.cer-ov)');if(o)o.remove();app.insertAdjacentHTML('beforeend',cerPopup())}}catch(e){console.error(e)}}},0);
+  const _r=render;render=function(){_r();try{if(U.screen==='game'&&S&&!U.M&&S.cer&&!S.cer.seen&&!document.querySelector('.cer-ov')){document.querySelectorAll('.evp-ov:not(.cer-ov)').forEach(o=>o.remove());app.insertAdjacentHTML('beforeend',cerPopup())}}catch(e){console.error(e)}}},0);
+/* ========== Idées 2 à 16 ========== */
+/* 2. Commentaires de caster */
+function castLine(e){if(!e)return'';const t=e.txt||'',P=a=>pick(a);
+  if(/Nexus/.test(t))return P(['C\'EST TERMINÉ ! Le Nexus explose !','Et c\'est fini ! Quelle partie !','GG ! Le Nexus tombe !']);
+  if(/Baron/.test(t))return P(['Le Baron est à eux ! Ça peut tout changer !','Nashor sécurisé, la pression monte !','Quel contrôle de la vision autour du Baron !']);
+  if(/dragon/i.test(t))return P(['Le dragon tombe, l\'âme se rapproche !','Encore un dragon, c\'est propre !','Belle prise d\'objectif en rivière !']);
+  if(/tourelle/.test(t))return P(['La tourelle tombe, la carte s\'ouvre !','Les tours tombent une à une…','Ils grignotent la base adverse !']);
+  if(/Premier sang/.test(t))return P(['PREMIER SANG ! On est lancés !','Le first blood tombe, ça commence fort !']);
+  if(/Échange/.test(t))return P(['Échange de bons procédés, un partout !','Personne ne lâche rien !']);
+  if(/doublé|ace|Combat|combat/.test(t))return P(['Quel combat ! Les sorts volent dans tous les sens !','Teamfight énorme, regardez-moi ça !','Ils ont tout donné dans ce combat !']);
+  if(/Gank/.test(t))return P(['Le gank parfait, personne ne l\'a vu venir !','La jungle frappe fort !']);
+  return P(['Ça se bat en lane !','Un kill de plus, la pression monte !','Joli jeu individuel !','Il le punit sur son erreur !'])}
+/* 3. Replay des temps forts */
+function hlList(M){const L=M.sim.log;let prev={b:0,r:0};const sc=L.map((e,k)=>{const kb=e.st.b.k-prev.b,kr=e.st.r.k-prev.r;prev={b:e.st.b.k,r:e.st.r.k};return{e,k,v:kb+kr+(/Baron/.test(e.txt)?3:0)+(/Nexus/.test(e.txt)?6:0)+(/Retournement/.test(e.txt)?3:0)}});
+  return sc.sort((a,b)=>b.v-a.v).slice(0,3).sort((a,b)=>a.k-b.k).map(x=>x.e)}
+/* 4. Temps mort tactique */
+function timeoutDec(M){const sim=M.sim,sg=M.side==='b'?1:-1,adv=sim.adv*sg;
+  return{to:1,i:'to',title:'Temps mort tactique',hint:'Une seule pause par partie : choisissez bien.',best:adv<-1?0:adv>1?1:2,opts:[
+    {t:'Tout changer : on attaque',d:'Plus de prises de risque. Utile quand vous êtes menés.',r:'JGL',f:()=>{sim.mod.cur+=adv<0?1.4:-.6;sim.mod.g=1.3}},
+    {t:'Calmer le jeu',d:'Jouer propre pour protéger votre avance.',r:'SUP',f:()=>{sim.mod.cur+=adv>0?.8:-.4;sim.mod.g=.75}},
+    {t:'Remobiliser les troupes',d:'Un discours pour remonter le moral : petit bonus fiable.',r:'MID',f:()=>{sim.mod.cur+=.5;ROLES.forEach(r=>{const p=pl(sim.d,M.side,r);p.morale=clamp(p.morale+3,20,100)})}}]}}
+/* 5. Notes de patch */
+function patchPopup(){const P=S.patches&&S.patches[0];if(!P||S.patchSeen===P.p+'-'+P.s)return'';
+  const row=(x,up)=>'<div class="pt-row">'+cicon(x[0],36)+'<b>'+esc(x[0])+'</b><span class="'+(up?'good':'bad')+'">'+x[1]+' → '+x[2]+' '+(up?'▲':'▼')+'</span></div>';
+  return '<div class="evp-ov pt-ov" role="dialog" aria-modal="true"><div class="evp"><div class="evp-top"><span class="pill g">Patch</span><span class="muted small">Saison '+P.s+' · semaine '+P.w+'</span></div><h2>Notes de patch '+P.s+'.'+P.p+'</h2><div class="muted">Style dominant : <b>'+esc(STYLE_FR[P.top]||P.top)+'</b>. La force des champions dans le méta change : adaptez vos drafts.</div>'+
+    '<div class="pt-cols"><div><div class="ch-cap">Renforcés</div>'+(P.buff.length?P.buff.map(x=>row(x,1)).join(''):'<span class="muted small">Aucun</span>')+'</div><div><div class="ch-cap">Affaiblis</div>'+(P.nerf.length?P.nerf.map(x=>row(x,0)).join(''):'<span class="muted small">Aucun</span>')+'</div></div>'+
+    '<div class="evp-btns"><button class="btn pri" data-act="patchok">Compris</button></div></div></div>'}
+function patchTweets(){const P=S.patches&&S.patches[0];if(!P)return;const all=Object.values(S.players).filter(p=>p.team!=null);
+  P.buff.slice(0,2).forEach(x=>{const p=all.find(q=>q.pool.some(e=>e.c===x[0]&&e.m>=70));if(p)addTweet({who:p.name,handle:'@'+p.name.replace(/\W/g,''),kind:'pl',tid:null,ver:1,mine:p.team===S.U,txt:pick(['Enfin un buff pour '+x[0]+' 😍 Préparez-vous.',x[0]+' renforcé ? Ça va faire mal 🔥','Merci les devs pour '+x[0]+' 🙏'])})});
+  P.nerf.slice(0,1).forEach(x=>{const p=all.find(q=>q.pool.some(e=>e.c===x[0]&&e.m>=70));if(p)addTweet({who:p.name,handle:'@'+p.name.replace(/\W/g,''),kind:'pl',ver:1,mine:p.team===S.U,txt:'Pourquoi toucher à '+x[0]+' 😭 RIP mon main.'})})}
+/* 6. Apprendre un champion */
+function learnBox(p){if(p.learn)return '<div class="rs-learn"><span class="rs-cap">Apprentissage</span>'+cicon(p.learn.c,28)+'<b>'+esc(p.learn.c)+'</b><span class="muted small">encore '+p.learn.w+' semaine'+(p.learn.w>1?'s':'')+'</span></div>';
+  const opts=CHAMPS.filter(c=>c.role===p.role&&!p.pool.some(e=>e.c===c.n)).sort((a,b)=>S.meta[b.n]-S.meta[a.n]);if(!opts.length)return'';
+  return '<div class="rs-learn"><span class="rs-cap">Apprendre</span><select id="learnSel">'+opts.map(c=>'<option value="'+esc(c.n)+'">'+esc(c.n)+' · méta '+S.meta[c.n]+'/10</option>').join('')+'</select><button class="btn sm" data-act="learn" data-arg="'+p.id+'">Commencer (3 sem.)</button></div>'}
+/* 8. Objectifs de la direction */
+const BOBJ={young:'Faire jouer un joueur de 20 ans ou moins (la moitié des matchs)',fans:'Gagner des fans',budget:'Finir la saison avec un budget d\'au moins',streak:'Enchaîner 3 victoires',fav:'Battre le favori de la ligue'};
+function bobjEnsure(){if(S.phase==='offseason'||S.fired)return;if(S.bobj&&S.bobj.s===S.season)return;const fav=LT().filter(t=>t.id!==S.U).sort((a,b)=>teamOvr(b)-teamOvr(a))[0],rew=Math.round(lgWage(S.lg)*1.2);
+  const pool=['young','fans','budget','streak','fav'];const ks=shuffle(pool).slice(0,2);
+  S.bobj={s:S.season,list:ks.map(k=>({k,rew,fans0:S.fans,fansT:Math.round(S.fans*1.15),bud:Math.max(50,Math.round(S.budget*.9)),fav:fav.id,h0:(S.h2h[fav.id]||{w:0}).w}))}}
+function bobjOk(o){const t=me();if(o.k==='young')return t.roster.some(id=>{const p=S.players[id];return p.age<=20&&p.gp>=S.rw/2});if(o.k==='fans')return S.fans>=o.fansT;if(o.k==='budget')return S.budget>=o.bud;if(o.k==='streak')return(S.streak&&S.streak.b||0)>=3;if(o.k==='fav')return(S.h2h[o.fav]||{w:0}).w>o.h0;return false}
+const bobjTxt=o=>o.k==='fans'?BOBJ.fans+' : '+o.fansT.toLocaleString('fr-FR')+' au total':o.k==='budget'?BOBJ.budget+' '+ke(o.bud):o.k==='fav'?BOBJ.fav+' ('+T(o.fav).name+')':BOBJ[o.k];
+function bobjPanel(){bobjEnsure();if(!S.bobj||S.bobj.s!==S.season)return'';return '<section class="db-card db-obj"><div class="db-h"><h2>Objectifs de la direction</h2><span class="db-meta">Bonus : '+ke(S.bobj.list[0].rew)+' chacun</span></div><div class="db-objs">'+S.bobj.list.map(o=>{const ok=bobjOk(o);return '<div class="db-o'+(ok?' ok':'')+'"><span>'+(ok?'✔':'○')+'</span>'+esc(bobjTxt(o))+'</div>'}).join('')+'</div></section>'}
+function bobjEnd(){if(!S.bobj||S.bobj.s!==S.season||S.bobj.done)return;S.bobj.done=1;let tx=[];S.bobj.list.forEach(o=>{const ok=bobjOk(o);if(ok){S.budget+=o.rew;S.conf=clamp(S.conf+5,0,100)}else S.conf=clamp(S.conf-4,0,100);tx.push((ok?'Réussi : ':'Manqué : ')+bobjTxt(o)+(ok?' (+'+ke(o.rew)+')':''))});
+  addMail({k:'info',from:'Direction de '+me().name,subj:'Bilan des objectifs de la saison',body:'Coach,\n\n'+tx.join('\n')+'\n\nLa direction'})}
+/* 9. Rivalités dynamiques */
+function rivalCheck(ur,won){const oid=ur.h===S.U?ur.a:ur.h,h=S.h2h[oid],o=T(oid);if(!h)return;S.riv=S.riv||{};const mh='@'+String(me().tag).replace(/\W/g,''),oh='@'+String(o.tag).replace(/\W/g,'');
+  if(!S.riv[oid]&&h.l>=3&&h.l-h.w>=2){S.riv[oid]=1;news('Une rivalité naît avec '+o.name+'.');addTweet({who:o.name,handle:oh,tid:oid,ver:1,kind:'off',mine:1,txt:'On commence à avoir l\'habitude '+mh+' 😏 À la prochaine !'})}
+  else if(S.riv[oid]){if(won)addTweet({who:me().name,handle:mh,tid:S.U,ver:1,kind:'off',mine:1,txt:'Pas de chance cette fois '+oh+' 😎 La revanche est servie.'});else addTweet({who:o.name,handle:oh,tid:oid,ver:1,kind:'off',mine:1,txt:'Toujours la même histoire '+mh+' 🥱'})}}
+/* 10. Palmarès du coach */
+function coachPanel(){const m=S.mgr||{nick:'Coach',style:''},car=S.stat.career||{},H=S.honors||[],titles=H.filter(x=>x.p===1).length,fm=Object.entries(S.formed||{}).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  return '<section class="panel cp"><div class="row sp"><h2>Palmarès du coach</h2><span class="muted small">'+esc(m.nick)+(m.style&&MSTYLE[m.style]?' · '+MSTYLE[m.style][0]:'')+(m.age?' · '+m.age+' ans':'')+'</span></div><div class="cp-k"><div><b class="num gold">'+titles+'</b><span>Titres</span></div><div><b class="num">'+(S.history?S.history.length:0)+'</b><span>Saisons terminées</span></div><div><b class="num">'+(car.g?Math.round(100*(car.w||0)/car.g)+' %':'—')+'</b><span>Victoires</span></div><div><b class="num">'+(S.streak?S.streak.b:0)+'</b><span>Meilleure série</span></div></div>'+
+    '<div class="rs-cap">Joueurs formés</div>'+(fm.length?'<div class="cp-f">'+fm.map(([n,v])=>'<span><b>'+esc(n)+'</b> +'+v.toFixed(1)+' niveaux</span>').join('')+'</div>':'<div class="muted small">Les progressions de vos joueurs s\'afficheront ici en fin de saison.</div>')+'</section>'}
+/* 11. Relations entre joueurs */
+const relKey=(a,b)=>[a.name,b.name].sort().join('|');
+function relOf(a,b){S.rel=S.rel||{};const k=relKey(a,b);if(S.rel[k]==null)S.rel[k]=[-1,0,0,0,1,1,1,2][hsh(k)%8];return S.rel[k]}
+function relAdd(a,b,d){if(!a||!b||a.id===b.id)return;relOf(a,b);const k=relKey(a,b);S.rel[k]=clamp(S.rel[k]+d,-2,2)}
+const relLab=v=>v>=1.5?['Duo soudé','g','❤']:v>=.5?['Bonne entente','q','🙂']:v<=-1?['Tensions','w','⚡']:['Neutre','','·'];
+function relBox(p){const t=me(),o=t.roster.map(id=>S.players[id]).filter(q=>q.id!==p.id&&t.lineup[q.role]===q.id);if(!o.length)return'';return '<div class="rs-rel"><span class="rs-cap">Affinités</span>'+o.map(q=>{const l=relLab(relOf(p,q));return '<span class="rs-rl '+l[1]+'" title="'+esc(l[0])+'">'+l[2]+' '+esc(q.name)+'</span>'}).join('')+'</div>'}
+function relWeek(won,played){const t=me(),st=ROLES.map(r=>S.players[t.lineup[r]]).filter(Boolean);let sum=0;for(let i=0;i<st.length;i++)for(let j=i+1;j<st.length;j++){if(played)relAdd(st[i],st[j],won?.05:-.03);sum+=relOf(st[i],st[j])}S.chem=clamp(S.chem+sum*.04,15,100)}
+/* 12. Retraites */
+function retirements(){const out=[];Object.values(S.players).forEach(p=>{if(p.retired||p.age<29||p.team===undefined)return;const ch=[0,.1,.2,.35,.55,.7][clamp(p.age-28,0,5)]*(p.src==='file'?.5:1)*(ovr(p)>=80?.6:1);if(Math.random()>=ch)return;
+    const t=p.team!=null?S.teams[p.team]:null;if(t){const same=t.roster.filter(id=>id!==p.id&&S.players[id].role===p.role);if(!same.length){const fa=(S.fa||[]).map(id=>S.players[id]).filter(q=>q&&q.role===p.role).sort((a,b)=>ovr(b)-ovr(a))[0];if(!fa||t.id===S.U)return;S.fa=S.fa.filter(id=>id!==fa.id);fa.team=t.id;t.roster.push(fa.id);fa.salary=salaryFor(fa);fa.contract=2}
+      t.roster=t.roster.filter(id=>id!==p.id);ensureLineup(t)}else S.fa=(S.fa||[]).filter(id=>id!==p.id);
+    const was=p.team;p.team=null;p.retired=1;out.push(p);if(S.tlist)delete S.tlist[p.id];
+    if(ovr(p)>=70||was===S.U)addTweet({who:p.name,handle:'@'+p.name.replace(/\W/g,''),ver:1,kind:'pl',mine:was===S.U,txt:'Après '+(p.age-16)+' ans de compétition, je raccroche. Merci à tous pour ce voyage 💜 #GG'});
+    if(was===S.U)addMail({k:'ev_ret',ev:1,from:p.name,subj:p.name+' prend sa retraite',pid:p.id,body:'Coach,\n\nÀ '+p.age+' ans, j\'ai décidé de mettre fin à ma carrière de joueur. J\'aimerais rester dans le milieu : je peux rejoindre votre staff comme analyste si vous le voulez.\n\n'+p.name})});
+  if(out.length)news(out.length+' joueur'+(out.length>1?'s':'')+' prennent leur retraite cette intersaison.')}
+/* 13. Contrats : clause de départ et agent qui insiste */
+const clauseOf=p=>Math.max(20,Math.round(value(p)*2.2/5)*5);
+function contractWeek(){const t=me(),ps=t.roster.map(id=>S.players[id]),pend=k=>S.mail.some(m=>m.st!=='done'&&m.k===k);
+  ps.forEach(p=>{if(p.reask&&S.week>=p.reask&&!pend('raise')){p.reask=0;const amt=Math.round(salaryFor(p)*1.12*10)/10;addMail({k:'raise',from:'Agent de '+p.name,subj:'Nouvelle demande pour '+p.name,pid:p.id,amt,exp:1,body:'Bonjour,\n\nJe reviens vers vous au sujet de '+p.name+'. Il se sent sous-payé et commence à écouter d\'autres clubs. Nous demandons désormais '+amt+' k€ par semaine.\n\nSans geste de votre part, il pourrait demander à partir.\n\nSon agent'})}});
+  if(mwin().open&&!pend('ev_clause')&&Math.random()<.05){const c=ps.filter(p=>ovr(p)>=ovr(S.players[t.lineup[p.role]])-2&&t.roster.filter(id=>S.players[id].role===p.role).length>=2);const b=S.teams.filter(x=>x.id!==S.U&&teamOvr(x)>teamOvr(t)+3);
+    if(c.length&&b.length){const p=pick(c),B=pick(b);addMail({k:'ev_clause',ev:1,exp:1,from:B.name,subj:B.name+' paie la clause de '+p.name,pid:p.id,tid:B.id,amt:clauseOf(p),body:'Bonjour,\n\nNous activons la clause de départ de '+p.name+' : '+ke(clauseOf(p))+'. Le joueur est d\'accord pour nous rejoindre.\n\nLa direction de '+B.name})}}}
+/* 14. Classement mondial des joueurs */
+function worldTop(){return S.teams.flatMap(t=>ROLES.map(r=>S.players[t.lineup[r]]).filter(Boolean)).sort((a,b)=>ovr(b)-ovr(a)).slice(0,20).map(p=>p.id)}
+function worldWeek(){const cur=worldTop(),prev=S.wr||[];S.wrPrev=prev;S.wr=cur;cur.slice(0,10).forEach((id,k)=>{const p=S.players[id];if(p.team===S.U&&!prev.slice(0,10).includes(id)&&prev.length){addTweet({who:'Faille Hebdo',kind:'press',mine:1,txt:'📈 '+p.name+' ('+me().tag+') entre dans le top 10 mondial des joueurs, '+(k+1)+'e !'});news(p.name+' entre dans le top 10 mondial.')}})}
+function worldPanel(){if(!S.wr||!S.wr.length)S.wr=worldTop();const prev=S.wrPrev||[];
+  return '<section class="panel"><div class="row sp"><h2>Classement mondial des joueurs</h2><span class="muted small">Mis à jour chaque semaine</span></div><div class="wr">'+S.wr.map((id,k)=>{const p=S.players[id];if(!p||p.team==null)return'';const pk=prev.indexOf(id),mv=pk<0?'new':pk>k?'up':pk<k?'down':'';
+    return '<div class="wr-r'+(p.team===S.U?' me':'')+'"><span class="num">'+(k+1)+'</span><span class="wr-mv '+mv+'">'+(mv==='up'?'▲':mv==='down'?'▼':mv==='new'?'•':'–')+'</span>'+pface(p,30)+'<span class="wr-n"><b>'+esc(p.name)+'</b><small>'+ROLE_FR[p.role]+' · '+esc(T(p.team).tag)+'</small></span><b class="num">'+Math.round(ovr(p))+'</b></div>'}).join('')+'</div></section>'}
+/* 16. Musique de match et ambiance sonore */
+function sting(kind){if(!SND.on)return;try{const AC=window.AudioContext||window.webkitAudioContext;CLK=CLK||new AC();const c=CLK,t=c.currentTime,o=c.createGain();o.gain.value=.25;o.connect(c.destination);
+  const tone=(f,d,v,ty,dl)=>{const x=c.createOscillator(),g=c.createGain();x.type=ty;x.frequency.value=f;g.gain.setValueAtTime(.0001,t+dl);g.gain.linearRampToValueAtTime(v,t+dl+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dl+d);x.connect(g);g.connect(o);x.start(t+dl);x.stop(t+dl+d+.05)};
+  const boom=(dl)=>{const x=c.createOscillator(),g=c.createGain();x.type='sine';x.frequency.setValueAtTime(120,t+dl);x.frequency.exponentialRampToValueAtTime(38,t+dl+.6);g.gain.setValueAtTime(.6,t+dl);g.gain.exponentialRampToValueAtTime(.0001,t+dl+.7);x.connect(g);g.connect(o);x.start(t+dl);x.stop(t+dl+.75)};
+  if(kind==='nexus'){boom(0);boom(.25);[262,330,392,523].forEach((f,k)=>tone(f,1.4,.12,'sawtooth',.1+k*.08))}
+  else if(kind==='baron'){boom(0);[147,175,220].forEach((f,k)=>tone(f,1.1,.12,'sawtooth',k*.06))}
+  else if(kind==='drake'){[330,415,494].forEach((f,k)=>tone(f,.5,.1,'triangle',k*.07))}
+  else if(kind==='fight'){boom(0);tone(220,.3,.1,'square',.02)}
+  else tone(660,.15,.06,'triangle',0)}catch(e){}}
+function stingFor(e){const t=e.txt||'';sting(/Nexus/.test(t)?'nexus':/Baron/.test(t)?'baron':/dragon/i.test(t)?'drake':/combat|Combat|doublé/.test(t)?'fight':'kill')}
+/* ---------- Branchements ---------- */
+setTimeout(()=>{
+  Object.assign(ACT,{
+    replay(){const M=U.M;if(!M||!M.sim.done)return;M.rpl={list:hlList(M),k:-1,t0:performance.now()}},
+    tmout(){const M=U.M;if(!M||M.stage!=='live'||M.sim.done||M.dec||M.toUsed)return;M.toUsed=1;M.dec=timeoutDec(M)},
+    patchok(){const P=S.patches&&S.patches[0];if(P)S.patchSeen=P.p+'-'+P.s},
+    learn(a){const p=S.players[+a],e=document.querySelector('#learnSel');if(!p||!e||p.learn)return;p.learn={c:e.value,w:3};news(p.name+' commence à travailler '+e.value+'.')}});
+  const _ch=ACT.choose;ACT.choose=a=>{const M=U.M;if(M&&M.dec&&M.dec.to){const o=M.dec.opts[+a];if(!o)return;o.f();M.note='Temps mort : '+o.t.toLowerCase()+'.';M.dec=null;return}_ch(a)};
+  const _np=newPatch;newPatch=function(){_np.apply(this,arguments);try{patchTweets()}catch(e){}};
+  const _ru=recordUser;recordUser=function(ur,won){_ru(ur,won);try{rivalCheck(ur,won)}catch(e){}};
+  const _rl=rivalLevel;rivalLevel=function(oid){const b=_rl(oid);return S.riv&&S.riv[oid]?Math.max(b,1):b};
+  const _es=endSeason;endSeason=function(){try{bobjEnd();const t=me();S.formed=S.formed||{};t.roster.forEach(id=>{const p=S.players[id],d=ovr(p)-p.o0;if(d>0)S.formed[p.name]=(S.formed[p.name]||0)+d})}catch(e){}_es.apply(this,arguments);try{retirements()}catch(e){console.error(e)}};
+  const _am=addMail;addMail=function(m){_am(m);try{if(m.k==='clash')relAdd(S.players[m.pid],S.players[m.pid2],-.7)}catch(e){}};
+  const _lw=lifeWeek;lifeWeek=function(won,played){_lw(won,played);try{relWeek(won,played);contractWeek();worldWeek();me().roster.forEach(id=>{const p=S.players[id];if(p.learn){p.learn.w--;if(p.learn.w<=0){if(p.pool.length>=6){p.pool.sort((a,b)=>b.m-a.m);p.pool.pop()}p.pool.push({c:p.learn.c,m:58});news(p.name+' maîtrise désormais '+p.learn.c+'.');delete p.learn}}})}catch(e){console.error(e)}};
+  const _vq=vQG;vQG=function(){const h=_vq();return h.replace('<div class="db-r2">',bobjPanel()+'<div class="db-r2">')};
+  const _vc=vClub;vClub=function(){const h=_vc();const k=h.indexOf('</section>');return k>0?h.slice(0,k+10)+coachPanel()+h.slice(k+10):h};
+  const _vm=vMonde;vMonde=function(){const h=_vm();const k=h.indexOf('</section>');return k>0?h.slice(0,k+10)+worldPanel()+h.slice(k+10):worldPanel()+h};
+  const _ve=vEff;vEff=function(){const h=_ve(),t=me(),p=S.players[U.effSel]&&S.players[U.effSel].team===S.U?S.players[U.effSel]:null,sel=p||t.roster.map(id=>S.players[id]).find(q=>t.lineup[q.role]===q.id);if(!sel)return h;
+    const extra=relBox(sel)+learnBox(sel)+'<div class="rs-kv rs-cl"><span>Clause de départ</span><b>'+ke(clauseOf(sel))+'</b></div>';return h.replace('<div class="rs-dbtn">',extra+'<div class="rs-dbtn">')};
+  const _r=render;render=function(){_r();try{if(U.screen==='game'&&S&&!U.M&&!document.querySelector('.cer-ov,.pt-ov')){const h=patchPopup();if(h)app.insertAdjacentHTML('beforeend',h)}
+    const M=U.M;if(M&&M.stage==='live'){const st=document.querySelector('.bc-stage');if(st&&M.cast&&!st.querySelector('.bc-cast'))st.insertAdjacentHTML('afterbegin','<div class="bc-cast">🎙️ '+esc(M.cast)+'</div>');
+      const ctl=document.querySelector('.bc-ctrl');if(ctl){if(!M.sim.done&&!M.toUsed&&!M.dec&&!ctl.querySelector('[data-act=tmout]'))ctl.insertAdjacentHTML('afterbegin','<button class="btn sm" data-act="tmout">⏸ Temps mort (1)</button>');}
+      const end=document.querySelector('.bc-end');if(end&&!end.querySelector('[data-act=replay]'))end.insertAdjacentHTML('beforeend','<button class="btn sm ghost" data-act="replay">▶ Revoir les temps forts</button>')}}catch(e){console.error(e)}};
+  const _dm=drawMap;drawMap=function(){try{_dm()}catch(e){console.error(e);raf=U.M&&U.M.stage==='live'?requestAnimationFrame(drawMap):null}};
+  const _lt=liveTick;liveTick=function(){try{_lt()}catch(e){console.error(e)}};
+  /* musique de match */
+  const _mt=musTarget;musTarget=function(){return _mt()};
+  const _ms=musSync;musSync=function(){_ms();try{const want=MUS.on&&U.M&&U.M.stage==='live'&&!U.M.sim.done?.16:0;if(want&&!MUS.m){const a=new Audio();a.loop=true;a.volume=0;a.src=(window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'')+'audio/match.mp3';a.onerror=()=>{if(!a.dataset.f){a.dataset.f=1;a.src='audio/match.mp3'}};MUS.m=a}
+    const a=MUS.m;if(!a)return;if(want&&a.paused){const p=a.play();if(p&&p.catch)p.catch(()=>{})}clearInterval(MUS.mt);MUS.mt=setInterval(()=>{const d=want-a.volume;if(Math.abs(d)<.02){a.volume=want;clearInterval(MUS.mt);if(!want&&!a.paused)a.pause();return}a.volume=clamp(a.volume+Math.sign(d)*.02,0,1)},60)}catch(e){}};
+},0);
 /* ---------- Partie en continu : chrono, déplacements des 10 joueurs ---------- */
 const SECMIN=1.1,NEXT_T=[4,8,11,13.5,16,19,21.5,23.5,26,29.5,32],DEC_T=[0,6.6,9.6,12.2,14.6,17.6,20.1,22.1,24.6,28.1,30.6];
 const FOUNT={b:[.06,.94],r:[.94,.06]},CAMPS_B=[[.24,.42],[.22,.57],[.36,.6],[.55,.75],[.63,.85],[.44,.81]];
@@ -2941,7 +3077,7 @@ function liveTick(){const M=U.M;if(!M||M.stage!=='live'||M.sim.done)return;const
   if(M.skT==null)M.skT=2.2+Math.random()*1.5;if(i<10&&M.clock>=M.skT&&M.clock<nt-1.2&&!(M.ev&&M.clock-M.ev.t<.9)){M.skT=M.clock+1.2+Math.random()*1.6;skirmish(M);render();return}
   if(M.clock>=nt){simStep(M.sim);const e=M.sim.log[M.sim.log.length-1];
     if(M.sim.done){const r=M.sim.res;r.dur=Math.ceil(M.clock);e.t=r.dur;M.clock=r.dur}else e.t=Math.floor(M.clock);
-    M.hit={loc:e.loc,side:e.side,t0:Date.now(),dead:e.dead};M.ev={t:M.clock,loc:e.loc,side:e.side,i};
+    M.hit={loc:e.loc,side:e.side,t0:Date.now(),dead:e.dead};M.ev={t:M.clock,loc:e.loc,side:e.side,i};M.cast=castLine(e);stingFor(e);
     killAgents(M,e.dead);
     if(M.sim.done){clearInterval(timer);endGame()}render()}}
 function agInit(M){M.ag={b:{},r:{}};['b','r'].forEach(s=>ROLES.forEach((r,j)=>{M.ag[s][r]={p:FOUNT[s].slice(),mode:'walk',rc:3+Math.random()*3.5,j:j*1.7+(s==='b'?0:.9),gk:2.5+Math.random()*2}}));M.wards=[];M.marks=[]}
@@ -2960,6 +3096,8 @@ function agTarget(M,s,r,a){const k=s==='b'?1:-1,c=M.clock,i=M.sim.i,ev=M.ev,o=s=
   if(mid){const f=laneFront(M,1),h=along(LANES[1],clamp(f-k*.08,.1,.9)),q=Math.floor(c/3)%2?LOC.drake:h;return[q[0]-.06*k+SPREAD[r][0]*.6,q[1]+.06*k+SPREAD[r][1]*.6]}
   return laneSpot(M,s,2,r==='SUP'?.05:.03,a.j+(r==='SUP'?1.3:0))}
 function agStep(M,dm){if(!M.ag)agInit(M);const c=M.clock;
+  if(M.rpl){const R=M.rpl,n=performance.now(),k=Math.floor((n-R.t0)/3200);if(k>=R.list.length){M.rpl=null}else{if(k!==R.k){R.k=k;const e=R.list[k];R.pos=eventPos(M,e);M.hit={loc:e.loc,side:e.side,t0:Date.now(),dead:e.dead};M.ev=null}
+    ['b','r'].forEach(s=>ROLES.forEach(r=>{const a=M.ag[s][r],t=R.pos[s][r];a.mode='walk';a.p=[a.p[0]+(t[0]-a.p[0])*.12,a.p[1]+(t[1]-a.p[1])*.12]}));return}}
   ['b','r'].forEach(s=>ROLES.forEach(r=>{const a=M.ag[s][r];
     if(a.mode==='dead'){if(c>=a.until)a.p=FOUNT[s].slice();if(c>=a.resp){a.mode='walk';a.rc=c+3+Math.random()*3}return}
     if(a.mode==='recall'){if(c>=a.until){a.p=FOUNT[s].slice();a.mode='walk'}return}
@@ -2989,6 +3127,7 @@ function drawMap(){const M=U.M,c=document.querySelector('#map');if(!M||M.stage!=
     g.strokeStyle=col[fx.side];g.lineWidth=W*.004;for(let k=0;k<10;k++){const an=k*.628+fx.t0%7,r1=W*(.03+.05*q),r2=W*(.05+.09*q);g.beginPath();g.moveTo(X(fx.loc[0])+Math.cos(an)*r1,X(fx.loc[1])+Math.sin(an)*r1);g.lineTo(X(fx.loc[0])+Math.cos(an)*r2,X(fx.loc[1])+Math.sin(an)*r2);g.stroke()}g.globalAlpha=1}
   /* déplacements continus */
   const rn=performance.now(),rdt=Math.min(.1,(rn-(M.rt||rn))/1000);M.rt=rn;const dm=M.dec?0:M.sim.done?rdt*.8/SECMIN:rdt*(U.spd||1)/SECMIN;if(M.clock==null)M.clock=0;agStep(M,snap?.5:dm);
+  const stg=document.querySelector('.bc-stage');if(stg)stg.classList.toggle('rpl',!!M.rpl);
   const tEl=document.querySelector('.bc-time');if(tEl&&!M.sim.done){const mm=Math.floor(M.clock),ss=Math.floor((M.clock-mm)*60);tEl.textContent=mm+':'+String(ss).padStart(2,'0')}
   /* balises de vision */
   M.wards.forEach(w=>{const a=clamp(1-(M.clock-w.t)/3,0,1)*.8;g.globalAlpha=a;g.fillStyle=w.s==='b'?'#7cc0ff':'#ff8a80';g.beginPath();const x=X(w.p[0]),y=X(w.p[1]),z=W*.007;g.moveTo(x,y-z);g.lineTo(x+z,y);g.lineTo(x,y+z);g.lineTo(x-z,y);g.fill();g.globalAlpha=1});
@@ -3004,6 +3143,7 @@ function drawMap(){const M=U.M,c=document.querySelector('#map');if(!M||M.stage!=
     if(im){g.save();g.beginPath();g.arc(X(p[0]),X(p[1]),W*.03,0,7);g.clip();g.drawImage(im,X(p[0])-W*.03,X(p[1])-W*.03,W*.06,W*.06);g.restore();disc(p,.03,null,col[s2],.008)}
     else{disc(p,.03,'hsl('+h+' 55% 32%)',col[s2],.008);txt(p,ini,.024,'#fff')}
     const nm=pl(d,s2,r).name,ly=X(p[1])+W*(s2==='b'?-.044:.046);g.font='600 '+Math.round(W*.021)+'px Barlow, sans-serif';g.textAlign='center';g.textBaseline='middle';g.lineWidth=W*.007;g.lineJoin='round';g.strokeStyle='rgba(6,10,12,.85)';g.strokeText(nm,X(p[0]),ly);g.fillStyle=s2==='b'?'#cfe6ff':'#ffd9d5';g.fillText(nm,X(p[0]),ly)}));
+  if(M.rpl&&M.rpl.k>=0&&M.rpl.list[M.rpl.k]){const e=M.rpl.list[M.rpl.k],tx='REPLAY · '+e.t+':00 · '+e.txt;g.font='700 '+Math.round(W*.026)+'px Outfit, sans-serif';const tw=Math.min(W*.94,g.measureText(tx).width+W*.05);g.fillStyle='rgba(10,8,20,.85)';g.fillRect(W/2-tw/2,W*.02,tw,W*.06);g.fillStyle='#f5c451';g.textAlign='center';g.textBaseline='middle';let t2=tx;while(g.measureText(t2).width>tw-W*.04&&t2.length>10)t2=t2.slice(0,-2);g.fillText(t2===tx?tx:t2+'…',W/2,W*.05)}
   raf=requestAnimationFrame(drawMap)}
 function startMap(){if(raf==null&&typeof requestAnimationFrame==='function'&&U.M&&U.M.stage==='live')raf=requestAnimationFrame(drawMap)}
 function sidePanel(d,s,user){const t=T(d.teams[s]);
@@ -3212,7 +3352,7 @@ function vMk(){const w=mwin(),t=me(),full=t.roster.length>=9,tab=U.mtab||'search
   const tabs='<div class="subtabs" role="tablist">'+[['search','Recherche'],['negs','Négociations'+(act?' · '+act:'')],['list','Liste des transferts'+(nl?' · '+nl:'')],['hist','Transferts officiels']].map(([k,l])=>'<button class="'+(tab===k?'on':'')+'" data-act="mtab" data-arg="'+k+'" role="tab" aria-selected="'+(tab===k)+'">'+l+'</button>').join('')+'</div>';
   let body='';
   if(tab==='search'){const key=w.open?w.key:'S'+S.season+'W'+S.week,srt=U.mkSort||'ovr',view=U.mkView||'cards';
-    const list=Object.values(S.players).filter(p=>p.team!==S.U&&(U.mk==='ALL'||p.role===U.mk)&&(U.mkf!=='budget'||(p.team===null?0:value(p))<=S.budget)&&(U.mkf!=='gems'||(p.age<=21&&potRange(p)[1]-ovr(p)>=8))&&(U.mkf!=='free'||p.team===null)&&(U.mkf!=='reach'||interestOf(p)>=-12)&&(U.mkf!=='real'||p.src!=='gen'))
+    const list=Object.values(S.players).filter(p=>!p.retired&&p.team!==S.U&&(U.mk==='ALL'||p.role===U.mk)&&(U.mkf!=='budget'||(p.team===null?0:value(p))<=S.budget)&&(U.mkf!=='gems'||(p.age<=21&&potRange(p)[1]-ovr(p)>=8))&&(U.mkf!=='free'||p.team===null)&&(U.mkf!=='reach'||interestOf(p)>=-12)&&(U.mkf!=='real'||p.src!=='gen'))
       .sort((a,b)=>srt==='pot'?(potRange(b)[0]+potRange(b)[1])-(potRange(a)[0]+potRange(a)[1]):srt==='val'?(a.team===null?0:value(a))-(b.team===null?0:value(b)):srt==='age'?a.age-b.age||ovr(b)-ovr(a):srt==='int'?interestOf(b)-interestOf(a):ovr(b)-ovr(a)).slice(0,U.mkMore?96:(typeof innerWidth==='number'&&innerWidth<600?16:32));
     const F={all:'Tous',real:'Joueurs réels',reach:'Intéressés par mon club',budget:'Dans mon budget',gems:'Pépites',free:'Joueurs libres'},SO={ovr:'Niveau',pot:'Potentiel',int:'Intérêt',val:'Moins chers',age:'Plus jeunes'};
     const btnFor=p=>{const ng=S.negs.find(n=>n.pid===p.id&&n.key===key&&n.stage!=='done'),closed=p.team!==null&&!w.open;
@@ -3541,7 +3681,11 @@ function randEvents(played){const t=me(),ps=t.roster.map(id=>S.players[id]).filt
     return{k:'info',ev:1,from:'Communauté',subj:'Cagnotte des supporters',body:'Coach,\n\nVos supporters ont lancé une cagnotte pour soutenir l\'équipe : '+amt+' k€ récoltés ! Le club gagne aussi en popularité.\n\nLe community manager'}}]);
   let tot=E.reduce((s,e)=>s+e[0],0),r=Math.random()*tot,ch=E[0];for(const e of E){r-=e[0];if(r<=0){ch=e;break}}
   const m=ch[1]();if(!m)return;if(m.k!=='info'){m.ev=1;m.exp=1}addMail(m);if(m.k!=='info')news('Événement : '+m.subj+'.')}
-function evMail(m,c,done){if(!m.k||m.k.indexOf('ev_')!==0)return false;const t=me(),p=m.pid?S.players[m.pid]:null,R=Math.random;
+function evMail(m,c,done){if(!m.k||m.k.indexOf('ev_')!==0)return false;
+  if(m.k==='ev_ret'){const p=S.players[m.pid];if(c==='yes'&&p){const q=Math.round(clamp(ovr(p)-8,40,90)),x={id:S.sid++,role:'analyst',src:'file',name:p.name,q,age:p.age,salary:Math.round((1+Math.pow(Math.max(0,q-38),1.35)*.075)*10)/10,contract:2};const old=S.staff.analyst;S.staff.analyst=x;done(p.name+' devient votre analyste (niveau '+q+')'+(old?', à la place de '+old.name:'')+'.')}else done('Vous lui souhaitez bonne chance pour la suite.');return true}
+  if(m.k==='ev_clause'){const p=S.players[m.pid],t=me(),B=S.teams[m.tid];if(!p||p.team!==S.U){done('Le joueur n\'est plus au club.');return true}
+    if(c==='raise'){const a=Math.round(p.salary*1.3*10)/10;if(Math.random()<.6){p.salary=a;EVMOR(p,8);done(p.name+' reste : salaire porté à '+a+' k€ par semaine.')}else{c='go';m.res=null}}
+    if(c==='go'){S.budget+=m.amt;t.roster=t.roster.filter(x=>x!==p.id);p.team=B.id;B.roster.push(p.id);if(ovr(p)>ovr(S.players[B.lineup[p.role]]))B.lineup[p.role]=p.id;p.salary=salaryFor(p);p.contract=3;ensureLineup(t);delete S.tlist[p.id];txRec(p,S.U,B.id,m.amt);done(p.name+' part chez '+B.name+'. Le club encaisse '+ke(m.amt)+'.')}return true}const t=me(),p=m.pid?S.players[m.pid]:null,R=Math.random;
   const gone=()=>{if(m.pid&&(!p||p.team!==S.U)){done('Le joueur n\'est plus au club.');return true}return false},pay=a=>{if(S.budget<a){m.warn='Budget insuffisant ('+a+' k€ nécessaires).';return false}S.budget-=a;return true};
   if(gone())return true;
   if(m.k==='ev_sick'){if(c==='rest'){p.inj=1;p.injWhy='Malade';EVEN(p,20);fixInjured(t);done(p.name+' reste au lit une semaine. Il reviendra en forme.');return true}
@@ -3572,7 +3716,8 @@ function evMail(m,c,done){if(!m.k||m.k.indexOf('ev_')!==0)return false;const t=m
 Object.assign(MAILOPT,{ev_sick:[['rest','Le mettre au repos (absent 1 sem.)'],['play','Le faire jouer quand même']],ev_out:[['talk','Le convaincre de rester'],['prime','Prime de fidélité (4 sem. de salaire)'],['sell','Le placer sur la liste des transferts'],['no','Refuser net']],
   ev_fam:[['yes','Accorder une semaine'],['no','Lui demander de rester']],ev_bad:[['sanc','Le sanctionner'],['def','Le défendre publiquement'],['no','Ne rien dire']],ev_pc:[['pay','Réparer en urgence'],['no','Faire avec']],
   ev_stream:[['yes','Accepter'],['no','Refuser']],ev_conf:[['psy','Séances avec le psy'],['talk','Lui parler vous-même'],['no','Le laisser gérer']],ev_visa:[['pay','Payer l\'avocat'],['no','Il manquera la semaine']]});
-Object.assign(MAILT,{ev_sick:['Maladie','w'],ev_out:['Départ','w'],ev_fam:['Personnel','q'],ev_bad:['Polémique','w'],ev_pc:['Imprévu',''],ev_stream:['Stream','g'],ev_conf:['Moral','q'],ev_visa:['Imprévu','']});
+Object.assign(MAILOPT,{ev_ret:[['yes','Le prendre comme analyste'],['no','Décliner']],ev_clause:[['raise','Proposer +30 % de salaire pour le garder'],['go','Le laisser partir']]});
+Object.assign(MAILT,{ev_ret:['Retraite','q'],ev_clause:['Clause','w'],ev_sick:['Maladie','w'],ev_out:['Départ','w'],ev_fam:['Personnel','q'],ev_bad:['Polémique','w'],ev_pc:['Imprévu',''],ev_stream:['Stream','g'],ev_conf:['Moral','q'],ev_visa:['Imprévu','']});
 /* ---------- Style du coach ---------- */
 const MSTYLE={agr:['Agressif','Vos équipes prennent plus d\'avance en début de partie.','La cohésion baisse un peu plus vite.'],
   equ:['Équilibré','Petit bonus partout, aucun point faible.','Aucun gros avantage.'],
@@ -3677,7 +3822,7 @@ setTimeout(()=>{Object.assign(ACT,{
   const _sg=ACT.startgame;ACT.startgame=a=>{if(a===''||a==null||!U.mstyle)return;_sg(a);S.mgr={nick:(U.mgrNick||'').trim()||'Coach',age:+U.mgrAge||null,style:U.mstyle};news('Le coach '+S.mgr.nick+' ('+MSTYLE[S.mgr.style][0].toLowerCase()+') prend les commandes de '+me().name+'.')};
   const _r=render;render=function(){_r();try{musSync();musBtn()}catch(e){}try{const M=U.M;if(M&&M.stage==='live'&&(M.dec||M.sim.done)&&innerWidth<=820){const key=M.sim.done?'end'+M.n:'d'+M.sim.i+'-'+M.n;if(M.scrolled!==key){M.scrolled=key;const el=document.querySelector('.bc-dec,.bc-end'),bc=document.querySelector('.bc');if(el&&bc)bc.scrollTo({top:Math.max(0,el.offsetTop-70),behavior:'smooth'})}}}catch(e){}};render()},0);
 function musBtn(){const b=document.querySelector('[data-act=snd]');if(b&&!document.querySelector('[data-act=mus]'))b.insertAdjacentHTML('afterend','<button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'" title="Musique">'+(MUS.on?'Musique : oui':'Musique : non')+'</button>');
-  if(U.screen==='menu'&&!document.querySelector('.ts-mus')){const m=document.querySelector('.ts');if(m)m.insertAdjacentHTML('beforeend','<div class="ts-mus"><button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'">'+(MUS.on?'♪ Musique : oui':'♪ Musique : non')+'</button><button class="btn sm" data-act="snd" aria-pressed="'+SND.on+'">'+(SND.on?'Sons : oui':'Sons : non')+'</button><small>Musique : « Cyber March », iamoneabe (CC0)</small></div>')}}
+  if(U.screen==='menu'&&!document.querySelector('.ts-mus')){const m=document.querySelector('.ts');if(m)m.insertAdjacentHTML('beforeend','<div class="ts-mus"><button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'">'+(MUS.on?'♪ Musique : oui':'♪ Musique : non')+'</button><button class="btn sm" data-act="snd" aria-pressed="'+SND.on+'">'+(SND.on?'Sons : oui':'Sons : non')+'</button><small>Musiques : « Cyber March », iamoneabe · « Cyber Runner », ansimuz (CC0)</small></div>')}}
 /* pop-up des événements */
 const isPop=m=>(m.ev||m.k==='clash'||m.k==='leave')&&!m.seen&&(m.st!=='done'||m.pop);
 function evPopup(){const m=S&&S.mail.find(isPop);if(!m)return'';const p=m.pid?S.players[m.pid]:null,tg=MAILT[m.k]||MAILT.info,ans=m.st==='done';
@@ -3689,7 +3834,7 @@ function evPopup(){const m=S&&S.mail.find(isPop);if(!m)return'';const p=m.pid?S.
     '<h2 id="evp-t">'+esc(m.subj)+'</h2>'+who+'<div class="evp-body">'+esc(m.body).replace(/\n/g,'<br>')+'</div>'+foot+'</div></div>'}
 setTimeout(()=>{ACT.evact=a=>{const[i,c]=a.split(':'),m=S.mail.find(x=>x.id===+i);if(!m)return;mailAct(+i,c);if(m.st==='done')m.pop=1};
 ACT.evok=a=>{const m=S.mail.find(x=>x.id===+a);if(m){m.seen=1;m.st='done';if(!m.res&&m.k==='info')m.res='Lu.'}};
-{const _r=render;render=function(){_r();const o=document.querySelector('.evp-ov:not(.cer-ov)');if(o)o.remove();if(U.screen==='game'&&S&&!U.M&&!document.querySelector('.cer-ov')){const h=evPopup();if(h){app.insertAdjacentHTML('beforeend',h);const b=app.querySelector('.evp-ov .btn');if(b)b.focus({preventScroll:true})}}}}
+{const _r=render;render=function(){_r();const o=document.querySelector('.evp-ov:not(.cer-ov):not(.pt-ov)');if(o)o.remove();if(U.screen==='game'&&S&&!U.M&&!document.querySelector('.cer-ov')){const h=evPopup();if(h){app.insertAdjacentHTML('beforeend',h);const b=app.querySelector('.evp-ov .btn');if(b)b.focus({preventScroll:true})}}}}
 render()},0);
 function lifeBonus(d,side){let b=(S.chem-60)/25;const big=S.phase!=='regular'||(d&&rivalLevel(d.teams[side==='b'?'r':'b'])>0);if(big)b+=ROLES.filter(r=>traitOf(pl(d,side,r))==='toxique').length*.35;return b}
 /* synergies de champions */
