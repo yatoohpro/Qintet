@@ -1825,6 +1825,14 @@ h1,.cs-h1,.mk-title,.mo-name,.ts-title{-webkit-text-fill-color:#f4f0ff!important
 .rs-card{height:300px}.rs-face{top:46px}.rs-ovr b{text-shadow:0 2px 8px #000}
 .side{overflow-x:clip}
 @media(max-width:520px){.side .row .btn{white-space:nowrap;font-size:.68rem;padding:5px 7px}}
+.db-feed{max-height:470px;overflow-y:auto}
+.db-av.cr{background:none;border-radius:50%;overflow:hidden}.db-av.cr img,.db-av.cr svg{width:38px;height:38px;border-radius:50%!important}
+.tw-hd{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.tw-hd small{margin-left:0!important}
+.tw-v{font-style:normal;font-size:.62rem;font-weight:800;width:14px;height:14px;border-radius:50%;display:inline-grid;place-items:center;background:#8b5cf6;color:#fff}
+.tw-ft{display:flex;gap:16px;margin-top:5px;font-size:.74rem;color:var(--muted)}
+.tw-st{display:inline-block;margin-top:5px;font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);letter-spacing:.04em}.tw-st.ok{background:rgba(63,214,143,.15);color:#3fd68f}.tw-st.no{background:rgba(255,93,108,.15);color:#ff5d6c}
+.db-tw.mine{background:rgba(139,92,246,.08);border-radius:8px;padding-left:6px;padding-right:6px}
+.bc-end.win::before,.bc-end.loss::before{content:none;display:none}
 </style>
 </head>
 <body>
@@ -2944,7 +2952,16 @@ function interestOf(p){return attract()-(ovr(p)-55)*2.2-(p.team!=null?Math.max(0
 function intLabel(v){return v>=5?['hi','Intéressé']:v>=-12?['mid','Hésitant']:['lo','Peu intéressé']}
 const negNoise=(n,k)=>(hsh(n.pid+':'+n.key+':'+k)%1000)/1000;
 const dots=(n,m)=>'●'.repeat(clamp(n,0,m))+'○'.repeat(m-clamp(n,0,m));
-function txRec(p,from,to,fee){S.tx.unshift({s:S.season,w:S.week,n:p.name,r:p.role,f:from,t:to,fee,u:from===S.U||to===S.U});if(S.tx.length>80)S.tx.length=80}
+/* --- Tweets : fil d'actu --- */
+const TWH={'Le Nexus Insider':'@NexusInsider','Faille Hebdo':'@FailleHebdo','@RiftLeaks':'@RiftLeaks','Mercato LoL FR':'@MercatoLoLFR','Baron Report':'@BaronReport','Coulisses de la Faille':'@CoulissesFaille'};
+function addTweet(o){if(!S.tw)S.tw=[];const big=o.tid!=null&&S.teams[o.tid]?clamp(teamOvr(S.teams[o.tid])-55,5,40):12,mine=o.mine?3:1;
+  o.id=S.nx++;o.s=S.season;o.w=S.week;o.likes=Math.round(big*rnd(40,160)*mine);o.rts=Math.round(o.likes*rnd(.12,.3));o.rep=Math.round(o.likes*rnd(.03,.1));
+  S.tw.unshift(o);if(S.tw.length>60)S.tw.length=60}
+function txTweet(p,from,to,fee){try{const F=from!=null?T(from):null,D=to!=null?T(to):null,mine=from===S.U||to===S.U,rl=ROLE_FR[p.role];
+  if(D)addTweet({who:D.name,handle:'@'+String(D.tag).replace(/\W/g,''),tid:D.id,ver:1,kind:'off',mine,txt:pick(['OFFICIEL ✍️ Bienvenue à '+p.name+' ! Notre nouveau '+rl+' arrive'+(F?' en provenance de '+F.name:' libre de tout contrat')+'. 💜','C\'est signé ! '+p.name+' ('+rl+') rejoint '+D.name+'.'+(fee?' Transfert estimé à '+ke(fee)+'.':''),'🚨 '+p.name+' est un joueur de '+D.name+' ! Bienvenue à la maison.'])});
+  else if(F)addTweet({who:F.name,handle:'@'+String(F.tag).replace(/\W/g,''),tid:F.id,ver:1,kind:'off',mine,txt:'Merci pour tout, '+p.name+' 🙏 Notre '+rl+' quitte le club. Bonne suite !'});
+  if(D&&F&&Math.random()<.6)addTweet({who:pick(['Le Nexus Insider','Mercato LoL FR','Baron Report']),kind:'press',mine,txt:'Mouvement '+(F.lg===D.lg?F.lg:F.lg+' → '+D.lg)+' : '+p.name+' ('+F.tag+') file chez '+D.tag+'.'+(fee?' Montant : '+ke(fee)+'.':'')+' Votre avis ? 👇'})}catch(e){}}
+function txRec(p,from,to,fee){txTweet(p,from,to,fee);S.tx.unshift({s:S.season,w:S.week,n:p.name,r:p.role,f:from,t:to,fee,u:from===S.U||to===S.U});if(S.tx.length>80)S.tx.length=80}
 const tagOf=id=>id==null?'Libre':T(id).tag;
 
 /* --- Négociation du joueur avec vous --- */
@@ -3027,7 +3044,7 @@ function aiTransfer(pl){const p=S.players[pl.pid],to=S.teams[pl.to];if(!p||!to||
 
 /* --- Leaks et rumeurs --- */
 const LEAKSRC=['Le Nexus Insider','Faille Hebdo','@RiftLeaks','Mercato LoL FR','Baron Report','Coulisses de la Faille'];
-function addLeak(txt,real,lg){const L={id:S.nx++,s:S.season,w:S.week,src:pick(LEAKSRC),txt,conf:real?ri(2,5):ri(1,3),st:'pending',lg};S.leaks.unshift(L);if(S.leaks.length>40)S.leaks.length=40;return L.id}
+function addLeak(txt,real,lg){const L={id:S.nx++,s:S.season,w:S.week,src:pick(LEAKSRC),txt,conf:real?ri(2,5):ri(1,3),st:'pending',lg};S.leaks.unshift(L);if(S.leaks.length>40)S.leaks.length=40;addTweet({who:L.src,kind:'leak',conf:L.conf,lid:L.id,txt:'🔎 '+txt});return L.id}
 function moveLeakTxt(p,to){const fr=p.team!=null?T(p.team):null,nm=p.name+' ('+(fr?fr.tag+', ':'')+ROLE_FR[p.role]+')';
   return fr?pick([nm+' serait en discussions avancées avec '+to.name+'.','Selon nos informations, '+to.name+' a fait une offre pour '+nm+'.',nm+' aurait fait part de son envie de partir. '+to.name+' est sur le coup.','Accord verbal entre '+fr.name+' et '+to.name+' pour '+p.name+' ('+ROLE_FR[p.role]+').'])
     :pick(['Libre, '+nm+' serait tout proche de signer chez '+to.name+'.','Le joueur libre '+nm+' a passé des tests avec '+to.name+'.'])}
@@ -3483,8 +3500,12 @@ function vQG(){if(S.phase==='offseason')return vOff();
   const cal=card('Calendrier','<span class="db-meta">Saison '+S.season+'</span>','<div class="db-cal">'+S.schedule.map((wk,k)=>{const w=k+1,m=wk.find(([h,a])=>h===S.U||a===S.U),res=(S.results[w]||[]).find(r=>r.h===S.U||r.a===S.U);let cls='',o=null;
       if(m)o=T(m[0]===S.U?m[1]:m[0]);if(res)cls=(res.h===S.U?res.sh>res.sa:res.sa>res.sh)?'w':'l';if(S.phase==='regular'&&w===S.week)cls+=' cur';
       return '<div class="db-day '+cls+'" title="Semaine '+w+(o?' · '+esc(o.name):' · repos')+'"><small>'+w+'</small>'+(o?crest(o,26):'<span class="muted">—</span>')+'</div>'}).join('')+'</div><div class="db-leg"><span class="w">Victoire</span><span class="l">Défaite</span><span class="cur">Cette semaine</span></div>');
-  const feedItems=[...(S.leaks||[]).slice(0,4).map(x=>({who:x.src,txt:x.txt+(x.st==='ok'?' · officiel':x.st==='no'?' · démenti':''),w:x.w,leak:1})),...S.news.slice(0,6).map(x=>({who:'Faille Hebdo',txt:x.t,w:x.w}))].slice(0,6);
-  const feed=card('Fil d\'actu','<button class="btn sm ghost" data-act="tab" data-arg="mercato">Mercato</button>','<div class="db-feed">'+feedItems.map(x=>{const h=hsh(x.who)%360;return '<div class="db-tw"><span class="db-av" style="--h:'+h+'">'+esc(x.who.slice(0,1).toUpperCase())+'</span><div><b>'+esc(x.who)+'</b><small>'+(x.leak?'rumeur':'actu')+(x.w?' · sem. '+x.w:'')+'</small><p>'+esc(x.txt)+'</p></div></div>'}).join('')+'</div>');
+  const T0=(S.tw||[]).slice(0,10),tws=T0.length>=4?T0:T0.concat(S.news.slice(0,6-T0.length).map(x=>({who:'Faille Hebdo',kind:'press',txt:x.t,w:x.w,s:x.s,likes:0,rts:0,rep:0})));
+  const nf=n=>n>=1000?(n/1000).toFixed(1).replace('.0','')+' k':String(n||0);
+  const feed=card('Fil d\'actu','<button class="btn sm ghost" data-act="tab" data-arg="mercato">Mercato</button>','<div class="db-feed">'+tws.map(x=>{const h=hsh(x.who)%360,lk=x.lid!=null?(S.leaks||[]).find(l=>l.id===x.lid):null,stt=lk&&lk.st==='ok'?'<span class="tw-st ok">Confirmé</span>':lk&&lk.st==='no'?'<span class="tw-st no">Démenti</span>':x.kind==='leak'?'<span class="tw-st">Rumeur · '+dots(x.conf||2,5)+'</span>':'';
+    return '<div class="db-tw'+(x.mine?' mine':'')+'">'+(x.tid!=null&&S.teams[x.tid]?'<span class="db-av cr">'+crest(S.teams[x.tid],38)+'</span>':'<span class="db-av" style="--h:'+h+'">'+esc(x.who.replace(/^@/,'').slice(0,1).toUpperCase())+'</span>')+
+      '<div><div class="tw-hd"><b>'+esc(x.who)+'</b>'+(x.ver||x.kind==='press'?'<i class="tw-v" title="Compte vérifié">✓</i>':'')+'<small>'+esc(x.handle||TWH[x.who]||'@'+x.who.replace(/\W/g,''))+' · sem. '+x.w+'</small></div><p>'+esc(x.txt)+'</p>'+stt+
+      (x.likes?'<div class="tw-ft"><span>💬 '+nf(x.rep)+'</span><span>🔁 '+nf(x.rts)+'</span><span>♥ '+nf(x.likes)+'</span></div>':'')+'</div></div>'}).join('')+'</div>');
   const table=card('Classement','<span class="db-meta">'+esc(S.lg)+'</span>','<div class="db-tab">'+st0.map((x,i)=>'<div class="db-tr'+(x.id===S.U?' me':'')+'"><span class="num">'+(i+1)+'</span>'+crest(x,22)+'<span class="db-tn">'+tlink(x,esc(x.name))+'</span><span class="num">'+x.w+'</span><span class="num muted">'+x.l+'</span></div>').join('')+'</div>');
   const extra=(pressPanel(fx)||'')+(S.intl?'<section class="panel"><h2>Tableau · '+esc(S.intl.name)+'</h2>'+bracketHTML(S.intl.rounds,null,true)+'</section>':'');
   return '<div class="db">'+rep+'<div class="db-r1">'+next+team+money+'</div><div class="db-r2">'+cal+feed+table+'</div>'+extra+'</div>'}
@@ -3531,7 +3552,7 @@ setTimeout(()=>{Object.assign(ACT,{
   mus(){MUS.on=!MUS.on;try{localStorage.setItem('quintet-mus',MUS.on?'1':'0')}catch(e){}}});
   const _lg=ACT.lg;ACT.lg=a=>{_lg(a);U.pick=null};
   const _sg=ACT.startgame;ACT.startgame=a=>{if(a===''||a==null||!U.mstyle)return;_sg(a);S.mgr={nick:(U.mgrNick||'').trim()||'Coach',age:+U.mgrAge||null,style:U.mstyle};news('Le coach '+S.mgr.nick+' ('+MSTYLE[S.mgr.style][0].toLowerCase()+') prend les commandes de '+me().name+'.')};
-  const _r=render;render=function(){_r();try{musSync();musBtn()}catch(e){}};render()},0);
+  const _r=render;render=function(){_r();try{musSync();musBtn()}catch(e){}try{const M=U.M;if(M&&M.stage==='live'&&(M.dec||M.sim.done)&&innerWidth<=820){const key=M.sim.done?'end'+M.n:'d'+M.sim.i+'-'+M.n;if(M.scrolled!==key){M.scrolled=key;const el=document.querySelector('.bc-dec,.bc-end'),bc=document.querySelector('.bc');if(el&&bc)bc.scrollTo({top:Math.max(0,el.offsetTop-70),behavior:'smooth'})}}}catch(e){}};render()},0);
 function musBtn(){const b=document.querySelector('[data-act=snd]');if(b&&!document.querySelector('[data-act=mus]'))b.insertAdjacentHTML('afterend','<button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'" title="Musique">'+(MUS.on?'Musique : oui':'Musique : non')+'</button>');
   if(U.screen==='menu'&&!document.querySelector('.ts-mus')){const m=document.querySelector('.ts');if(m)m.insertAdjacentHTML('beforeend','<div class="ts-mus"><button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'">'+(MUS.on?'♪ Musique : oui':'♪ Musique : non')+'</button><button class="btn sm" data-act="snd" aria-pressed="'+SND.on+'">'+(SND.on?'Sons : oui':'Sons : non')+'</button><small>Musique : « Cyber March », iamoneabe (CC0)</small></div>')}}
 /* pop-up des événements */
