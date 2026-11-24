@@ -3170,7 +3170,7 @@ function vStaff(){const R=['coach','analyst','psy'],f=n=>n.toLocaleString('fr-FR
   return '<div class="rs">'+head+'<div class="rs-grid"><section class="rs-panel"><div class="rs-cards sf-cards">'+R.map(card).join('')+'</div><div class="muted small">Le staff agit chaque semaine : progression des joueurs, préparation des matchs, moral et récupération. Cliquez sur un poste pour voir sa fiche et ses candidats.</div></section>'+detail+'</div></div>'}
 
 /* ---------- Version et mise à jour ---------- */
-const QV='2026.11.24-10';
+const QV='2026.11.24-11';
 async function checkUpdate(){try{if(location.protocol==='file:'&&!window.__desktop)return;const base=window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'';const r=await fetch(base+'index.html?v='+Date.now(),{cache:'no-store'});if(!r.ok)return;const t=await r.text(),m=t.match(/const QV='([^']+)'/);
   if(m&&m[1]!==QV&&!document.querySelector('.upd')){document.body.insertAdjacentHTML('beforeend','<div class="upd" role="status">Nouvelle version disponible ('+m[1]+')<button class="btn sm pri" id="updGo">Mettre à jour</button></div>');
     document.getElementById('updGo').onclick=async()=>{try{if(typeof save==='function'&&S)save()}catch(e){}if(window.__desktop){try{const x=await fetch('/__refresh',{cache:'no-store'});if(x.ok){location.reload();return}}catch(e){}document.open();document.write(t.replace('<meta charset="utf-8">','<meta charset="utf-8">\n<script>window.__desktop=1<\/script>'));document.close();return}
@@ -3275,16 +3275,20 @@ function decArt(title){const m=DA_MAP.find(x=>x[0].test(title))||[0,'obj','targe
 /* ---------- Musique : gestionnaire unique (menu, partie, match) ---------- */
 const TRK={menu:'audio/menu.mp3',hub:'audio/hub.mp3',match:'audio/match.mp3'};
 function trackWant(){if(!MUS.on||typeof U==='undefined')return{};const M=U.M;if(M&&M.stage==='live'&&!M.sim.done)return{match:.5};if(M)return{};if(U.screen==='game'&&S)return{hub:.42};return{menu:.6}}
-function mkAudio(k){const a=new Audio(),srcs=window.__desktop&&typeof PACK_BASE!=='undefined'?[TRK[k],PACK_BASE+TRK[k]]:[TRK[k]];let i=0;a.loop=true;a.preload='auto';a.volume=0;a.src=srcs[0];
-  a.onerror=()=>{i++;if(i<srcs.length){a.src=srcs[i];if((MUS.want||{})[k]){const p=a.play();if(p&&p.catch)p.catch(()=>{})}}else{MUS.st='err';musInd()}};a.onplaying=()=>{MUS.st='ok';musInd()};return a}
+function mkAudio(k){const a=new Audio(),f=TRK[k],base=typeof PACK_BASE!=='undefined'&&PACK_BASE?PACK_BASE:'https://yatoohpro.github.io/Qintet/';
+  const srcs=[...new Set([f,base+f,'https://raw.githubusercontent.com/yatoohpro/Qintet/main/'+f,'https://cdn.jsdelivr.net/gh/yatoohpro/Qintet@main/'+f])];let i=0,blobTry=0;a.loop=true;a.preload='auto';a.volume=0;a.src=srcs[0];
+  const go=()=>{if((MUS.want||{})[k]){const p=a.play();if(p&&p.catch)p.catch(()=>{})}};
+  const viaBlob=async()=>{for(const u of srcs){try{const r=await fetch(u+(u.includes('?')?'':'?b=1'),{cache:'no-store'});if(!r.ok)continue;const b=await r.blob();if(b.size<10000)continue;a.src=URL.createObjectURL(b);go();return true}catch(e){}}return false};
+  a.onerror=async()=>{MUS.errInfo='code '+(a.error&&a.error.code)+' · '+srcs[i];i++;if(i<srcs.length){a.src=srcs[i];go();return}if(!blobTry){blobTry=1;if(await viaBlob())return}MUS.st='err';musInd()};
+  a.onplaying=()=>{MUS.st='ok';musInd()};return a}
 function musInd(){const t=MUS.on?(MUS.st==='blocked'?'Cliquez n\'importe où pour lancer la musique':MUS.st==='err'?'Musique introuvable : vérifiez votre connexion':MUS.st==='ok'?'♪ Musique en cours':''):'Musique coupée';
-  document.querySelectorAll('.mus-ind').forEach(e=>{e.textContent=t;e.className='mus-ind '+(MUS.st||'')});document.querySelectorAll('[data-act=mus]').forEach(b=>{b.title=t})}
+  document.querySelectorAll('.mus-ind').forEach(e=>{e.textContent=t;e.className='mus-ind '+(MUS.st||'')});document.querySelectorAll('[data-act=mus]').forEach(b=>{b.title=t});if(MUS.st==='err')document.querySelectorAll('.mus-ind').forEach(e=>{e.title=MUS.errInfo||''})}
 setTimeout(()=>{['el','h','m'].forEach(k=>{try{if(MUS[k]){MUS[k].pause();MUS[k]=null}}catch(e){}});MUS.a={};
   musSync=function(){const W=trackWant();MUS.want=W;Object.keys(TRK).forEach(k=>{const v=W[k]||0;let a=MUS.a[k];if(v>0&&!a)a=MUS.a[k]=mkAudio(k);if(!a)return;
     if(v>0&&a.paused){const p=a.play();if(p&&p.catch)p.catch(e=>{if(e&&e.name==='NotAllowedError'){MUS.st='blocked';musInd()}})}
     clearInterval(a._t);a._t=setInterval(()=>{const d=v-a.volume;if(Math.abs(d)<.03){a.volume=v;clearInterval(a._t);if(!v&&!a.paused)a.pause();return}a.volume=clamp(a.volume+Math.sign(d)*.03,0,1)},60)});musInd()};
   ['pointerdown','keydown','touchend'].forEach(ev=>document.addEventListener(ev,()=>{try{musSync()}catch(e){}},true));
-  try{musSync()}catch(e){}},0);
+  try{musSync()}catch(e){}try{navigator.serviceWorker&&navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.update()))}catch(e){}},0);
 /* ---------- Partie en continu : chrono, déplacements des 10 joueurs ---------- */
 const SECMIN=1.1,NEXT_T=[4,8,11,13.5,16,19,21.5,23.5,26,29.5,32],DEC_T=[0,6.6,9.6,12.2,14.6,17.6,20.1,22.1,24.6,28.1,30.6];
 const FOUNT={b:[.06,.94],r:[.94,.06]},CAMPS_B=[[.24,.42],[.22,.57],[.36,.6],[.55,.75],[.63,.85],[.44,.81]];
