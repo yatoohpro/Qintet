@@ -17,3 +17,7 @@ L'application se met à jour toute seule dès qu'elle est connectée.
 - `index.html` : le jeu complet (moteur, interface, mercato, match en direct).
 - `manifest.webmanifest`, `sw.js`, `icons/` : application installable et mode hors ligne.
 - Sauvegardes dans le navigateur de chaque appareil (export et import de fichier dans Parties).
+
+## Crédits
+
+Musique du menu : « Cyber March » par iamoneabe, domaine public (CC0), via OpenGameArt : https://opengameart.org/content/cyber-march

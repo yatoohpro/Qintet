@@ -7,6 +7,7 @@ on:
     paths:
       - 'index.html'
       - 'manifest.webmanifest'
+      - 'audio/**'
       - 'icons/**'
       - 'launcher/**'
       - '.github/workflows/exe.yml'
@@ -29,7 +30,7 @@ jobs:
         run: |
           mkdir -p launcher/web
           cp index.html manifest.webmanifest launcher/web/
-          cp -r icons launcher/web/
+          cp -r icons audio launcher/web/
           go install github.com/tc-hib/go-winres@latest
           cd launcher
           "$(go env GOPATH)/bin/go-winres" simply --icon ../icons/icon-512.png --manifest gui \

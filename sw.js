@@ -1,11 +1,12 @@
 /* Quintet — service worker : version en ligne en priorité, copie locale si hors ligne */
-const CACHE='quintet-v3';
+const CACHE='quintet-v4';
 const CORE=['./','./index.html','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/maskable-512.png','./icons/apple-touch-icon.png','./icons/favicon-32.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET')return;
   const u=new URL(r.url),ext=/fonts\.(googleapis|gstatic)\.com|cdnjs\.cloudflare\.com/.test(u.host);
   if(u.origin!==location.origin&&!ext)return;
+  if(u.pathname.includes('/audio/'))return;
   const isPage=r.mode==='navigate'||u.pathname.endsWith('/index.html')||u.pathname.endsWith('/')||u.pathname.includes('/data/');
   e.respondWith(caches.open(CACHE).then(c=>{
     const net=fetch(r,isPage?{cache:'no-cache'}:{}).then(res=>{if(res&&(res.ok||res.type==='opaque'))c.put(r,res.clone());return res});
