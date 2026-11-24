@@ -22,3 +22,4 @@ L'application se met à jour toute seule dès qu'elle est connectée.
 
 Musique du menu : « Cyber March » par iamoneabe, domaine public (CC0), via OpenGameArt : https://opengameart.org/content/cyber-march
 Musique des matchs : « Cyber Runner Music » par ansimuz, domaine public (CC0), via OpenGameArt : https://opengameart.org/content/cyber-runner-music
+Musique de fond en partie : « Calm Relax 1 (Synthwave 421k) » par The Cynic Project, domaine public (CC0), via OpenGameArt : https://opengameart.org/content/calm-relax-1-synthwave-421k

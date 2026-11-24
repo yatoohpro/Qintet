@@ -1948,6 +1948,9 @@ body[data-scr=menu]::after,body[data-scr=start]::after{background:linear-gradien
 .neg-role{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.neg-cap{font-size:.78rem;color:var(--muted)}.neg-cap b{color:var(--text)}
 @media(max-width:1000px){.mt-head{grid-template-columns:1fr}.mt-ks{grid-template-columns:repeat(2,minmax(0,1fr))}.mt-two,.mt-pipe{grid-template-columns:1fr}.mt-needs{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:600px){.mt-needs{grid-template-columns:repeat(2,minmax(0,1fr))}.mt-ofc{grid-template-columns:40px minmax(0,1fr)}.mt-ofc>.mt-am,.mt-ofc>.row{grid-column:1/-1}.mt-filt select{min-width:0;width:100%}.mt-filt label{flex:1}}
+.bc-art .dart{transform:none!important;width:100%!important;height:100%!important}
+.bc-ch{position:absolute;right:8px;bottom:8px;z-index:2;border-radius:50%;overflow:hidden;width:30px;height:30px;box-shadow:0 0 0 2px rgba(255,255,255,.6)}.bc-art .bc-ch img,.bc-art .bc-ch svg{width:30px!important;height:30px!important;transform:none!important;border-radius:50%!important}
+.bc-card:hover .dart{filter:brightness(1.15) saturate(1.1)}
 </style>
 </head>
 <body>
@@ -3140,7 +3143,8 @@ setTimeout(()=>{
   const _lt=liveTick;liveTick=function(){try{_lt()}catch(e){console.error(e)}};
   /* musique de match */
   const _mt=musTarget;musTarget=function(){return _mt()};
-  const _ms=musSync;musSync=function(){_ms();try{const want=MUS.on&&U.M&&U.M.stage==='live'&&!U.M.sim.done?.16:0;if(want&&!MUS.m){const a=new Audio();a.loop=true;a.volume=0;a.src=(window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'')+'audio/match.mp3';a.onerror=()=>{if(!a.dataset.f){a.dataset.f=1;a.src='audio/match.mp3'}};MUS.m=a}
+  const _ms=musSync;musSync=function(){_ms();try{const hw=MUS.on&&U.screen==='game'&&S&&!U.M?.2:0;if(hw&&!MUS.h){const a=new Audio();a.loop=true;a.volume=0;a.src=(window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'')+'audio/hub.mp3';a.onerror=()=>{if(!a.dataset.f){a.dataset.f=1;a.src='audio/hub.mp3'}};MUS.h=a}
+    if(MUS.h){const a=MUS.h;if(hw&&a.paused){const p=a.play();if(p&&p.catch)p.catch(()=>{})}clearInterval(MUS.ht);MUS.ht=setInterval(()=>{const d=hw-a.volume;if(Math.abs(d)<.02){a.volume=hw;clearInterval(MUS.ht);if(!hw&&!a.paused)a.pause();return}a.volume=clamp(a.volume+Math.sign(d)*.02,0,1)},60)}}catch(e){}try{const want=MUS.on&&U.M&&U.M.stage==='live'&&!U.M.sim.done?.16:0;if(want&&!MUS.m){const a=new Audio();a.loop=true;a.volume=0;a.src=(window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'')+'audio/match.mp3';a.onerror=()=>{if(!a.dataset.f){a.dataset.f=1;a.src='audio/match.mp3'}};MUS.m=a}
     const a=MUS.m;if(!a)return;if(want&&a.paused){const p=a.play();if(p&&p.catch)p.catch(()=>{})}clearInterval(MUS.mt);MUS.mt=setInterval(()=>{const d=want-a.volume;if(Math.abs(d)<.02){a.volume=want;clearInterval(MUS.mt);if(!want&&!a.paused)a.pause();return}a.volume=clamp(a.volume+Math.sign(d)*.02,0,1)},60)}catch(e){}};
 },0);
 /* ---------- Staff : même habillage que l'Effectif ---------- */
@@ -3165,7 +3169,7 @@ function vStaff(){const R=['coach','analyst','psy'],f=n=>n.toLocaleString('fr-FR
   return '<div class="rs">'+head+'<div class="rs-grid"><section class="rs-panel"><div class="rs-cards sf-cards">'+R.map(card).join('')+'</div><div class="muted small">Le staff agit chaque semaine : progression des joueurs, préparation des matchs, moral et récupération. Cliquez sur un poste pour voir sa fiche et ses candidats.</div></section>'+detail+'</div></div>'}
 
 /* ---------- Version et mise à jour ---------- */
-const QV='2026.11.24-8';
+const QV='2026.11.24-9';
 async function checkUpdate(){try{if(location.protocol==='file:'&&!window.__desktop)return;const base=window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'';const r=await fetch(base+'index.html?v='+Date.now(),{cache:'no-store'});if(!r.ok)return;const t=await r.text(),m=t.match(/const QV='([^']+)'/);
   if(m&&m[1]!==QV&&!document.querySelector('.upd')){document.body.insertAdjacentHTML('beforeend','<div class="upd" role="status">Nouvelle version disponible ('+m[1]+')<button class="btn sm pri" id="updGo">Mettre à jour</button></div>');
     document.getElementById('updGo').onclick=async()=>{try{if(typeof save==='function'&&S)save()}catch(e){}if(window.__desktop){try{const x=await fetch('/__refresh',{cache:'no-store'});if(x.ok){location.reload();return}}catch(e){}document.open();document.write(t.replace('<meta charset="utf-8">','<meta charset="utf-8">\n<script>window.__desktop=1<\/script>'));document.close();return}
@@ -3238,6 +3242,34 @@ setTimeout(()=>{Object.assign(ACT,{
   const _mk=ACT.mk;ACT.mkneed=a=>{U.mk=a;U.mtab='search';U.mkMore=0};
 },0);
 document.addEventListener('change',e=>{const t=e.target;if(!t||!t.id)return;if(t.id==='mkPos')U.mk=t.value;else if(t.id==='mkFil')U.mkf=t.value;else if(t.id==='mkSrt')U.mkSort=t.value;else return;U.mkMore=0;render()});
+/* ---------- Illustrations des cartes de décision (dessins originaux) ---------- */
+const DA_THEME={agr:['#ff5d6c','#f59e0b','#3a0d14'],safe:['#4ea1ff','#22d3ee','#071a2e'],obj:['#a78bfa','#ec4899','#1a0c2e'],calm:['#34d399','#10b981','#06231a'],gold:['#f59e0b','#ef4444','#2a1205'],baron:['#c084fc','#6366f1','#140a2e']};
+const DA_G={
+ sword:'<path d="M47 6h6v58l-3 6-3-6z"/><rect x="34" y="62" width="32" height="6" rx="2"/><rect x="47.5" y="68" width="5" height="16" rx="1"/><circle cx="50" cy="88" r="4.5"/>',
+ shield:'<path d="M50 6 86 20v26c0 24-17 40-36 48C31 86 14 70 14 46V20z"/><path d="M50 22 70 30v16c0 13-9 23-20 28-11-5-20-15-20-28V30z" fill="rgba(0,0,0,.28)"/>',
+ eye:'<path d="M6 50Q50 8 94 50 50 92 6 50z"/><circle cx="50" cy="50" r="17" fill="rgba(0,0,0,.45)"/><circle cx="50" cy="50" r="9"/><circle cx="55" cy="45" r="3" fill="rgba(0,0,0,.5)"/>',
+ tower:'<path d="M30 92h40l-6-50h-28z"/><path d="M28 42h44V24h-8v8h-8v-8h-12v8h-8v-8h-8z"/><rect x="45" y="60" width="10" height="16" rx="5" fill="rgba(0,0,0,.35)"/>',
+ flame:'<path d="M50 4c14 20 30 34 22 60-4 16-14 26-22 28-8-2-18-12-22-28-8-26 8-40 22-60z"/><path d="M50 40c7 10 14 18 10 30-2 8-6 12-10 14-4-2-8-6-10-14-4-12 3-20 10-30z" fill="rgba(0,0,0,.3)"/>',
+ baron:'<circle cx="50" cy="52" r="26"/><path d="M50 6l6 20h-12zM90 38l-18 10 2-12zM10 38l18 10-2-12zM78 82l-14-14 12-4zM22 82l14-14-12-4z"/><ellipse cx="50" cy="52" rx="13" ry="7" fill="rgba(0,0,0,.5)"/><ellipse cx="50" cy="52" rx="3" ry="6"/>',
+ group:'<circle cx="50" cy="50" r="9"/><circle cx="18" cy="22" r="7"/><circle cx="82" cy="22" r="7"/><circle cx="18" cy="80" r="7"/><circle cx="82" cy="80" r="7"/><path d="M25 29l13 12M75 29 62 41M25 73l13-12M75 73 62 61" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>',
+ split:'<path d="M14 90V14h72" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round" opacity=".45"/><circle cx="14" cy="40" r="9"/><path d="M14 26 4 40h20z"/><circle cx="64" cy="66" r="5"/><circle cx="76" cy="58" r="5"/><circle cx="72" cy="76" r="5"/><circle cx="84" cy="70" r="5"/>',
+ dagger:'<path d="M50 4l7 14v42h-14V18z"/><rect x="36" y="58" width="28" height="6" rx="3"/><rect x="47" y="64" width="6" height="20" rx="2"/><circle cx="50" cy="88" r="5"/>',
+ hourglass:'<path d="M24 6h52v8c0 16-16 26-16 36s16 20 16 36v8H24v-8c0-16 16-26 16-36S24 30 24 14z"/><path d="M34 82h32c-2-10-10-16-16-20-6 4-14 10-16 20z" fill="rgba(0,0,0,.3)"/>',
+ bolt:'<path d="M60 2 20 56h26l-8 42 42-58H54z"/>',
+ target:'<circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="50" cy="50" r="22" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="50" cy="50" r="7"/><path d="M50 2v20M50 78v20M2 50h20M78 50h20" stroke="currentColor" stroke-width="5"/>',
+ horn:'<path d="M14 40h18l40-22v64L32 60H14z"/><path d="M24 60l6 24h10l-4-24z"/><path d="M80 36c6 4 6 24 0 28M88 28c10 8 10 36 0 44" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>',
+ flank:'<path d="M16 84C16 40 44 18 80 18" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><path d="M70 4l22 14-22 14z"/><circle cx="76" cy="70" r="9"/><circle cx="58" cy="82" r="7"/>',
+ moon:'<path d="M66 8a44 44 0 1 0 22 70A36 36 0 1 1 66 8z"/><circle cx="74" cy="30" r="3"/><circle cx="84" cy="46" r="2"/>',
+ lanes:'<path d="M12 88V12h76" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/><path d="M12 88h76V12" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round" opacity=".6"/><path d="M12 88 88 12" stroke="currentColor" stroke-width="6" opacity=".8"/>',
+ dive:'<path d="M58 94h32l-5-36H63z"/><path d="M60 58h28V44h-6v6h-6v-6h-4v6h-6v-6h-6z"/><path d="M14 10l28 30" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M34 46l14-2-2 14z"/>',
+ poke:'<path d="M8 74 70 30" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M8 50 60 18" stroke="currentColor" stroke-width="5" stroke-linecap="round" opacity=".6"/><path d="M66 22l16-4-6 16z"/><circle cx="84" cy="76" r="12" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="84" cy="76" r="4"/>'};
+const DA_MAP=[[/Baron/,'baron','baron'],[/Agressif|Tout changer|Engager|Forcer/,'agr','sword',1],[/Prudent|Protéger|Défendre|Contre-gank/,'safe','shield'],[/Vision/,'calm','eye'],[/regrouper/i,'obj','group'],[/Split/,'calm','split'],[/dragon/i,'gold','flame'],[/Tourelles|Siège/,'safe','tower'],[/Envahir|Ganker/,'agr','dagger'],[/Baron/,'baron','baron'],[/Appâter/,'obj','target'],[/Temporiser|montre|Calmer/,'calm','hourglass'],[/Tout miser/,'agr','bolt'],[/Remobiliser/,'gold','horn'],[/revers/,'obj','flank'],[/en douce/,'baron','moon'],[/Standard/,'obj','lanes'],[/Plonger/,'agr','dive'],[/Poke/,'gold','poke']];
+function decArt(title){const m=DA_MAP.find(x=>x[0].test(title))||[0,'obj','target'],th=DA_THEME[m[1]],g=DA_G[m[2]],id='da'+hsh(title)%100000;
+  let seed=hsh(title)%997+1;const R=()=>(seed=(seed*16807)%2147483647)/2147483647;let sp='';for(let k=0;k<14;k++)sp+='<circle cx="'+(R()*320).toFixed(0)+'" cy="'+(R()*160).toFixed(0)+'" r="'+(R()*2+.6).toFixed(1)+'" fill="#fff" opacity="'+(R()*.5+.2).toFixed(2)+'"/>';
+  const glyph=m[3]?'<g transform="translate(110 30) scale(1)"><g transform="rotate(-40 50 50)">'+g+'</g></g><g transform="translate(110 30)"><g transform="rotate(40 50 50)">'+g+'</g></g>':'<g transform="translate(110 30)">'+g+'</g>';
+  return '<svg class="dart" viewBox="0 0 320 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="'+id+'b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+th[2]+'"/><stop offset="1" stop-color="#07060c"/></linearGradient><radialGradient id="'+id+'r" cx=".5" cy=".55" r=".55"><stop offset="0" stop-color="'+th[0]+'" stop-opacity=".75"/><stop offset=".55" stop-color="'+th[1]+'" stop-opacity=".18"/><stop offset="1" stop-color="'+th[1]+'" stop-opacity="0"/></radialGradient><linearGradient id="'+id+'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="'+th[0]+'"/></linearGradient><filter id="'+id+'f" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'+
+    '<rect width="320" height="160" fill="url(#'+id+'b)"/><path d="M-10 170 330 -10M40 170 380 -10M-60 170 280 -10" stroke="'+th[0]+'" stroke-opacity=".12" stroke-width="10"/><rect width="320" height="160" fill="url(#'+id+'r)"/>'+sp+
+    '<g fill="url(#'+id+'g)" color="'+th[0]+'" filter="url(#'+id+'f)" transform="translate(0 0)">'+glyph+'</g></svg>'}
 /* ---------- Partie en continu : chrono, déplacements des 10 joueurs ---------- */
 const SECMIN=1.1,NEXT_T=[4,8,11,13.5,16,19,21.5,23.5,26,29.5,32],DEC_T=[0,6.6,9.6,12.2,14.6,17.6,20.1,22.1,24.6,28.1,30.6];
 const FOUNT={b:[.06,.94],r:[.94,.06]},CAMPS_B=[[.24,.42],[.22,.57],[.36,.6],[.55,.75],[.63,.85],[.44,.81]];
@@ -3775,7 +3807,7 @@ function vLive(){const M=U.M,d=M.d,R=M.sim,done=R.done,cur=R.log.length?R.log[R.
       '<button class="btn pri" data-act="aftergame">'+(over?'Terminer la semaine':'Manche suivante')+'</button></div>'}
   else if(M.dec){const D=M.dec;
     over2='<div class="bc-dec"><div class="bc-dh"><span>Décision</span><b>'+esc(D.title)+'</b></div>'+(D.hint?'<div class="bc-hint">'+esc(D.hint)+'</div>':'')+
-      '<div class="bc-cards">'+D.opts.map((o,k)=>{const c=d.picks[M.side][o.r||'MID'];return '<button class="bc-card'+(k===D.best?' best':'')+'" data-act="choose" data-arg="'+k+'" title="'+esc(o.d)+'"><span class="bc-n">'+(k+1)+'</span><span class="bc-art">'+cicon(c,160)+'</span><span class="bc-ct"><b>'+esc(o.t)+'</b><small>'+esc(o.d)+'</small>'+(k===D.best?'<em>Conseil du coach</em>':'')+'</span></button>'}).join('')+'</div>'+
+      '<div class="bc-cards">'+D.opts.map((o,k)=>{const c=d.picks[M.side][o.r||'MID'];return '<button class="bc-card'+(k===D.best?' best':'')+'" data-act="choose" data-arg="'+k+'" title="'+esc(o.d)+'"><span class="bc-n">'+(k+1)+'</span><span class="bc-art">'+decArt(o.t)+'<span class="bc-ch">'+cicon(c,30)+'</span></span><span class="bc-ct"><b>'+esc(o.t)+'</b><small>'+esc(o.d)+'</small>'+(k===D.best?'<em>Conseil du coach</em>':'')+'</span></button>'}).join('')+'</div>'+
       '<button class="btn sm ghost bc-auto" data-act="coachauto">Laisser le coach décider</button></div>'}
   const row=r=>{const cell=s=>{const p=pl(d,s,r),c=d.picks[s][r],k=R.kda[p.id]||[0,0,0],dead=!done&&cur.dead&&cur.dead.includes(s+r),mvp=done&&R.res.mvp===p.id;
       return '<div class="bc-pc '+s+(dead?' dead':'')+(mvp?' mvp':'')+'">'+cicon(c,38)+'<span class="bc-pn"><b>'+esc(p.name)+'</b><small>'+esc(c)+'</small><i class="bc-hp"><i style="width:'+(dead?0:100)+'%"></i></i></span><span class="bc-kda num">'+k.join('/')+'</span><span class="bc-pg num">'+pg(s,r).toFixed(1)+'k</span></div>'};
@@ -3984,7 +4016,7 @@ function vEff(){const t=me(),ps=t.roster.map(id=>S.players[id]).sort((a,b)=>{con
   return '<div class="rs">'+head+'<div class="rs-grid"><section class="rs-panel"><div class="rs-cards">'+ps.map(cardP).join('')+open+'</div>'+scrimBox()+'</section>'+detail+'</div></div>'}
 /* ---------- Musique et sons ---------- */
 const MUS={on:(()=>{try{return localStorage.getItem('quintet-mus')!=='0'}catch(e){return true}})(),el:null,want:0,cur:0,tmr:null};
-function musTarget(){if(!MUS.on)return 0;if(typeof U==='undefined')return 0;if(U.M)return 0;return U.screen==='game'?.12:.32}
+function musTarget(){if(!MUS.on)return 0;if(typeof U==='undefined')return 0;if(U.M)return 0;return U.screen==='game'?0:.32}
 function musSync(){const v=musTarget();MUS.want=v;if(v>0&&!MUS.el){const a=new Audio();a.loop=true;a.preload='auto';a.volume=0;a.src=(window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'')+'audio/menu.mp3';a.onerror=()=>{if(!a.dataset.f){a.dataset.f=1;a.src='audio/menu.mp3'}};MUS.el=a}
   const a=MUS.el;if(!a)return;if(v>0&&a.paused){const pr=a.play();if(pr&&pr.catch)pr.catch(()=>{})}
   clearInterval(MUS.tmr);MUS.tmr=setInterval(()=>{const d=MUS.want-a.volume;if(Math.abs(d)<.02){a.volume=MUS.want;clearInterval(MUS.tmr);if(MUS.want===0&&!a.paused)a.pause();return}a.volume=clamp(a.volume+Math.sign(d)*.02,0,1)},60)}
@@ -4006,7 +4038,7 @@ setTimeout(()=>{Object.assign(ACT,{
   const _sg=ACT.startgame;ACT.startgame=a=>{if(a===''||a==null||!U.mstyle)return;_sg(a);S.mgr={nick:(U.mgrNick||'').trim()||'Coach',age:+U.mgrAge||null,style:U.mstyle};news('Le coach '+S.mgr.nick+' ('+MSTYLE[S.mgr.style][0].toLowerCase()+') prend les commandes de '+me().name+'.')};
   const _r=render;render=function(){_r();try{document.body.dataset.scr=U.screen==='game'?'game':U.screen;musSync();musBtn()}catch(e){}try{const M=U.M;if(M&&M.stage==='live'&&(M.dec||M.sim.done)&&innerWidth<=820){const key=M.sim.done?'end'+M.n:'d'+M.sim.i+'-'+M.n;if(M.scrolled!==key){M.scrolled=key;const el=document.querySelector('.bc-dec,.bc-end'),bc=document.querySelector('.bc');if(el&&bc)bc.scrollTo({top:Math.max(0,el.offsetTop-70),behavior:'smooth'})}}}catch(e){}};render()},0);
 function musBtn(){const b=document.querySelector('[data-act=snd]');if(b&&!document.querySelector('[data-act=mus]'))b.insertAdjacentHTML('afterend','<button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'" title="Musique">'+(MUS.on?'Musique : oui':'Musique : non')+'</button>');
-  if(U.screen==='menu'&&!document.querySelector('.ts-mus')){const m=document.querySelector('.ts');if(m)m.insertAdjacentHTML('beforeend','<div class="ts-mus"><button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'">'+(MUS.on?'♪ Musique : oui':'♪ Musique : non')+'</button><button class="btn sm" data-act="snd" aria-pressed="'+SND.on+'">'+(SND.on?'Sons : oui':'Sons : non')+'</button><small>Musiques : « Cyber March », iamoneabe · « Cyber Runner », ansimuz (CC0) · version '+QV+'</small></div>')}}
+  if(U.screen==='menu'&&!document.querySelector('.ts-mus')){const m=document.querySelector('.ts');if(m)m.insertAdjacentHTML('beforeend','<div class="ts-mus"><button class="btn sm" data-act="mus" aria-pressed="'+MUS.on+'">'+(MUS.on?'♪ Musique : oui':'♪ Musique : non')+'</button><button class="btn sm" data-act="snd" aria-pressed="'+SND.on+'">'+(SND.on?'Sons : oui':'Sons : non')+'</button><small>Musiques : « Cyber March », iamoneabe · « Synthwave 421k », The Cynic Project · « Cyber Runner », ansimuz (CC0) · version '+QV+'</small></div>')}}
 /* pop-up des événements */
 const isPop=m=>(m.ev||m.k==='clash'||m.k==='leave')&&!m.seen&&(m.st!=='done'||m.pop);
 function evPopup(){const m=S&&S.mail.find(isPop);if(!m)return'';const p=m.pid?S.players[m.pid]:null,tg=MAILT[m.k]||MAILT.info,ans=m.st==='done';
