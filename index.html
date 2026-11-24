@@ -3099,13 +3099,13 @@ function vLive(){const M=U.M,d=M.d,R=M.sim,done=R.done,cur=R.log.length?R.log[R.
 const TRAITS={leader:['Leader','Soude le groupe : la cohésion monte chaque semaine où il joue.'],pro:['Professionnel','Moral stable, aucun souci en dehors du jeu.'],calme:['Calme','Garde la tête froide : moins de conflits autour de lui.'],toxique:['Tempérament explosif','Source de conflits, mais se surpasse dans les gros matchs.'],star:['Star','Attire les fans, mais exige de jouer titulaire.']};
 function traitOf(p){if(!p)return 'pro';if(!p.trait){const k=['pro','pro','calme','leader','toxique','star','pro','calme','leader','toxique'][hsh(p.name+'#tr')%10];p.trait=k==='star'&&ovr(p)<78?'pro':k}return p.trait}
 const traitPill=p=>{const t=traitOf(p),c={leader:'g',toxique:'w',star:'g',calme:'q',pro:''}[t];return '<span class="pill '+c+'" title="'+esc(TRAITS[t][1])+'">'+TRAITS[t][0]+'</span>'};
-const injPill=p=>p.inj?'<span class="pill w inj" title="Indisponible : ne peut pas jouer">Blessé · '+p.inj+' sem.</span>':'';
+const injPill=p=>p.inj?'<span class="pill w inj" title="Indisponible : ne peut pas jouer">'+(p.injWhy||'Blessé')+' · '+p.inj+' sem.</span>':'';
 function chemTxt(){const c=S.chem;return c>=75?'Excellente':c>=60?'Bonne':c>=45?'Fragile':'Mauvaise'}
 /* remplace un titulaire blessé par le meilleur remplaçant valide du même poste */
 function fixInjured(t){ROLES.forEach(r=>{const cur=S.players[t.lineup[r]];if(cur&&cur.inj){const sub=t.roster.map(id=>S.players[id]).filter(x=>x.role===r&&!x.inj&&x.id!==cur.id).sort((a,b)=>ovr(b)-ovr(a))[0];if(sub)t.lineup[r]=sub.id}})}
 function lifeWeek(won,played){if(!(S.chem>=0))S.chem=60;const t=me(),st=ROLES.map(r=>S.players[t.lineup[r]]).filter(Boolean),ps=t.roster.map(id=>S.players[id]);
   /* blessures et burn-out */
-  ps.forEach(p=>{if(p.inj){p.inj--;p.energy=clamp(p.energy+12,5,100);if(!p.inj)news(p.name+' est de retour de blessure.');return}
+  ps.forEach(p=>{if(p.inj){p.inj--;p.energy=clamp(p.energy+12,5,100);if(!p.inj){news(p.name+' est de nouveau disponible.');delete p.injWhy};return}
     p.lowE=p.energy<32?(p.lowE||0)+1:0;
     if(p.lowE>=2&&Math.random()<.35){p.inj=ri(1,3);p.lowE=0;const burn=Math.random()<.5;addMail({k:'info',from:'Staff médical',subj:(burn?'Burn-out':'Blessure')+' : '+p.name,pid:p.id,body:'Coach,\n\n'+p.name+' est '+(burn?'en burn-out après des semaines à bout de forces':'blessé au poignet, à force de jouer fatigué')+'. Il sera indisponible '+p.inj+' semaine'+(p.inj>1?'s':'')+'.\n\nMettez l\'équipe au repos plus souvent pour éviter que ça se reproduise.\n\nLe staff médical'});news(p.name+' est indisponible '+p.inj+' semaine'+(p.inj>1?'s':'')+' ('+(burn?'burn-out':'blessure')+').')}});
   fixInjured(t);
@@ -3119,9 +3119,10 @@ function lifeWeek(won,played){if(!(S.chem>=0))S.chem=60;const t=me(),st=ROLES.ma
     addMail({k:'clash',from:'Vestiaire',subj:'Tensions entre '+a.name+' et '+b.name,pid:a.id,pid2:b.id,exp:1,body:'Coach,\n\nL\'ambiance est tendue : '+a.name+' ('+ROLE_FR[a.role]+') et '+b.name+' ('+ROLE_FR[b.role]+') se sont accrochés après la dernière scrim. Le reste de l\'équipe attend de voir comment vous réagissez.\n\nVotre capitaine d\'équipe'})}
   const star=ps.find(p=>traitOf(p)==='star'&&t.lineup[p.role]!==p.id&&!p.inj);
   if(star&&!pend('leave')&&Math.random()<.3)addMail({k:'leave',from:star.name,subj:'Je veux partir',pid:star.id,exp:1,body:'Coach,\n\nJe ne suis pas venu ici pour regarder les matchs depuis le banc. Si je ne joue pas, je préfère être transféré.\n\n'+star.name});
+  try{randEvents(played)}catch(e){console.error(e)}
   /* classement de puissance */
   S.prLast=S.prCur||null;S.prCur=powerOrder().map(x=>x.id)}
-function lifeMail(m,c,done){const p=m.pid?S.players[m.pid]:null,q=m.pid2?S.players[m.pid2]:null;
+function lifeMail(m,c,done){if(typeof evMail==='function'&&evMail(m,c,done))return true;const p=m.pid?S.players[m.pid]:null,q=m.pid2?S.players[m.pid2]:null;
   if(m.k==='clash'){if(c==='med'){if(S.budget<5){m.warn='Budget insuffisant pour la médiation.';return true}S.budget-=5;S.chem=clamp(S.chem+6,15,100);[p,q].forEach(x=>x&&(x.morale=clamp(x.morale+3,20,100)));done('Médiation réussie : cohésion +6.');return true}
     if(c==='sanc'){if(p)p.morale=clamp(p.morale-12,20,100);S.chem=clamp(S.chem+4,15,100);done((p?p.name:'Le joueur')+' est sanctionné. Le groupe apprécie la fermeté, lui beaucoup moins.');return true}
     S.chem=clamp(S.chem-8,15,100);[p,q].forEach(x=>x&&(x.morale=clamp(x.morale-4,20,100)));done('Le conflit s\'envenime : cohésion −8.');return true}
@@ -3134,6 +3135,71 @@ function lifeMail(m,c,done){const p=m.pid?S.players[m.pid]:null,q=m.pid2?S.playe
   return false}
 Object.assign(MAILOPT,{clash:[['med','Organiser une médiation (5 k€)'],['sanc','Sanctionner le fauteur de troubles'],['no','Laisser faire']],leave:[['yes','Le placer sur la liste des transferts'],['no','Refuser']],job:[['yes','Accepter le poste'],['no','Décliner']]});
 Object.assign(MAILT,{clash:['Vestiaire','w'],leave:['Départ','w'],job:['Emploi','g']});
+/* ---------- Événements aléatoires ---------- */
+const EVMOR=(p,d)=>{if(p)p.morale=clamp(p.morale+d,20,100)},EVEN=(p,d)=>{if(p)p.energy=clamp(p.energy+d,5,100)};
+function randEvents(played){const t=me(),ps=t.roster.map(id=>S.players[id]).filter(p=>!p.inj),st=ROLES.map(r=>S.players[t.lineup[r]]).filter(p=>p&&!p.inj);
+  if(!ps.length||S.mail.some(m=>m.st!=='done'&&m.ev))return;
+  if(Math.random()>(S.phase==='offseason'?.15:.33))return;
+  const sal=p=>Math.max(2,Math.round(p.salary*2)),big=()=>S.teams.filter(x=>x.id!==S.U&&teamOvr(x)>teamOvr(t)+2),E=[];
+  /* maladie */
+  E.push([3,()=>{const p=pick(st.length?st:ps),k=pick([['une grosse grippe','grippé'],['une gastro-entérite','malade'],['une angine carabinée','malade'],['une intoxication alimentaire au bootcamp','malade']]);
+    return{k:'ev_sick',from:'Staff médical',subj:p.name+' est malade',pid:p.id,body:'Coach,\n\n'+p.name+' a attrapé '+k[0]+'. Il peut tenir sa place, mais il ne sera pas à 100 %, et il risque de contaminer le reste du groupe.\n\nÀ vous de décider.\n\nLe staff médical'}}]);
+  /* un grand club lui fait tourner la tête */
+  const tg=ps.filter(p=>ovr(p)>=ovr(S.players[t.lineup[p.role]])-3),bg=big();
+  if(tg.length&&bg.length)E.push([3,()=>{const p=pick(tg),b=pick(bg);
+    return{k:'ev_out',from:p.name,subj:'Je veux partir',pid:p.id,tid:b.id,body:'Coach,\n\n'+b.name+' m\'a contacté et leur projet me fait rêver. Je veux tenter ma chance là-bas. Je respecte le club, mais ma décision est presque prise.\n\nSi vous voulez me garder, il va falloir me convaincre.\n\n'+p.name}}]);
+  /* problème familial */
+  E.push([2,()=>{const p=pick(ps);return{k:'ev_fam',from:p.name,subj:'Raison familiale',pid:p.id,body:'Coach,\n\nJ\'ai un souci familial grave et je dois rentrer chez moi quelques jours. Je sais que la période est importante, mais j\'ai besoin d\'une semaine.\n\n'+p.name}}]);
+  /* polémique réseaux sociaux */
+  E.push([2,()=>{const p=pick(ps);return{k:'ev_bad',from:'Community manager',subj:'Polémique autour de '+p.name,pid:p.id,body:'Coach,\n\nUn vieux message de '+p.name+' ressort sur les réseaux et la communauté s\'enflamme. Notre sponsor principal a déjà appelé pour savoir ce qu\'on compte faire.\n\nLe community manager'}}]);
+  /* panne au bootcamp */
+  E.push([1,()=>{const amt=Math.max(6,Math.round(lgWage(S.lg)*.8));return{k:'ev_pc',from:'Responsable logistique',subj:'Panne au bootcamp',amt,body:'Coach,\n\nLa climatisation et deux PC de la salle d\'entraînement ont lâché. On peut tout réparer en urgence pour '+amt+' k€, ou faire avec cette semaine : les joueurs vont souffrir.\n\nLa logistique'}}]);
+  /* stream viral */
+  E.push([2,()=>{const p=pick(ps),amt=Math.max(3,Math.round(lgWage(S.lg)*.5));return{k:'ev_stream',from:'Plateforme de streaming',subj:'Le stream de '+p.name+' explose',pid:p.id,amt,body:'Bonjour,\n\nLe dernier live de '+p.name+' a fait un carton. Nous proposons un partenariat : trois longues sessions cette semaine, rémunérées '+amt+' k€ au club. Vos fans vont adorer, votre joueur un peu moins dormir.\n\nL\'équipe partenariats'}}]);
+  /* perte de confiance */
+  const low=ps.filter(p=>p.morale<55);
+  if(low.length)E.push([2,()=>{const p=pick(low);return{k:'ev_conf',from:'Psychologue du club',subj:p.name+' doute',pid:p.id,body:'Coach,\n\n'+p.name+' traverse une période de doute. Il ne dort pas bien et se refait ses erreurs en boucle. Quelques séances individuelles l\'aideraient, ou alors un mot de votre part.\n\nLe psychologue'}}]);
+  /* problème de visa / déplacement */
+  if(S.phase!=='offseason')E.push([1,()=>{const p=pick(st.length?st:ps),amt=Math.max(4,Math.round(lgWage(S.lg)*.4));return{k:'ev_visa',from:'Administration',subj:'Souci de papiers pour '+p.name,pid:p.id,amt,body:'Coach,\n\nLes papiers de '+p.name+' ne sont pas en règle pour le prochain déplacement. Un avocat peut régler ça en urgence pour '+amt+' k€. Sinon, il manquera la semaine.\n\nL\'administration'}}]);
+  /* bonnes surprises (sans choix) */
+  E.push([2,()=>{const p=pick(ps.filter(x=>x.age<=22).concat(ps));p.pot=clamp((p.pot||ovr(p))+ri(2,4),0,99);EVMOR(p,8);news(p.name+' impressionne à l\'entraînement : son potentiel grimpe.');
+    return{k:'info',ev:1,from:'Staff technique',subj:'Déclic pour '+p.name,pid:p.id,body:'Coach,\n\n'+p.name+' a franchi un cap cette semaine : il lit les parties beaucoup mieux qu\'avant. Son potentiel est revu à la hausse.\n\nLe staff technique'}}]);
+  E.push([1,()=>{const amt=Math.max(3,Math.round(lgWage(S.lg)*.6));S.budget+=amt;S.fans=Math.round(S.fans*1.03);
+    return{k:'info',ev:1,from:'Communauté',subj:'Cagnotte des supporters',body:'Coach,\n\nVos supporters ont lancé une cagnotte pour soutenir l\'équipe : '+amt+' k€ récoltés ! Le club gagne aussi en popularité.\n\nLe community manager'}}]);
+  let tot=E.reduce((s,e)=>s+e[0],0),r=Math.random()*tot,ch=E[0];for(const e of E){r-=e[0];if(r<=0){ch=e;break}}
+  const m=ch[1]();if(!m)return;if(m.k!=='info'){m.ev=1;m.exp=1}addMail(m);if(m.k!=='info')news('Événement : '+m.subj+'.')}
+function evMail(m,c,done){if(!m.k||m.k.indexOf('ev_')!==0)return false;const t=me(),p=m.pid?S.players[m.pid]:null,R=Math.random;
+  const gone=()=>{if(m.pid&&(!p||p.team!==S.U)){done('Le joueur n\'est plus au club.');return true}return false},pay=a=>{if(S.budget<a){m.warn='Budget insuffisant ('+a+' k€ nécessaires).';return false}S.budget-=a;return true};
+  if(gone())return true;
+  if(m.k==='ev_sick'){if(c==='rest'){p.inj=1;p.injWhy='Malade';EVEN(p,20);fixInjured(t);done(p.name+' reste au lit une semaine. Il reviendra en forme.');return true}
+    EVEN(p,-30);let txt=p.name+' joue malgré la fièvre : grosse fatigue.';
+    if(R()<.4){const o=t.roster.map(id=>S.players[id]).filter(x=>x.id!==p.id&&!x.inj);if(o.length){const q=pick(o);q.inj=1;q.injWhy='Malade';fixInjured(t);txt+=' Et '+q.name+' a été contaminé : absent une semaine.'}}
+    done(txt);return true}
+  if(m.k==='ev_out'){const b=S.teams[m.tid];
+    if(c==='prime'){const a=Math.max(5,Math.round(p.salary*4));if(!pay(a))return true;if(R()<.75){EVMOR(p,12);p.salary=Math.round(p.salary*1.1*10)/10;done(p.name+' reste au club après une prime de '+a+' k€ et une petite augmentation.')}else{EVMOR(p,-5);S.tlist[p.id]=Math.max(10,Math.round(value(p)/5)*5);done('Malgré la prime de '+a+' k€, '+p.name+' veut partir. Il est sur la liste des transferts.')}return true}
+    if(c==='talk'){if(R()<(traitOf(p)==='leader'||traitOf(p)==='calme'?.6:.35)+(S.chem-60)/200){EVMOR(p,6);done('Discussion franche : '+p.name+' accepte de rester.')}else{EVMOR(p,-14);S.chem=clamp(S.chem-4,15,100);done(p.name+' n\'est pas convaincu. Il fait la tête et l\'ambiance s\'en ressent.')}return true}
+    if(c==='sell'){S.tlist[p.id]=Math.max(10,Math.round(value(p)/5)*5);EVMOR(p,8);done(p.name+' est placé sur la liste des transferts. '+(b?b.name+' est prévenu.':''));return true}
+    EVMOR(p,-18);S.chem=clamp(S.chem-5,15,100);if(R()<.35){EVEN(p,-25);done(p.name+' se met en retrait à l\'entraînement : énergie et moral au plus bas.')}else done('Refus net. '+p.name+' est furieux.');return true}
+  if(m.k==='ev_fam'){if(c==='yes'){p.inj=1;p.injWhy='Absent';EVMOR(p,12);S.chem=clamp(S.chem+3,15,100);fixInjured(t);done(p.name+' rentre chez lui une semaine. Le groupe salue votre décision.');return true}
+    EVMOR(p,-20);S.chem=clamp(S.chem-4,15,100);done(p.name+' reste, mais il a la tête ailleurs.');return true}
+  if(m.k==='ev_bad'){const sp=S.spons||[];
+    if(c==='sanc'){EVMOR(p,-12);sp.forEach(x=>x.sat=clamp(x.sat+4,0,100));done(p.name+' est sanctionné et s\'excuse publiquement. Le sponsor est rassuré.');return true}
+    if(c==='def'){EVMOR(p,10);S.chem=clamp(S.chem+3,15,100);sp.forEach(x=>x.sat=clamp(x.sat-10,0,100));S.fans=Math.round(S.fans*.98);done('Vous défendez '+p.name+'. Le vestiaire apprécie, le sponsor beaucoup moins.');return true}
+    sp.forEach(x=>x.sat=clamp(x.sat-5,0,100));S.fans=Math.round(S.fans*.96);done('Silence radio : la polémique enfle et vous perdez des fans.');return true}
+  if(m.k==='ev_pc'){if(c==='pay'){if(!pay(m.amt))return true;done('Matériel réparé pour '+m.amt+' k€.');return true}
+    t.roster.forEach(id=>EVEN(S.players[id],-15));S.chem=clamp(S.chem-2,15,100);done('Semaine galère au bootcamp : tout le monde est fatigué.');return true}
+  if(m.k==='ev_stream'){if(c==='yes'){S.budget+=m.amt;S.fans=Math.round(S.fans*1.04);EVEN(p,-20);EVMOR(p,5);done('+'+m.amt+' k€ et de nouveaux fans. '+p.name+' est épuisé.');return true}
+    EVMOR(p,-4);done('Partenariat refusé. '+p.name+' reste concentré sur la compétition.');return true}
+  if(m.k==='ev_conf'){if(c==='psy'){const a=Math.max(3,Math.round(lgWage(S.lg)*.3));if(!pay(a))return true;EVMOR(p,18);done('Séances avec le psychologue ('+a+' k€) : '+p.name+' reprend confiance.');return true}
+    if(c==='talk'){const ok=R()<.55;EVMOR(p,ok?10:-4);done(ok?'Votre discours a fait mouche : '+p.name+' va mieux.':'Vos mots n\'ont pas suffi. '+p.name+' doute toujours.');return true}
+    EVMOR(p,-8);done(p.name+' s\'enfonce un peu plus.');return true}
+  if(m.k==='ev_visa'){if(c==='pay'){if(!pay(m.amt))return true;done('Papiers réglés : '+p.name+' sera du voyage.');return true}
+    p.inj=1;p.injWhy='Absent';fixInjured(t);EVMOR(p,-5);done(p.name+' manque la semaine.');return true}
+  return false}
+Object.assign(MAILOPT,{ev_sick:[['rest','Le mettre au repos (absent 1 sem.)'],['play','Le faire jouer quand même']],ev_out:[['talk','Le convaincre de rester'],['prime','Prime de fidélité (4 sem. de salaire)'],['sell','Le placer sur la liste des transferts'],['no','Refuser net']],
+  ev_fam:[['yes','Accorder une semaine'],['no','Lui demander de rester']],ev_bad:[['sanc','Le sanctionner'],['def','Le défendre publiquement'],['no','Ne rien dire']],ev_pc:[['pay','Réparer en urgence'],['no','Faire avec']],
+  ev_stream:[['yes','Accepter'],['no','Refuser']],ev_conf:[['psy','Séances avec le psy'],['talk','Lui parler vous-même'],['no','Le laisser gérer']],ev_visa:[['pay','Payer l\'avocat'],['no','Il manquera la semaine']]});
+Object.assign(MAILT,{ev_sick:['Maladie','w'],ev_out:['Départ','w'],ev_fam:['Personnel','q'],ev_bad:['Polémique','w'],ev_pc:['Imprévu',''],ev_stream:['Stream','g'],ev_conf:['Moral','q'],ev_visa:['Imprévu','']});
 function lifeBonus(d,side){let b=(S.chem-60)/25;const big=S.phase!=='regular'||(d&&rivalLevel(d.teams[side==='b'?'r':'b'])>0);if(big)b+=ROLES.filter(r=>traitOf(pl(d,side,r))==='toxique').length*.35;return b}
 /* synergies de champions */
 const SYN=[['Xayah','Rakan'],['Lucian','Nami'],['Kalista','Renata Glasc'],['Jinx','Lulu'],['Zeri','Yuumi'],['Twitch','Lulu'],["Kog'Maw",'Lulu'],['Yasuo','Malphite'],['Yone','Gragas'],['Orianna','Jarvan IV'],['Aphelios','Thresh'],['Ezreal','Karma'],['Miss Fortune','Leona'],['Samira','Nautilus'],['Varus','Ashe'],['Sivir','Karma'],['Draven','Pyke'],['Caitlyn','Lux']];
