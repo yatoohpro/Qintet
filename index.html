@@ -1869,6 +1869,14 @@ h1,.cs-h1,.mk-title,.mo-name,.ts-title{-webkit-text-fill-color:#f4f0ff!important
 .wr-n{display:flex;flex-direction:column;min-width:0}.wr-n b{font-size:.86rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.wr-n small{color:var(--muted);font-size:.72rem}.wr-mv{font-size:.7rem;color:var(--muted)}.wr-mv.up{color:#3fd68f}.wr-mv.down{color:#ff5d6c}.wr-mv.new{color:#f5c451}
 @media(max-width:700px){.wr{grid-template-columns:1fr}}
 .bc-stage.rpl .bc-cast{display:none}
+.sf-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+.sf-ct{display:inline-block;padding:3px 9px;border-radius:99px;background:#f3f0ff;color:#1b1430;font-weight:800;font-size:.75rem}.sf-ct.w{background:#f5c451}
+.sf-eff{padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.05);border-left:3px solid var(--rc);font-weight:700}
+.sf-cands{display:flex;flex-direction:column;gap:8px}
+.sf-c{display:grid;grid-template-columns:56px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.sf-ci{display:flex;flex-direction:column;min-width:0}.sf-ci b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sf-ci small{font-size:.74rem;color:var(--muted)}
+.sf-cq{display:flex;flex-direction:column;align-items:flex-end;line-height:1.1}.sf-cq b{font-family:var(--title);font-size:1.4rem}.sf-cq span{font-size:.72rem;font-weight:700}
+@media(max-width:700px){.sf-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.sf-c{grid-template-columns:44px minmax(0,1fr) auto}.sf-c .btn{grid-column:1/-1}.sf-c svg,.sf-c img{width:44px;height:44px}}
 </style>
 </head>
 <body>
@@ -3063,6 +3071,26 @@ setTimeout(()=>{
   const _ms=musSync;musSync=function(){_ms();try{const want=MUS.on&&U.M&&U.M.stage==='live'&&!U.M.sim.done?.16:0;if(want&&!MUS.m){const a=new Audio();a.loop=true;a.volume=0;a.src=(window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'')+'audio/match.mp3';a.onerror=()=>{if(!a.dataset.f){a.dataset.f=1;a.src='audio/match.mp3'}};MUS.m=a}
     const a=MUS.m;if(!a)return;if(want&&a.paused){const p=a.play();if(p&&p.catch)p.catch(()=>{})}clearInterval(MUS.mt);MUS.mt=setInterval(()=>{const d=want-a.volume;if(Math.abs(d)<.02){a.volume=want;clearInterval(MUS.mt);if(!want&&!a.paused)a.pause();return}a.volume=clamp(a.volume+Math.sign(d)*.02,0,1)},60)}catch(e){}};
 },0);
+/* ---------- Staff : même habillage que l'Effectif ---------- */
+function vStaff(){const R=['coach','analyst','psy'],f=n=>n.toLocaleString('fr-FR'),fil=R.filter(r=>S.staff[r]),aq=fil.length?Math.round(fil.reduce((s,r)=>s+S.staff[r].q,0)/fil.length):0;
+  const role=R.includes(U.stSel)?U.stSel:'coach',x=S.staff[role],I=STAFF[role],c=SROLE_C[role];
+  const card=r=>{const y=S.staff[r],C=SROLE_C[r];
+    if(!y)return '<button class="rs-card rs-open'+(r===role?' on':'')+'" style="--rc:'+C+'" data-act="stsel" data-arg="'+r+'"><span>+</span><b>'+STAFF[r].n+'</b><small>Poste vacant · voir les candidats</small></button>';
+    return '<div class="rs-card st'+(r===role?' on':'')+'" style="--rc:'+C+'"><button class="rs-hit" data-act="stsel" data-arg="'+r+'" aria-label="'+esc(STAFF[r].n)+'"></button><div class="rs-ovr"><b class="num">'+y.q+'</b><small>QUAL.</small></div>'+
+      '<div class="rs-acts"><span class="sf-ct'+(y.contract<=1?' w':'')+'">'+y.contract+' s.</span></div><div class="rs-face">'+sface(y,150)+'</div><div class="rs-info"><small>'+STAFF[r].n+'</small><b>'+esc(y.name)+genTag({src:y.src||'gen'})+'</b><span>'+y.age+' ans · '+f(y.salary)+' k€/sem.</span><span class="rs-bars"><i style="width:'+y.q+'%;background:'+C+'"></i></span></div></div>'};
+  const L=S.staffPool.filter(y=>y.role===role).sort((a,b)=>b.q-a.q);
+  const cand=L.length?L.map(y=>{const d=x?y.q-x.q:null,fee=staffFee(y);
+    return '<div class="sf-c" style="--rc:'+c+'">'+sface(y,56)+'<div class="sf-ci"><b>'+esc(y.name)+genTag({src:y.src||'gen'})+'</b><small>'+y.age+' ans · '+f(y.salary)+' k€/sem. · '+y.contract+' saison'+(y.contract>1?'s':'')+'</small><small class="muted">'+esc(I.eff(y.q))+'</small></div><div class="sf-cq"><b class="num">'+y.q+'</b><span class="num '+(d==null||d>0?'good':d<0?'bad':'muted')+'">'+(d==null?'nouveau':(d>0?'+':'')+d)+'</span></div><button class="btn sm'+(d==null||d>0?' pri':'')+'" data-act="sthire" data-arg="'+y.id+'"'+(S.budget<fee?' disabled':'')+'>Recruter · '+ke(fee)+'</button></div>'}).join(''):'<div class="muted">Aucun candidat pour ce poste cette saison.</div>';
+  const kv=(l,v)=>'<div class="rs-kv"><span>'+l+'</span><b>'+v+'</b></div>';
+  const detail='<section class="rs-panel rs-det" style="--rc:'+c+'">'+(x?'<div class="rs-dh"><div><h2>'+esc(x.name)+genTag({src:x.src||'gen'})+'</h2><small>'+I.n+'</small></div><div class="rs-big"><b class="num">'+x.q+'</b><small>QUALITÉ</small></div></div>'+
+      '<div class="rs-kvs">'+kv('Âge',x.age+' ans')+kv('Salaire',f(x.salary)+' k€/sem.')+kv('Contrat',x.contract+' saison'+(x.contract>1?'s':''))+'</div>'+
+      '<div class="rs-st"><div><b>Qualité</b><small>'+esc(I.d)+'</small></div><span class="rs-sb hi"><i style="width:'+x.q+'%;background:'+c+'"></i></span><b class="num">'+x.q+'</b></div>'+
+      '<div class="sf-eff">'+esc(I.eff(x.q))+'</div>'+
+      '<div class="rs-dbtn"><button class="btn" data-act="stext" data-arg="'+role+'"'+(x.contract>=3||S.budget<Math.round(x.salary*3)?' disabled':'')+'>Prolonger 2 saisons · '+ke(x.salary*3)+'</button><button class="btn" data-act="stfire" data-arg="'+role+'"'+(S.budget<Math.round(x.salary*x.contract*2)?' disabled':'')+'>Remercier · '+ke(x.salary*x.contract*2)+'</button></div>'
+    :'<div class="rs-dh"><div><h2>Poste vacant</h2><small>'+I.n+'</small></div></div><div class="muted">'+esc(I.d)+' Recrutez un candidat ci-dessous.</div>')+
+    '<div class="rs-cap">Candidats · '+L.length+'</div><div class="sf-cands">'+cand+'</div><div class="muted small">Recruter à un poste occupé remplace le titulaire sans indemnité. La liste est renouvelée chaque saison.</div></section>';
+  const head='<div class="rs-top"><div class="row" style="gap:12px"><h2>Staff</h2><span class="muted">'+fil.length+' / 3 postes</span><span class="gold">'+ke(S.budget)+'</span></div><div class="row" style="gap:14px"><span class="muted small">Qualité moyenne <b>'+(aq||'—')+'</b></span><span class="muted small">Masse salariale <b>'+f(Math.round(staffSalary()*10)/10)+' k€/sem.</b></span><span class="muted small">Bonus en match <b>+'+analystBonus().toFixed(1)+'</b></span></div></div>';
+  return '<div class="rs">'+head+'<div class="rs-grid"><section class="rs-panel"><div class="rs-cards sf-cards">'+R.map(card).join('')+'</div><div class="muted small">Le staff agit chaque semaine : progression des joueurs, préparation des matchs, moral et récupération. Cliquez sur un poste pour voir sa fiche et ses candidats.</div></section>'+detail+'</div></div>'}
 /* ---------- Partie en continu : chrono, déplacements des 10 joueurs ---------- */
 const SECMIN=1.1,NEXT_T=[4,8,11,13.5,16,19,21.5,23.5,26,29.5,32],DEC_T=[0,6.6,9.6,12.2,14.6,17.6,20.1,22.1,24.6,28.1,30.6];
 const FOUNT={b:[.06,.94],r:[.94,.06]},CAMPS_B=[[.24,.42],[.22,.57],[.36,.6],[.55,.75],[.63,.85],[.44,.81]];
@@ -3423,7 +3451,7 @@ const mono=(name,sz)=>{const h=hsh(name)%360,ini=name.replace(/[^A-Za-zÀ-ÿ ]/g
 const qbar=(q,c)=>'<span class="ef-sb"><i style="width:'+clamp(q,0,100)+'%;background:'+(c||'linear-gradient(90deg,var(--ice2),var(--ice))')+'"></i></span>';
 
 /* Staff */
-function vStaff(){const f=n=>n.toLocaleString('fr-FR'),R=['coach','analyst','psy'],fil=R.filter(r=>S.staff[r]),aq=fil.length?Math.round(fil.reduce((s,r)=>s+S.staff[r].q,0)/fil.length):0;
+function vStaff_old(){const f=n=>n.toLocaleString('fr-FR'),R=['coach','analyst','psy'],fil=R.filter(r=>S.staff[r]),aq=fil.length?Math.round(fil.reduce((s,r)=>s+S.staff[r].q,0)/fil.length):0;
   const head=pageHead('Staff',[['Postes pourvus',fil.length+' / 3',fil.length<3?'bad':''],['Qualité moyenne',aq?aq+'<small> / 100</small>':'—'],['Masse salariale',f(Math.round(staffSalary()*10)/10)+'<small> k€ / sem.</small>'],['Bonus en match','+'+analystBonus().toFixed(1)]],'','Le staff agit chaque semaine : progression des joueurs, préparation des matchs, moral et récupération. La liste des candidats est renouvelée à chaque saison.');
   const slot=r=>{const x=S.staff[r],I=STAFF[r],c=SROLE_C[r];
     if(!x)return '<section class="st-card vac" style="--rc:'+c+'"><span class="ef-role">'+I.n+'</span><b class="st-vac">Poste vacant</b><span class="muted small">'+esc(I.d)+'</span><button class="btn sm" data-act="ptab" data-arg="staff:'+r+'">Voir les candidats</button></section>';
