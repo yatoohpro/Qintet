@@ -1617,6 +1617,20 @@ h1,.cs-h1,.mk-title,.mo-name,.ts-title{-webkit-text-fill-color:#f4f0ff!important
 .sp2-w{display:flex;flex-direction:column;align-items:flex-end;line-height:1.1}.sp2-w small{display:block}
 @media (display-mode: standalone){body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}#app{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}}
 .ts-inst{border-color:rgba(167,139,250,.55)!important}.ts-hint{font-size:.85rem;color:var(--muted);padding:6px 4px}
+/* pop-up événements */
+.evp-ov{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:16px;background:rgba(6,4,14,.72);backdrop-filter:blur(6px)}
+.evp{width:min(560px,100%);max-height:calc(100vh - 32px);overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding:22px 24px;background:var(--surf2);border:1px solid var(--line2);border-top:3px solid var(--acc);border-radius:14px;box-shadow:0 24px 70px rgba(0,0,0,.6),0 0 40px rgba(139,92,246,.18)}
+.evp.w{border-top-color:#f5a524}.evp.g{border-top-color:#3fd68f}
+@media(prefers-reduced-motion:no-preference){.evp{animation:evpin .22s ease-out}@keyframes evpin{from{opacity:0;transform:translateY(12px) scale(.98)}}}
+.evp-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.evp h2{margin:0;font-size:1.45rem;line-height:1.2}
+.evp-pl{display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--surf);border:1px solid var(--line);border-radius:10px;flex-wrap:wrap}
+.evp-pl b{display:block}.evp-pl small{color:var(--muted)}
+.evp-st{margin-left:auto;display:flex;gap:14px;font-size:.85rem;color:var(--muted)}.evp-st b{color:var(--text)}
+.evp-body{line-height:1.55;color:var(--text)}
+.evp-opts{display:flex;flex-direction:column;gap:8px}.evp-opts .btn{justify-content:flex-start;text-align:left;width:100%}
+.evp-btns{display:flex;justify-content:flex-end}
+.evp-res{padding:12px 14px;border-radius:10px;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.35);font-weight:600}
 </style>
 </head>
 <body>
@@ -3107,7 +3121,7 @@ function lifeWeek(won,played){if(!(S.chem>=0))S.chem=60;const t=me(),st=ROLES.ma
   /* blessures et burn-out */
   ps.forEach(p=>{if(p.inj){p.inj--;p.energy=clamp(p.energy+12,5,100);if(!p.inj){news(p.name+' est de nouveau disponible.');delete p.injWhy};return}
     p.lowE=p.energy<32?(p.lowE||0)+1:0;
-    if(p.lowE>=2&&Math.random()<.35){p.inj=ri(1,3);p.lowE=0;const burn=Math.random()<.5;addMail({k:'info',from:'Staff médical',subj:(burn?'Burn-out':'Blessure')+' : '+p.name,pid:p.id,body:'Coach,\n\n'+p.name+' est '+(burn?'en burn-out après des semaines à bout de forces':'blessé au poignet, à force de jouer fatigué')+'. Il sera indisponible '+p.inj+' semaine'+(p.inj>1?'s':'')+'.\n\nMettez l\'équipe au repos plus souvent pour éviter que ça se reproduise.\n\nLe staff médical'});news(p.name+' est indisponible '+p.inj+' semaine'+(p.inj>1?'s':'')+' ('+(burn?'burn-out':'blessure')+').')}});
+    if(p.lowE>=2&&Math.random()<.35){p.inj=ri(1,3);p.lowE=0;const burn=Math.random()<.5;addMail({k:'info',ev:1,from:'Staff médical',subj:(burn?'Burn-out':'Blessure')+' : '+p.name,pid:p.id,body:'Coach,\n\n'+p.name+' est '+(burn?'en burn-out après des semaines à bout de forces':'blessé au poignet, à force de jouer fatigué')+'. Il sera indisponible '+p.inj+' semaine'+(p.inj>1?'s':'')+'.\n\nMettez l\'équipe au repos plus souvent pour éviter que ça se reproduise.\n\nLe staff médical'});news(p.name+' est indisponible '+p.inj+' semaine'+(p.inj>1?'s':'')+' ('+(burn?'burn-out':'blessure')+').')}});
   fixInjured(t);
   /* cohésion */
   const lead=st.filter(p=>traitOf(p)==='leader').length,tox=st.filter(p=>traitOf(p)==='toxique').length;
@@ -3200,6 +3214,19 @@ Object.assign(MAILOPT,{ev_sick:[['rest','Le mettre au repos (absent 1 sem.)'],['
   ev_fam:[['yes','Accorder une semaine'],['no','Lui demander de rester']],ev_bad:[['sanc','Le sanctionner'],['def','Le défendre publiquement'],['no','Ne rien dire']],ev_pc:[['pay','Réparer en urgence'],['no','Faire avec']],
   ev_stream:[['yes','Accepter'],['no','Refuser']],ev_conf:[['psy','Séances avec le psy'],['talk','Lui parler vous-même'],['no','Le laisser gérer']],ev_visa:[['pay','Payer l\'avocat'],['no','Il manquera la semaine']]});
 Object.assign(MAILT,{ev_sick:['Maladie','w'],ev_out:['Départ','w'],ev_fam:['Personnel','q'],ev_bad:['Polémique','w'],ev_pc:['Imprévu',''],ev_stream:['Stream','g'],ev_conf:['Moral','q'],ev_visa:['Imprévu','']});
+/* pop-up des événements */
+const isPop=m=>(m.ev||m.k==='clash'||m.k==='leave')&&!m.seen&&(m.st!=='done'||m.pop);
+function evPopup(){const m=S&&S.mail.find(isPop);if(!m)return'';const p=m.pid?S.players[m.pid]:null,tg=MAILT[m.k]||MAILT.info,ans=m.st==='done';
+  const who=p?'<div class="evp-pl">'+pface(p,48)+'<div><b>'+esc(p.name)+'</b><small>'+ROLE_FR[p.role]+' · '+p.age+' ans · niveau '+Math.round(ovr(p))+'</small></div><div class="evp-st"><span>Moral <b>'+Math.round(p.morale)+'</b></span><span>Énergie <b>'+Math.round(p.energy)+'</b></span></div></div>':'';
+  const foot=ans?'<div class="evp-res">'+esc(m.res||'')+'</div><div class="evp-btns"><button class="btn pri" data-act="evok" data-arg="'+m.id+'">Continuer</button></div>'
+    :m.k==='info'?'<div class="evp-btns"><button class="btn pri" data-act="evok" data-arg="'+m.id+'">Compris</button></div>'
+    :(m.warn?'<div class="tip warn"><span>'+esc(m.warn)+'</span></div>':'')+'<div class="evp-opts">'+(MAILOPT[m.k]||[]).map((o,k)=>'<button class="btn'+(k?'':' pri')+'" data-act="evact" data-arg="'+m.id+':'+o[0]+'">'+o[1]+'</button>').join('')+'</div>';
+  return '<div class="evp-ov" role="dialog" aria-modal="true" aria-labelledby="evp-t"><div class="evp '+(tg[1]||'')+'"><div class="evp-top"><span class="pill '+(tg[1]||'')+'">'+tg[0]+'</span><span class="muted small">'+esc(m.from)+' · semaine '+m.w+'</span></div>'+
+    '<h2 id="evp-t">'+esc(m.subj)+'</h2>'+who+'<div class="evp-body">'+esc(m.body).replace(/\n/g,'<br>')+'</div>'+foot+'</div></div>'}
+setTimeout(()=>{ACT.evact=a=>{const[i,c]=a.split(':'),m=S.mail.find(x=>x.id===+i);if(!m)return;mailAct(+i,c);if(m.st==='done')m.pop=1};
+ACT.evok=a=>{const m=S.mail.find(x=>x.id===+a);if(m){m.seen=1;m.st='done';if(!m.res&&m.k==='info')m.res='Lu.'}};
+{const _r=render;render=function(){_r();const o=document.querySelector('.evp-ov');if(o)o.remove();if(U.screen==='game'&&S&&!U.M){const h=evPopup();if(h){app.insertAdjacentHTML('beforeend',h);const b=app.querySelector('.evp-ov .btn');if(b)b.focus({preventScroll:true})}}}}
+render()},0);
 function lifeBonus(d,side){let b=(S.chem-60)/25;const big=S.phase!=='regular'||(d&&rivalLevel(d.teams[side==='b'?'r':'b'])>0);if(big)b+=ROLES.filter(r=>traitOf(pl(d,side,r))==='toxique').length*.35;return b}
 /* synergies de champions */
 const SYN=[['Xayah','Rakan'],['Lucian','Nami'],['Kalista','Renata Glasc'],['Jinx','Lulu'],['Zeri','Yuumi'],['Twitch','Lulu'],["Kog'Maw",'Lulu'],['Yasuo','Malphite'],['Yone','Gragas'],['Orianna','Jarvan IV'],['Aphelios','Thresh'],['Ezreal','Karma'],['Miss Fortune','Leona'],['Samira','Nautilus'],['Varus','Ashe'],['Sivir','Karma'],['Draven','Pyke'],['Caitlyn','Lux']];
