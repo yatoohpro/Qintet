@@ -3232,6 +3232,7 @@ setTimeout(()=>{
   Object.assign(ACT,{wp(){if(S.budget<wpCost()||S.wp&&S.wp.s===S.season&&S.wp.w===S.week)return;S.budget-=wpCost();S.wp={s:S.season,w:S.week};ROLES.forEach(r=>{const p=S.players[me().lineup[r]];if(p)p.morale=clamp(p.morale+4,20,100)});news('Watch party organisée pour le match de la semaine.')},
     loanin(a){loanIn(+a)},loanout(a){loanOut(+a)},loanbuy(a){loanBuy(+a)},
     partner(a){const c=Math.round(lgWage(S.lg)*2);if(S.budget<c)return;S.budget-=c;S.partner={tid:+a,s:S.season};news('Partenariat signé avec '+T(+a).name+'.')},partnerend(){if(S.partner){news('Fin du partenariat avec '+T(S.partner.tid).name+'.');S.partner=null}}});
+  const _tj=takeJob;takeJob=function(tid){try{if(tid!==S.U)clubSwitch(tid)}catch(e){console.error(e)}const r=_tj(tid);try{news('Infrastructures de '+S.teams[tid].name+' : '+Object.entries(S.infra).filter(([k,v])=>v).map(([k,v])=>INFRA[k][0]+' niv. '+v).join(', ')+(Object.values(S.infra).some(v=>v)?'.':' aucune pour le moment.'))}catch(e){}return r};
   const _vm=vMonde;vMonde=function(){const h=_vm();const k=h.indexOf('</section>');return k>0?h.slice(0,k+10)+worldPanel()+h.slice(k+10):worldPanel()+h};
   const _ve=vEff;vEff=function(){const h=_ve(),t=me(),p=S.players[U.effSel]&&S.players[U.effSel].team===S.U?S.players[U.effSel]:null,sel=p||t.roster.map(id=>S.players[id]).find(q=>t.lineup[q.role]===q.id);if(!sel)return h;
     const extra=relBox(sel)+learnBox(sel)+'<div class="rs-kv rs-cl"><span>Clause de départ</span><b>'+ke(clauseOf(sel))+'</b></div>';return h.replace('<div class="rs-dbtn">',extra+'<div class="rs-dbtn"><button class="btn'+(sel.pc?' on':'')+'" data-act="pc" data-arg="'+sel.id+'">'+(sel.pc?'Coach individuel actif · arrêter':'Coach individuel · '+ke(pcCost())+'/sem.')+'</button>')};
@@ -3269,7 +3270,7 @@ function vStaff(){const R=['coach','analyst','psy'],f=n=>n.toLocaleString('fr-FR
   return '<div class="rs">'+head+'<div class="rs-grid"><section class="rs-panel"><div class="rs-cards sf-cards">'+R.map(card).join('')+'</div><div class="muted small">Le staff agit chaque semaine : progression des joueurs, préparation des matchs, moral et récupération. Cliquez sur un poste pour voir sa fiche et ses candidats.</div></section>'+detail+'</div></div>'}
 
 /* ---------- Version et mise à jour ---------- */
-const QV='2026.11.25-6';
+const QV='2026.11.25-7';
 async function checkUpdate(){try{if(location.protocol==='file:'&&!window.__desktop)return;const base=window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'';const r=await fetch(base+'index.html?v='+Date.now(),{cache:'no-store'});if(!r.ok)return;const t=await r.text(),m=t.match(/const QV='([^']+)'/);
   if(m&&m[1]!==QV&&!document.querySelector('.upd')){document.body.insertAdjacentHTML('beforeend','<div class="upd" role="status">Nouvelle version disponible ('+m[1]+')<button class="btn sm pri" id="updGo">Mettre à jour</button></div>');
     document.getElementById('updGo').onclick=async()=>{try{if(typeof save==='function'&&S)save()}catch(e){}if(window.__desktop){try{const x=await fetch('/__refresh',{cache:'no-store'});if(x.ok){location.reload();return}}catch(e){}document.open();document.write(t.replace('<meta charset="utf-8">','<meta charset="utf-8">\n<script>window.__desktop=1<\/script>'));document.close();return}
@@ -3586,6 +3587,21 @@ function advBox(p){const cur=((S.stat.season.pl||{})[p.id]||{}),H=S.shist||{},ro
 const wpCost=()=>Math.max(3,Math.round(lgWage(S.lg)*1.1));
 function wpResult(won){const W=S.wp;if(!W||W.s!==S.season||W.w!==S.week||W.done)return;W.done=1;const inc=Math.round(wpCost()*(won?1.9:.8)*clamp(S.fans/LG[S.lg].fans,.5,2.5));S.budget+=inc;S.fans=Math.round(S.fans*(won?1.04:1.015));
   news('Watch party '+(won?'en folie après la victoire':'animée malgré la défaite')+' : '+ke(inc)+' de recettes (billetterie, buvette, boutique).');if(typeof addTweet==='function')addTweet({who:me().name,handle:'@'+String(me().tag).replace(/\W/g,''),tid:S.U,ver:1,kind:'off',mine:1,txt:(won?'🎉 Quelle ambiance à la watch party ! Merci à tous d\'être venus pousser l\'équipe 💜':'💜 Merci aux fans présents à la watch party malgré le résultat. On revient plus forts !')})}
+
+/* ---------- Changement de club : ce qui appartient au club reste au club ---------- */
+function defaultInfra(t){const lv=LG[t.lg].lvl,ord=S.teams.filter(x=>x.lg===t.lg).sort((a,b)=>teamOvr(b)-teamOvr(a)),top=ord.indexOf(t)<3?1:0,base=(lv>=85?2:lv>=75?1:0)+top,o={};
+  ['train','med','stream','video','acad','house'].forEach(k=>{const h=hsh(t.name+'#inf'+k)%3;o[k]=clamp(base-(h===0?1:0)-(['acad','house'].includes(k)?1:0),0,5)});return o}
+function clubSwitch(newId){const old=S.U,ot=S.teams[old];
+  /* prêts en cours : chacun rentre chez lui */
+  (S.loans||[]).filter(l=>!l.end).forEach(l=>{l.end=1;const p=S.players[l.pid];if(!p||p.retired)return;const cur=p.team!=null?S.teams[p.team]:null;
+    if(l.to===old&&cur&&cur.id===old){cur.roster=cur.roster.filter(x=>x!==p.id);const back=S.teams[l.from];p.team=back.id;back.roster.push(p.id);ensureLineup(back)}
+    else if(l.from===old&&cur&&cur.id===l.to){cur.roster=cur.roster.filter(x=>x!==p.id);ensureLineup(cur);p.team=old;ot.roster.push(p.id)}});
+  if(ot)ensureLineup(ot);
+  /* bilan du club quitté, sauvegardé pour un éventuel retour */
+  S.clubMem=S.clubMem||{};S.clubMem[old]={infra:S.infra||null,rexp:S.rexp||0,capBoost:S.capBoost||0,capN:S.capN||0,partner:S.partner||null,owner:S.owner||null};
+  const m=S.clubMem[newId];S.infra=m&&m.infra?m.infra:defaultInfra(S.teams[newId]);S.infraQ={};S.rexp=m?m.rexp:0;S.capBoost=m?m.capBoost:0;S.capN=m?m.capN:0;S.partner=m?m.partner:null;S.owner=m?m.owner:null;
+  S.attrB=null;S.primeW=0;S.bootS=null;S.wp=null;S.loan=null;S.wcap=null;S.cvHist=[];S.buyS=null;
+  me().roster.forEach(id=>{const p=S.players[id];if(p&&p.pc)p.pc=0})}
 /* ---------- Partie en continu : chrono, déplacements des 10 joueurs ---------- */
 const SECMIN=1.1,NEXT_T=[4,8,11,13.5,16,19,21.5,23.5,26,29.5,32],DEC_T=[0,6.6,9.6,12.2,14.6,17.6,20.1,22.1,24.6,28.1,30.6];
 const FOUNT={b:[.06,.94],r:[.94,.06]},CAMPS_B=[[.24,.42],[.22,.57],[.36,.6],[.55,.75],[.63,.85],[.44,.81]];
