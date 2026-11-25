@@ -3196,9 +3196,9 @@ setTimeout(()=>{
   const _np=newPatch;newPatch=function(){_np.apply(this,arguments);try{patchTweets()}catch(e){}};
   const _ru=recordUser;recordUser=function(ur,won){_ru(ur,won);try{rivalCheck(ur,won)}catch(e){}};
   const _rl=rivalLevel;rivalLevel=function(oid){const b=_rl(oid);return S.riv&&S.riv[oid]?Math.max(b,1):b};
-  const _es=endSeason;endSeason=function(){try{bobjEnd();const t=me();S.formed=S.formed||{};t.roster.forEach(id=>{const p=S.players[id],d=ovr(p)-p.o0;if(d>0)S.formed[p.name]=(S.formed[p.name]||0)+d})}catch(e){}_es.apply(this,arguments);try{retirements()}catch(e){console.error(e)}};
+  const _es=endSeason;endSeason=function(){try{if(S.loan&&!S.loan.done&&S.loan.ok)loanEnd()}catch(e){}try{bobjEnd();const t=me();S.formed=S.formed||{};t.roster.forEach(id=>{const p=S.players[id],d=ovr(p)-p.o0;if(d>0)S.formed[p.name]=(S.formed[p.name]||0)+d})}catch(e){}_es.apply(this,arguments);try{retirements()}catch(e){console.error(e)}};
   const _am=addMail;addMail=function(m){_am(m);try{if(m.k==='clash')relAdd(S.players[m.pid],S.players[m.pid2],-.7)}catch(e){}};
-  const _lw=lifeWeek;lifeWeek=function(won,played){try{repairEconomy()}catch(e){}_lw(won,played);try{jobWeek();relWeek(won,played);me().roster.forEach(id=>{const p=S.players[id];if(p.promise&&played&&me().lineup[p.role]!==p.id){p.morale=clamp(p.morale-4,20,100);p.brk=(p.brk||0)+1;if(p.brk===3)addMail({k:'info',from:p.name,subj:'Promesse non tenue',pid:p.id,body:'Coach,\n\nOn m\'avait promis une place de titulaire en signant ici. Je reste sur le banc depuis trois semaines. Si ça continue, je demanderai à partir.\n\n'+p.name})}else if(p.promise)p.brk=0});contractWeek();worldWeek();me().roster.forEach(id=>{const p=S.players[id];if(p.learn){p.learn.w--;if(p.learn.w<=0){if(p.pool.length>=6){p.pool.sort((a,b)=>b.m-a.m);p.pool.pop()}p.pool.push({c:p.learn.c,m:58});news(p.name+' maîtrise désormais '+p.learn.c+'.');delete p.learn}}})}catch(e){console.error(e)}};
+  const _lw=lifeWeek;lifeWeek=function(won,played){try{repairEconomy()}catch(e){}_lw(won,played);try{try{loanWeek()}catch(e){console.error(e)}jobWeek();relWeek(won,played);me().roster.forEach(id=>{const p=S.players[id];if(p.promise&&played&&me().lineup[p.role]!==p.id){p.morale=clamp(p.morale-4,20,100);p.brk=(p.brk||0)+1;if(p.brk===3)addMail({k:'info',from:p.name,subj:'Promesse non tenue',pid:p.id,body:'Coach,\n\nOn m\'avait promis une place de titulaire en signant ici. Je reste sur le banc depuis trois semaines. Si ça continue, je demanderai à partir.\n\n'+p.name})}else if(p.promise)p.brk=0});contractWeek();worldWeek();me().roster.forEach(id=>{const p=S.players[id];if(p.learn){p.learn.w--;if(p.learn.w<=0){if(p.pool.length>=6){p.pool.sort((a,b)=>b.m-a.m);p.pool.pop()}p.pool.push({c:p.learn.c,m:58});news(p.name+' maîtrise désormais '+p.learn.c+'.');delete p.learn}}})}catch(e){console.error(e)}};
   const _vq=vQG;vQG=function(){const h=_vq();const jn=S.jobNext!=null&&S.teams[S.jobNext]?'<section class="db-rep">'+crest(S.teams[S.jobNext],26)+'<b>Pré-accord signé</b><span class="muted">Vous rejoindrez '+esc(S.teams[S.jobNext].name)+' ('+esc(S.teams[S.jobNext].lg)+') au début de la saison prochaine.</span></section>':'';return jn+h.replace('<div class="db-r2">',bobjPanel()+'<div class="db-r2">')};
   const _sns=startNextSeason;startNextSeason=function(){if(S.phase==='offseason'&&S.jobNext!=null&&S.teams[S.jobNext]){const id=S.jobNext;S.jobNext=null;takeJob(id)}return _sns.apply(this,arguments)};
   const _vc=vClub;vClub=function(){const h=_vc();const k=h.indexOf('</section>');return k>0?h.slice(0,k+10)+coachPanel()+h.slice(k+10):h};
@@ -3245,7 +3245,7 @@ function vStaff(){const R=['coach','analyst','psy'],f=n=>n.toLocaleString('fr-FR
   return '<div class="rs">'+head+'<div class="rs-grid"><section class="rs-panel"><div class="rs-cards sf-cards">'+R.map(card).join('')+'</div><div class="muted small">Le staff agit chaque semaine : progression des joueurs, préparation des matchs, moral et récupération. Cliquez sur un poste pour voir sa fiche et ses candidats.</div></section>'+detail+'</div></div>'}
 
 /* ---------- Version et mise à jour ---------- */
-const QV='2026.11.25-3';
+const QV='2026.11.25-4';
 async function checkUpdate(){try{if(location.protocol==='file:'&&!window.__desktop)return;const base=window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'';const r=await fetch(base+'index.html?v='+Date.now(),{cache:'no-store'});if(!r.ok)return;const t=await r.text(),m=t.match(/const QV='([^']+)'/);
   if(m&&m[1]!==QV&&!document.querySelector('.upd')){document.body.insertAdjacentHTML('beforeend','<div class="upd" role="status">Nouvelle version disponible ('+m[1]+')<button class="btn sm pri" id="updGo">Mettre à jour</button></div>');
     document.getElementById('updGo').onclick=async()=>{try{if(typeof save==='function'&&S)save()}catch(e){}if(window.__desktop){try{const x=await fetch('/__refresh',{cache:'no-store'});if(x.ok){location.reload();return}}catch(e){}document.open();document.write(t.replace('<meta charset="utf-8">','<meta charset="utf-8">\n<script>window.__desktop=1<\/script>'));document.close();return}
@@ -3432,6 +3432,47 @@ function realCoachCands(){if(!S||!S.staffPool)return;const cur=S.staff.coach?S.s
 function coachDataSync(){if(!S||S.pv)return;RCOD=null;const R=realCoaches(),byName={};Object.values(R).forEach(c=>byName[c.name]=c);const x=S.staff&&S.staff.coach;
   if(x&&byName[x.name]&&byName[x.name].q){const c=byName[x.name];x.q=c.q;x.pot=Math.max(c.pot||c.q,c.q);if(c.age)x.age=c.age;x.src='file'}
   if(S.staffPool&&!S.staffPool.some(y=>y.from!=null))realCoachCands()}
+
+/* ---------- Académies : appels temporaires vers l'équipe première ---------- */
+const ACAD_PAR={'LCK CL':'LCK','LDL':'LPL','NACL':'LCS','LFL':'LEC'};let ACADM=null,ACADN=0;
+function acadMap(){if(ACADM&&ACADN===S.teams.length)return ACADM;ACADM={par:{},kid:{}};ACADN=S.teams.length;const nrm=x=>String(x).toLowerCase().replace(/[^a-z0-9]/g,'');
+  S.teams.filter(t=>ACAD_PAR[t.lg]).forEach(t=>{let best=null,bl=0;S.teams.filter(m=>m.lg===ACAD_PAR[t.lg]).forEach(m=>{let sc=0;const rest=String(t.tag).slice(String(m.tag).length);
+    if(String(t.tag).toUpperCase().startsWith(String(m.tag).toUpperCase())&&(/^\./.test(rest)||/^[ABCYJ]$/i.test(rest)))sc=10+m.tag.length;
+    const mw=nrm(m.name.split(' ')[0]);if(mw.length>=3&&nrm(t.name).startsWith(mw)&&/academy|challengers|youth|young|junior|blue|bee|global/i.test(t.name))sc=Math.max(sc,mw.length);
+    if(sc>bl){bl=sc;best=m}});if(best){ACADM.par[t.id]=best.id;ACADM.kid[best.id]=t.id}});return ACADM}
+function swapPl(p,q){const tp=S.teams[p.team],tq=S.teams[q.team],r=p.role,ps=tp.lineup[r]===p.id,qs=tq.lineup[q.role]===q.id;
+  tp.roster=tp.roster.filter(x=>x!==p.id);tq.roster=tq.roster.filter(x=>x!==q.id);p.team=tq.id;q.team=tp.id;tp.roster.push(q.id);tq.roster.push(p.id);
+  if(ps)tp.lineup[r]=q.id;if(qs)tq.lineup[q.role]=p.id;delete p.dep;delete q.dep;ensureLineup(tp);ensureLineup(tq)}
+const hdl=t=>'@'+String(t.tag).replace(/\W/g,'');
+function loanWeek(){const A=acadMap(),L=S.loan;
+  if(L&&L.s===S.season&&!L.done&&(S.week>=L.until||S.phase!=='regular'))return loanEnd();
+  if(S.phase!=='regular'||L&&L.s===S.season||S.week<3||S.week>S.rw-4||Math.random()>.07)return;if(S.mail.some(m=>m.st!=='done'&&/^ev_(callup|loanend)/.test(m.k)))return;
+  const me_=me(),par=A.par[S.U]!=null?S.teams[A.par[S.U]]:null,kid=A.kid[S.U]!=null?S.teams[A.kid[S.U]]:null,wk=ri(3,4);
+  if(par){/* vous êtes l'académie : l'équipe première appelle un de vos joueurs */
+    const c=ROLES.map(r=>S.players[me_.lineup[r]]).filter(p=>p&&!p.inj).map(p=>({p,q:S.players[par.lineup[p.role]]})).filter(x=>x.q&&!x.q.inj).sort((a,b)=>(ovr(b.p)+(b.p.pot-ovr(b.p))*.5)-(ovr(a.p)+(a.p.pot-ovr(a.p))*.5))[0];if(!c)return;
+    S.loan={s:S.season,kind:'up',p:c.p.id,q:c.q.id,par:par.id,kid:S.U,wk,until:S.week+wk,done:0,ok:0};
+    addMail({k:'ev_callup',ev:1,exp:1,from:'Direction de '+par.name,pid:c.p.id,subj:par.name+' appelle '+c.p.name,body:'Coach,\n\nLe staff de '+par.name+' a repéré les performances de '+c.p.name+' ('+ROLE_FR[c.p.role]+', niveau '+Math.round(ovr(c.p))+'). Nous l\'appelons en équipe première pendant '+wk+' semaines.\n\nEn échange, '+c.q.name+' ('+ROLE_FR[c.q.role]+', niveau '+Math.round(ovr(c.q))+') descend chez vous pendant cette période. À la fin, nous déciderons si '+c.p.name+' reste définitivement en équipe première.\n\nLa direction de '+par.name})}
+  else if(kid){/* vous êtes l'équipe première : une pépite de l'académie brille */
+    const c=kid.roster.map(id=>S.players[id]).filter(p=>!p.inj).map(p=>({p,q:S.players[me_.lineup[p.role]]})).filter(x=>x.q&&!x.q.inj).sort((a,b)=>(b.p.pot+ovr(b.p))-(a.p.pot+ovr(a.p)))[0];if(!c)return;
+    S.loan={s:S.season,kind:'down',p:c.p.id,q:c.q.id,par:S.U,kid:kid.id,wk,until:S.week+wk,done:0,ok:0};
+    addMail({k:'ev_callup2',ev:1,exp:1,from:'Staff de '+kid.name,pid:c.p.id,subj:'Pépite de l\'académie : '+c.p.name,body:'Coach,\n\n'+c.p.name+' ('+ROLE_FR[c.p.role]+', '+c.p.age+' ans, niveau '+Math.round(ovr(c.p))+', potentiel '+Math.round(c.p.pot)+') domine en '+kid.lg+'. Nous proposons de l\'appeler en équipe première pendant '+wk+' semaines.\n\nPendant ce temps, '+c.q.name+' descendrait à l\'académie. À la fin de l\'essai, vous déciderez de le garder définitivement ou non.\n\nLe staff de '+kid.name})}}
+function loanStart(){const L=S.loan,p=S.players[L.p],q=S.players[L.q],par=S.teams[L.par],kid=S.teams[L.kid];if(!p||!q||p.team!==(L.kind==='up'?L.kid:L.kid)||q.team!==L.par)return false;
+  swapPl(p,q);L.ok=1;L.until=S.week+L.wk;news(p.name+' est appelé chez '+par.name+' ; '+q.name+' descend chez '+kid.name+' pour '+L.wk+' semaines.');
+  if(typeof addTweet==='function')addTweet({who:par.name,handle:hdl(par),tid:par.id,ver:1,kind:'off',long:1,mine:1,txt:'📢 MOUVEMENT INTERNE\n\n'+p.name+' rejoint temporairement l\'équipe première au poste de '+ROLE_FR[p.role]+'.\n\n'+q.name+' part s\'entraîner avec '+kid.name+' pendant '+L.wk+' semaines.\n\nOn compte sur vous deux ! 💪'});return true}
+function loanEnd(){const L=S.loan;L.done=1;if(!L.ok)return;const p=S.players[L.p],q=S.players[L.q],par=S.teams[L.par],kid=S.teams[L.kid];if(!p||!q||p.team!==L.par||q.team!==L.kid)return;
+  if(L.kind==='up'){const keep=Math.random()<(ovr(p)>=ovr(q)-1?.6:.25);
+    if(keep){txRec(p,kid.id,par.id,0);txRec(q,par.id,kid.id,0);p.morale=clamp(p.morale+15,20,100);const b=Math.round(lgWage(S.lg)*1.5);S.budget+=b;
+      addMail({k:'info',ev:1,from:'Direction de '+par.name,pid:p.id,subj:par.name+' garde '+p.name+' définitivement',body:'Coach,\n\n'+p.name+' a convaincu notre staff : il reste définitivement en équipe première.\n\n'+q.name+' reste donc chez vous de façon permanente. Pour vous remercier du travail de formation, nous versons '+ke(b)+' au club.\n\nLa direction de '+par.name});news(par.name+' garde '+p.name+' définitivement ; '+q.name+' reste chez '+kid.name+'.')}
+    else{swapPl(p,q);addMail({k:'info',ev:1,from:'Direction de '+par.name,pid:p.id,subj:p.name+' revient chez vous',body:'Coach,\n\nLa période d\'essai de '+p.name+' est terminée : il revient dans votre effectif, et '+q.name+' remonte en équipe première.\n\nMerci pour votre collaboration.\n\nLa direction de '+par.name});news(p.name+' revient chez '+kid.name+' après son passage chez '+par.name+'.')}}
+  else addMail({k:'ev_loanend',ev:1,from:'Staff de '+me().name,pid:p.id,subj:'Fin de l\'essai de '+p.name,body:'Coach,\n\nLa période d\'essai de '+p.name+' en équipe première est terminée. Voulez-vous le garder définitivement ? Dans ce cas, '+q.name+' reste à l\'académie ('+kid.name+').\n\nVotre staff'})}
+function loanMail(m,c,done){const L=S.loan;if(!L){done('L\'opération a été annulée.');return true}if(/callup/.test(m.k)&&L.done){done('Trop tard : la période prévue est passée.');return true}const p=S.players[L.p],q=S.players[L.q];
+  if(m.k==='ev_callup'){if(c==='ok'){if(!loanStart()){done('Le mouvement n\'est plus possible.');return true}p.morale=clamp(p.morale+10,20,100);done(p.name+' rejoint l\'équipe première pour '+L.wk+' semaines. '+q.name+' arrive chez vous.')}
+    else{L.done=1;p.morale=clamp(p.morale-15,20,100);S.conf=clamp(S.conf-3,0,100);done('Vous refusez. '+p.name+' est très déçu de ne pas saisir sa chance.')}return true}
+  if(m.k==='ev_callup2'){if(c==='ok'){if(!loanStart()){done('Le mouvement n\'est plus possible.');return true}done(p.name+' rejoint votre équipe pour '+L.wk+' semaines d\'essai. '+q.name+' descend à l\'académie.')}else{L.done=1;done(p.name+' reste à l\'académie.')}return true}
+  if(m.k==='ev_loanend'){const par=S.teams[L.par],kid=S.teams[L.kid];if(p.team!==L.par||q.team!==L.kid){done('La situation a changé entre-temps.');return true}
+    if(c==='keep'){txRec(p,kid.id,par.id,0);txRec(q,par.id,kid.id,0);p.morale=clamp(p.morale+12,20,100);q.morale=clamp(q.morale-10,20,100);done(p.name+' reste définitivement en équipe première. '+q.name+' poursuit à l\'académie.')}
+    else{swapPl(p,q);done(p.name+' retourne à l\'académie et '+q.name+' reprend sa place.')}return true}
+  return false}
 /* ---------- Partie en continu : chrono, déplacements des 10 joueurs ---------- */
 const SECMIN=1.1,NEXT_T=[4,8,11,13.5,16,19,21.5,23.5,26,29.5,32],DEC_T=[0,6.6,9.6,12.2,14.6,17.6,20.1,22.1,24.6,28.1,30.6];
 const FOUNT={b:[.06,.94],r:[.94,.06]},CAMPS_B=[[.24,.42],[.22,.57],[.36,.6],[.55,.75],[.63,.85],[.44,.81]];
@@ -4072,6 +4113,7 @@ function randEvents(played){const t=me(),ps=t.roster.map(id=>S.players[id]).filt
   const m=ch[1]();if(!m)return;if(m.k!=='info'){m.ev=1;m.exp=1}addMail(m);if(m.k!=='info')news('Événement : '+m.subj+'.')}
 function evMail(m,c,done){if(!m.k||m.k.indexOf('ev_')!==0)return false;
   if(m.k==='ev_job')return jobDecide(m,c,done);
+  if(/^ev_(callup|loanend)/.test(m.k))return loanMail(m,c,done);
   if(m.k==='ev_ret'){const p=S.players[m.pid];if(c==='yes'&&p){const q=Math.round(clamp(ovr(p)-8,40,90)),x={id:S.sid++,role:'analyst',src:'file',name:p.name,q,age:p.age,salary:Math.round((1+Math.pow(Math.max(0,q-38),1.35)*.075)*10)/10,contract:2};const old=S.staff.analyst;S.staff.analyst=x;staffTweet(x);done(p.name+' devient votre analyste (niveau '+q+')'+(old?', à la place de '+old.name:'')+'.')}else done('Vous lui souhaitez bonne chance pour la suite.');return true}
   if(m.k==='ev_clause'){const p=S.players[m.pid],t=me(),B=S.teams[m.tid];if(!p||p.team!==S.U){done('Le joueur n\'est plus au club.');return true}
     if(c==='raise'){const a=Math.round(p.salary*1.3*10)/10;if(Math.random()<.6){p.salary=a;EVMOR(p,8);done(p.name+' reste : salaire porté à '+a+' k€ par semaine.')}else{c='go';m.res=null}}
@@ -4106,6 +4148,7 @@ function evMail(m,c,done){if(!m.k||m.k.indexOf('ev_')!==0)return false;
 Object.assign(MAILOPT,{ev_sick:[['rest','Le mettre au repos (absent 1 sem.)'],['play','Le faire jouer quand même']],ev_out:[['talk','Le convaincre de rester'],['prime','Prime de fidélité (4 sem. de salaire)'],['sell','Le placer sur la liste des transferts'],['no','Refuser net']],
   ev_fam:[['yes','Accorder une semaine'],['no','Lui demander de rester']],ev_bad:[['sanc','Le sanctionner'],['def','Le défendre publiquement'],['no','Ne rien dire']],ev_pc:[['pay','Réparer en urgence'],['no','Faire avec']],
   ev_stream:[['yes','Accepter'],['no','Refuser']],ev_conf:[['psy','Séances avec le psy'],['talk','Lui parler vous-même'],['no','Le laisser gérer']],ev_visa:[['pay','Payer l\'avocat'],['no','Il manquera la semaine']]});
+Object.assign(MAILOPT,{ev_callup:[['ok','Accepter l\'appel'],['no','Refuser']],ev_callup2:[['ok','Appeler le joueur'],['no','Le laisser à l\'académie']],ev_loanend:[['keep','Le garder définitivement'],['back','Le renvoyer à l\'académie']]});Object.assign(MAILT,{ev_callup:['Académie','g'],ev_callup2:['Académie','g'],ev_loanend:['Académie','q']});
 Object.assign(MAILOPT,{ev_job:[['yes','Accepter (arrivée à l\'intersaison)'],['leverage','Rester et demander plus de moyens'],['no','Décliner']]});Object.assign(MAILT,{ev_job:['Emploi','g']});
 Object.assign(MAILOPT,{ev_ret:[['yes','Le prendre comme analyste'],['no','Décliner']],ev_clause:[['raise','Proposer +30 % de salaire pour le garder'],['go','Le laisser partir']]});
 Object.assign(MAILT,{ev_ret:['Retraite','q'],ev_clause:['Clause','w'],ev_sick:['Maladie','w'],ev_out:['Départ','w'],ev_fam:['Personnel','q'],ev_bad:['Polémique','w'],ev_pc:['Imprévu',''],ev_stream:['Stream','g'],ev_conf:['Moral','q'],ev_visa:['Imprévu','']});
