@@ -2019,6 +2019,7 @@ body[data-scr=menu]::after,body[data-scr=start]::after{background:linear-gradien
 @media(max-width:560px){.bd-rec{padding:4px 10px 4px 4px}.bd-rec img,.bd-rec svg{width:26px!important;height:26px!important}.bd-tm small{display:none}.bd-tm{padding:8px}.bd-tm img,.bd-tm svg{width:28px!important;height:28px!important}}
 @media(max-width:1000px){.bd>*{flex:none}.bd-main{flex:none;min-height:auto;grid-template-rows:auto auto}.bd-center,.bd-col{min-height:auto}}
 .sf-from{color:#f5c451!important}
+.mt-q{flex:1;min-width:200px}.mt-q input{background:#0f0b1c;color:var(--text);border:1px solid var(--line2);border-radius:8px;padding:8px 12px;font:inherit;width:100%}.mt-q input:focus{outline:none;border-color:#a78bfa;box-shadow:0 0 0 3px rgba(139,92,246,.25)}
 </style>
 </head>
 <body>
@@ -3244,13 +3245,16 @@ function vStaff(){const R=['coach','analyst','psy'],f=n=>n.toLocaleString('fr-FR
   return '<div class="rs">'+head+'<div class="rs-grid"><section class="rs-panel"><div class="rs-cards sf-cards">'+R.map(card).join('')+'</div><div class="muted small">Le staff agit chaque semaine : progression des joueurs, préparation des matchs, moral et récupération. Cliquez sur un poste pour voir sa fiche et ses candidats.</div></section>'+detail+'</div></div>'}
 
 /* ---------- Version et mise à jour ---------- */
-const QV='2026.11.25-1';
+const QV='2026.11.25-2';
 async function checkUpdate(){try{if(location.protocol==='file:'&&!window.__desktop)return;const base=window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'';const r=await fetch(base+'index.html?v='+Date.now(),{cache:'no-store'});if(!r.ok)return;const t=await r.text(),m=t.match(/const QV='([^']+)'/);
   if(m&&m[1]!==QV&&!document.querySelector('.upd')){document.body.insertAdjacentHTML('beforeend','<div class="upd" role="status">Nouvelle version disponible ('+m[1]+')<button class="btn sm pri" id="updGo">Mettre à jour</button></div>');
     document.getElementById('updGo').onclick=async()=>{try{if(typeof save==='function'&&S)save()}catch(e){}if(window.__desktop){try{const x=await fetch('/__refresh',{cache:'no-store'});if(x.ok){location.reload();return}}catch(e){}document.open();document.write(t.replace('<meta charset="utf-8">','<meta charset="utf-8">\n<script>window.__desktop=1<\/script>'));document.close();return}
       try{const rs=await navigator.serviceWorker?.getRegistrations?.();(rs||[]).forEach(x=>x.update())}catch(e){}location.reload()}}}catch(e){}}
 setTimeout(checkUpdate,2500);setInterval(checkUpdate,10*60*1000);
 /* ========== Centre des transferts (mercato v3) ========== */
+const mkNorm=t=>String(t||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
+let MKQ=null;document.addEventListener('input',e=>{const t=e.target;if(!t||t.id!=='mkName')return;U.mkName=t.value;U.mkMore=0;clearTimeout(MKQ);MKQ=setTimeout(()=>{const pos=t.selectionStart;render();const el=document.querySelector('#mkName');if(el){el.focus();try{el.setSelectionRange(pos,pos)}catch(x){}}},220)});
+
 const payroll=()=>me().roster.reduce((a,id)=>a+(S.players[id]?S.players[id].salary:0),0);
 function wageCap(){if(!S.wcap||S.wcap.s!==S.season||S.wcap.lg!==S.lg)S.wcap={s:S.season,lg:S.lg,v:Math.round(Math.max(payroll()*1.12,lgWage(S.lg)*1.45))};return S.wcap.v}
 const reserveAmt=()=>Math.round(4*(payroll()+(typeof staffSalary==='function'?staffSalary():0)));
@@ -3290,13 +3294,14 @@ function vMk(){const w=mwin(),t=me(),full=t.roster.length>=9,tab=U.mtab||'dash';
       '<section class="db-card"><div class="db-h"><h2>Suivis</h2><button class="btn sm ghost" data-act="mtab" data-arg="short">Tout voir</button></div>'+(sl.length?sl.map(p=>'<div class="mt-off">'+pface(p,28)+'<span><b>'+esc(p.name)+'</b><small>'+ROLE_FR[p.role]+' · '+(p.team!=null?esc(T(p.team).tag):'libre')+'</small></span><b class="num">'+Math.round(ovr(p))+'</b></div>').join(''):'<span class="muted small">Ajoutez des joueurs avec ★ depuis la recherche.</span>')+'</section></div></div>'}
   else if(tab==='search'||tab==='short'){const srt=U.mkSort||'ovr';
     const F={all:'Tous',real:'Joueurs réels',reach:'Intéressés par mon club',budget:'Dans mon budget',gems:'Pépites (21 ans et moins)',free:'Joueurs libres'},SO={ovr:'Niveau',pot:'Potentiel',int:'Intérêt',val:'Moins chers',age:'Plus jeunes'};
-    let list=tab==='short'?S.short.map(id=>S.players[id]):Object.values(S.players).filter(p=>!p.retired&&p.team!==S.U&&(!U.mk||U.mk==='ALL'||p.role===U.mk)&&(U.mkf!=='budget'||(p.team===null?0:value(p))<=tb)&&(U.mkf!=='gems'||(p.age<=21&&potRange(p)[1]-ovr(p)>=8))&&(U.mkf!=='free'||p.team===null)&&(U.mkf!=='reach'||interestOf(p)>=-12)&&(U.mkf!=='real'||p.src!=='gen'));
+    const nq=mkNorm(U.mkName||'');
+    let list=tab==='short'?S.short.map(id=>S.players[id]):nq?Object.values(S.players).filter(p=>!p.retired&&p.team!==S.U&&mkNorm(p.name).includes(nq)):Object.values(S.players).filter(p=>!p.retired&&p.team!==S.U&&(!U.mk||U.mk==='ALL'||p.role===U.mk)&&(U.mkf!=='budget'||(p.team===null?0:value(p))<=tb)&&(U.mkf!=='gems'||(p.age<=21&&potRange(p)[1]-ovr(p)>=8))&&(U.mkf!=='free'||p.team===null)&&(U.mkf!=='reach'||interestOf(p)>=-12)&&(U.mkf!=='real'||p.src!=='gen'));
     list=list.sort((a,b)=>srt==='pot'?(potRange(b)[0]+potRange(b)[1])-(potRange(a)[0]+potRange(a)[1]):srt==='val'?(a.team===null?0:value(a))-(b.team===null?0:value(b)):srt==='age'?a.age-b.age||ovr(b)-ovr(a):srt==='int'?interestOf(b)-interestOf(a):ovr(b)-ovr(a));
     const n=list.length;list=list.slice(0,U.mkMore?120:40);
     const sel=(id,cur,opts)=>'<select id="'+id+'">'+Object.keys(opts).map(k=>'<option value="'+k+'"'+(cur===k?' selected':'')+'>'+opts[k]+'</option>').join('')+'</select>';
-    const filt=tab==='search'?'<div class="mt-filt"><label><span>Poste</span>'+sel('mkPos',U.mk||'ALL',Object.assign({ALL:'Tous les postes'},ROLE_FR))+'</label><label><span>Filtre</span>'+sel('mkFil',U.mkf||'all',F)+'</label><label><span>Trier par</span>'+sel('mkSrt',srt,SO)+'</label><span class="muted small">'+n+' joueur'+(n>1?'s':'')+'</span></div>':'';
+    const filt=tab==='search'?'<div class="mt-filt"><label class="mt-q"><span>Nom du joueur</span><input id="mkName" type="search" placeholder="Ex. Faker, Caps…" autocomplete="off" value="'+esc(U.mkName||'')+'"></label><label><span>Poste</span>'+sel('mkPos',U.mk||'ALL',Object.assign({ALL:'Tous les postes'},ROLE_FR))+'</label><label><span>Filtre</span>'+sel('mkFil',U.mkf||'all',F)+'</label><label><span>Trier par</span>'+sel('mkSrt',srt,SO)+'</label><span class="muted small">'+n+' joueur'+(n>1?'s':'')+(nq?' · recherche sur tous les joueurs':'')+'</span></div>':'';
     body='<section class="db-card">'+filt+(full?'<div class="tip warn"><span>Effectif complet (9 joueurs) : vendez ou libérez un joueur avant de recruter.</span></div>':'')+
-      (list.length?'<div class="scroll"><table class="mt-tab">'+MK_TH+list.map(p=>mkPlayerRow(p,btnFor)).join('')+'</table></div>'+(!U.mkMore&&n>40?'<div class="row" style="justify-content:center"><button class="btn sm" data-act="mkmore">Afficher plus</button></div>':''):'<div class="muted">'+(tab==='short'?'Aucun joueur suivi. Cliquez sur ★ dans la recherche pour suivre un joueur.':'Aucun joueur ne correspond.')+'</div>')+'</section>'}
+      (list.length?'<div class="scroll"><table class="mt-tab">'+MK_TH+list.map(p=>mkPlayerRow(p,btnFor)).join('')+'</table></div>'+(!U.mkMore&&n>40?'<div class="row" style="justify-content:center"><button class="btn sm" data-act="mkmore">Afficher plus</button></div>':''):'<div class="muted">'+(tab==='short'?'Aucun joueur suivi. Cliquez sur ★ dans la recherche pour suivre un joueur.':nq?'Aucun joueur ne s\'appelle « '+esc(U.mkName)+' ». Vérifiez l\'orthographe.':'Aucun joueur ne correspond.')+'</div>')+'</section>'}
   else if(tab==='negs'){const L=S.negs.slice(0,20),stp={club:1,agent:2,sign:3,done:4,fail:0};
     body='<section class="db-card"><div class="db-h"><h2>Négociations</h2><span class="db-meta">'+live.length+' en cours</span></div>'+(L.length?'<div class="mt-negs">'+L.map(n=>{const p=S.players[n.pid];if(!p)return '';const last=n.log[n.log.length-1],k=stp[n.stage];
       return '<button class="mt-neg'+(['club','agent','sign'].includes(n.stage)?' live':'')+'" data-act="negview" data-arg="'+n.id+'">'+pface(p,40)+'<span class="mt-ni"><b>'+esc(p.name)+'</b><small>'+ROLE_FR[p.role]+' · '+esc(tagOf(n.from))+'</small><small class="muted">'+esc(last?last.t:'')+'</small></span><span class="mt-ns">'+negChip(n)+'<span class="mk-steps">'+[1,2,3,4].map(i=>'<i class="'+(n.stage==='fail'?'ko':i<=k?'ok':'')+'"></i>').join('')+'</span></span></button>'}).join('')+'</div>':'<div class="muted">Aucune négociation. Lancez-en une depuis la recherche.</div>')+'</section>'}
