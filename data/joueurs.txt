@@ -64,57 +64,57 @@ LEC|G2 Esports|G2|SUP|Labrov|Labros Papoutsakis|GR|TIT|87|90|1380000|24|2002-02-
 LEC|G2 Esports|G2|COACH|Perkz|Luka Perkovic|HR|TIT||||||
 LEC|Karmine Corp|KC|TOP|Canna|Kim Chang-dong|KR|TIT|89|89|1680000|26|2000-02-11|LP
 LEC|Karmine Corp|KC|JGL|Yike|Martin Sundelin|SE|TIT|88|88|1440000|26|2000-11-11|LP
-LEC|Karmine Corp|KC|MID|Kyeahoo|Kang Yea-hoo|KR|TIT|87|93|1530000|21|2005-08-13|LP
+LEC|Karmine Corp|KC|MID|Kyeahoo|Kang Yea-hoo|KR|TIT|87|97|1730000|21|2005-08-13|LP
 LEC|Karmine Corp|KC|ADC|Caliste|Caliste Henry-Hennebert|FR|TIT|94|99|4320000|20|2006-08-28|LP
-LEC|Karmine Corp|KC|SUP|Busio|Alan Cwalina|US|TIT|87|91|1430000|23|2003-10-22|LP
+LEC|Karmine Corp|KC|SUP|Busio|Alan Cwalina|US|TIT|87|92|1480000|23|2003-10-22|LP
 LEC|Karmine Corp|KC|COACH|Reapered|Bok Han-gyu|KR|TIT||||||
-LEC|Movistar KOI|MKOI|TOP|Myrwn|Alex Villarejo|ES|TIT|89|93|1950000|23|2003-06-13|LP
+LEC|Movistar KOI|MKOI|TOP|Myrwn|Alex Villarejo|ES|TIT|89|94|2010000|23|2003-06-13|LP
 LEC|Movistar KOI|MKOI|JGL|Elyoya|Javier Prades|ES|TIT|91|91|2280000|26|2000-03-13|LP
 LEC|Movistar KOI|MKOI|MID|Jojopyun|Joseph Pyun|CA|TIT|89|96|2150000|22|2004-10-01|LP
 LEC|Movistar KOI|MKOI|ADC|Supa|David Garcia|ES|TIT|89|89|1680000|26|2000-10-23|LP
-LEC|Movistar KOI|MKOI|SUP|Alvaro|Alvaro Fernandez del Amo|ES|TIT|89|93|1950000|23|2003-07-15|LP
+LEC|Movistar KOI|MKOI|SUP|Alvaro|Alvaro Fernandez del Amo|ES|TIT|89|94|2010000|23|2003-07-15|LP
 LEC|Movistar KOI|MKOI|COACH|Melzhet|Tomas Campelos|ES|TIT||||||
-LEC|GIANTX|GX|TOP|Oscarinin|Oscar Munoz Jimenez|ES|TIT|86|90|1230000|23|2003-06-11|LP
+LEC|GIANTX|GX|TOP|Oscarinin|Oscar Munoz Jimenez|ES|TIT|86|91|1270000|23|2003-06-11|LP
 LEC|GIANTX|GX|JGL|ISMA|Ismail Boualem|FR|TIT|85|85|910000|25|2001-06-20|LP
 LEC|GIANTX|GX|MID|Jackies|Adam Jerabek|CZ|TIT|86|93|1360000|22|2004-10-06|LP
 LEC|GIANTX|GX|ADC|Flakked|Victor Lirola|ES|TIT|84|84|780000|25|2001-04-25|LP
 LEC|GIANTX|GX|SUP|Jun|Yoon Se-jun|KR|TIT|85|85|910000|26|2000-08-02|LP
 LEC|GIANTX|GX|COACH|Guilhoto|Andre Guilhoto|PT|TIT||||||
-LEC|Team Vitality|VIT|TOP|Naak Nako|Kaan Okan|TR|TIT|88|96|1900000|21|2005-03-24|LP
+LEC|Team Vitality|VIT|TOP|Naak Nako|Kaan Okan|TR|TIT|88|98|2020000|21|2005-03-24|LP
 LEC|Team Vitality|VIT|JGL|Lyncas|Linas Nauncikas|LT|TIT|87|94|1580000|22|2003-12-10|LP
-LEC|Team Vitality|VIT|MID|FIESTA|An Hyeon-seo|KR|TIT|83|87|780000|23|2003-05-04|LP
+LEC|Team Vitality|VIT|MID|FIESTA|An Hyeon-seo|KR|TIT|83|88|800000|23|2003-05-04|LP
 LEC|Team Vitality|VIT|ADC|Carzzy|Matyas Orsag|CZ|TIT|85|88|1020000|24|2002-01-31|LP
 LEC|Team Vitality|VIT|SUP|Fleshy|Kadir Kemiksiz|TR|TIT|84|85|810000|25|2000-11-24|LP
 LEC|Team Vitality|VIT|COACH|Pad|Patrick Suckow-Breum|DK|TIT||||||
 LEC|Natus Vincere|NAVI|TOP|Maynter|Volodymyr Sorokin|UA|TIT|83|83|670000|25|2000-12-15|LP
-LEC|Natus Vincere|NAVI|JGL|Rhilech|Enes Ucan|TR|TIT|82|90|760000|21|2005-10-15|LP
-LEC|Natus Vincere|NAVI|MID|Poby|Yoon Sung-won|KR|TIT|83|91|890000|20|2006-02-07|LP
+LEC|Natus Vincere|NAVI|JGL|Rhilech|Enes Ucan|TR|TIT|82|92|810000|21|2005-10-15|LP
+LEC|Natus Vincere|NAVI|MID|Poby|Yoon Sung-won|KR|TIT|83|96|1020000|20|2006-02-07|LP
 LEC|Natus Vincere|NAVI|ADC|SamD|Lee Jae-hoon|KR|TIT|84|84|780000|25|2001-03-14|LP
-LEC|Natus Vincere|NAVI|SUP|Parus|Polat Cicek|TR|TIT|80|84|490000|23|2003-02-22|LP
+LEC|Natus Vincere|NAVI|SUP|Parus|Polat Cicek|TR|TIT|80|85|510000|23|2003-02-22|LP
 LEC|Natus Vincere|NAVI|COACH|TheRock|Vasilis Voltis|GR|TIT||||||
-LEC|Fnatic|FNC|TOP|Soboro|Lim Seong-min|KR|TIT|81|87|610000|22|2004-01-10|LP
+LEC|Fnatic|FNC|TOP|Soboro|Lim Seong-min|KR|TIT|81|88|630000|22|2004-01-10|LP
 LEC|Fnatic|FNC|JGL|Razork|Ivan Martin Diaz|ES|TIT|83|85|720000|26|2000-10-07|LP
-LEC|Fnatic|FNC|MID|Vladi|Vladimiros Kourtidis|GR|TIT|83|90|860000|21|2005-08-12|LP
+LEC|Fnatic|FNC|MID|Vladi|Vladimiros Kourtidis|GR|TIT|83|93|940000|21|2005-08-12|LP
 LEC|Fnatic|FNC|ADC|Upset|Elias Lipp|DE|TIT|85|87|980000|26|1999-12-16|LP
 LEC|Fnatic|FNC|SUP|Lospa|Park Joon-hyeong|KR|TIT|81|85|570000|24|2002-09-30|LP
 LEC|Fnatic|FNC|COACH|GrabbZ|Fabian Lohmann|DE|TIT||||||
 LEC|SK Gaming|SK|TOP|Wunder|Martin Hansen|DK|TIT|79|79|360000|28|1998-11-09|LP
 LEC|SK Gaming|SK|JGL|Skeanz|Duncan Marquet|FR|TIT|81|82|510000|26|2000-09-25|LP
-LEC|SK Gaming|SK|MID|SlowQ|Seo Ye-bit|KR|TIT|79|83|420000|22|2004-03-20|LP
-LEC|SK Gaming|SK|ADC|Jopa|Josip Cancar|HR|TIT|78|82|360000|23|2003-11-03|LP
+LEC|SK Gaming|SK|MID|SlowQ|Seo Ye-bit|KR|TIT|79|86|470000|22|2004-03-20|LP
+LEC|SK Gaming|SK|ADC|Jopa|Josip Cancar|HR|TIT|78|83|380000|23|2003-11-03|LP
 LEC|SK Gaming|SK|SUP|Mikyx|Mihael Mehle|SI|TIT|80|80|420000|28|1998-11-02|LP
 LEC|SK Gaming|SK|COACH|OWN3R|David Rodriguez|ES|TIT||||||
-LEC|Shifters|SHFT|TOP|Rooster|Shin Yun-hwan|KR|TIT|79|85|450000|21|2005-04-28|LP
+LEC|Shifters|SHFT|TOP|Rooster|Shin Yun-hwan|KR|TIT|79|89|510000|21|2005-04-28|LP
 LEC|Shifters|SHFT|JGL|Sheo|Theo Borile|FR|TIT|77|80|300000|25|2001-07-05|LP
-LEC|Shifters|SHFT|MID|nuc|Ilias Bizriken|FR|TIT|80|82|460000|24|2002-10-17|LP
-LEC|Shifters|SHFT|ADC|Paduck|Park Seok-hyeon|KR|TIT|80|86|530000|21|2005-02-12|LP
+LEC|Shifters|SHFT|MID|nuc|Ilias Bizriken|FR|TIT|80|83|480000|24|2002-10-17|LP
+LEC|Shifters|SHFT|ADC|Paduck|Park Seok-hyeon|KR|TIT|80|90|590000|21|2005-02-12|LP
 LEC|Shifters|SHFT|SUP|Stend|Paul Lardin|FR|TIT|76|78|250000|25|2001-07-13|LP
 LEC|Shifters|SHFT|COACH|Striker|Yanis Kella|FR|TIT||||||
-LEC|Team Heretics|TH|TOP|Tracyn|Sebastian Wojton|PL|TIT|79|85|450000|21|2005-09-16|LP
-LEC|Team Heretics|TH|JGL|Daglas|Kacper Dagiel|PL|TIT|81|87|610000|21|2005-10-23|LP
+LEC|Team Heretics|TH|TOP|Tracyn|Sebastian Wojton|PL|TIT|79|89|510000|21|2005-09-16|LP
+LEC|Team Heretics|TH|JGL|Daglas|Kacper Dagiel|PL|TIT|81|91|690000|21|2005-10-23|LP
 LEC|Team Heretics|TH|MID|Serin|Tolga Olmez|TR|TIT|78|81|350000|24|2002-04-10|LP
-LEC|Team Heretics|TH|ADC|Hype|Byeon Jeong-hyeon|KR|TIT|82|85|640000|23|2003-09-09|LP
-LEC|Team Heretics|TH|SUP|Way|Han Gil|KR|TIT|80|82|460000|24|2002-06-29|LP
+LEC|Team Heretics|TH|ADC|Hype|Byeon Jeong-hyeon|KR|TIT|82|87|690000|23|2003-09-09|LP
+LEC|Team Heretics|TH|SUP|Way|Han Gil|KR|TIT|80|83|480000|24|2002-06-29|LP
 LEC|Team Heretics|TH|COACH|Nukeduck|Erlend Holm|NO|TIT||||||
 
 # ============================================================
@@ -138,7 +138,7 @@ LCK|Hanwha Life Esports|HLE|MID|Zeka|Kim Geon-woo|KR|TIT|95|99|4860000|23|2002-1
 LCK|Hanwha Life Esports|HLE|ADC|Gumayusi|Lee Min-hyeong|KR|TIT|95|98|4700000|24|2002-02-06|LP
 LCK|Hanwha Life Esports|HLE|SUP|Delight|Yoo Hwan-joong|KR|TIT|95|98|4700000|24|2002-09-12|LP
 LCK|Hanwha Life Esports|HLE|COACH|Homme|Yoon Sung-young|KR|TIT||||||
-LCK|Dplus KIA|DK|TOP|Siwoo|Jeon Si-woo|KR|TIT|89|98|2280000|18|2007-11-24|LP
+LCK|Dplus KIA|DK|TOP|Siwoo|Jeon Si-woo|KR|TIT|89|99|2350000|18|2007-11-24|LP
 LCK|Dplus KIA|DK|JGL|Lucid|Choi Yong-hyeok|KR|TIT|92|99|3390000|21|2005-01-28|LP
 LCK|Dplus KIA|DK|MID|ShowMaker|Heo Su|KR|TIT|94|94|3600000|26|2000-07-22|LP
 LCK|Dplus KIA|DK|ADC|Smash|Shin Geum-jae|KR|TIT|94|99|4320000|20|2006-07-20|LP
@@ -148,38 +148,38 @@ LCK|KT Rolster|KT|TOP|PerfecT|Lee Seung-min|KR|TIT|90|97|2500000|22|2004-05-17|L
 LCK|KT Rolster|KT|JGL|Cuzz|Mun U-chan|KR|TIT|92|92|2650000|27|1999-10-30|LP
 LCK|KT Rolster|KT|MID|Bdd|Gwak Bo-sung|KR|TIT|95|95|4190000|27|1999-03-01|LP
 LCK|KT Rolster|KT|ADC|Jiwoo|Jung Ji-woo|KR|TIT|87|94|1580000|22|2004-03-20|LP
-LCK|KT Rolster|KT|ADC|FenRir|Park Kang-jun|KR|SUB|85|93|1200000|20|2006-06-24|LP
+LCK|KT Rolster|KT|ADC|FenRir|Park Kang-jun|KR|SUB|85|98|1380000|20|2006-06-24|LP
 LCK|KT Rolster|KT|SUP|Effort|Lee Sang-ho|KR|TIT|87|87|1240000|25|2000-11-23|LP
 LCK|KT Rolster|KT|COACH|Score|Go Dong-bin|KR|TIT||||||
-LCK|BNK FEARX|BFX|TOP|Clear|Song Hyeon-min|KR|TIT|83|86|750000|23|2002-12-19|LP
-LCK|BNK FEARX|BFX|JGL|Raptor|Jeon Eo-jin|KR|TIT|83|88|800000|21|2004-11-15|LP
-LCK|BNK FEARX|BFX|MID|VicLa|Lee Dae-kwang|KR|TIT|84|88|910000|22|2003-11-27|LP
+LCK|BNK FEARX|BFX|TOP|Clear|Song Hyeon-min|KR|TIT|83|88|800000|23|2002-12-19|LP
+LCK|BNK FEARX|BFX|JGL|Raptor|Jeon Eo-jin|KR|TIT|83|93|940000|21|2004-11-15|LP
+LCK|BNK FEARX|BFX|MID|VicLa|Lee Dae-kwang|KR|TIT|84|91|1000000|22|2003-11-27|LP
 LCK|BNK FEARX|BFX|ADC|Taeyoon|Kim Tae-yoon|KR|TIT|82|86|670000|24|2002-06-02|LP
 LCK|BNK FEARX|BFX|SUP|Kellin|Kim Hyeong-gyu|KR|TIT|83|84|700000|25|2001-02-01|LP
 LCK|BNK FEARX|BFX|COACH|Edo|Park Jun-seok|KR|TIT||||||
 LCK|Nongshim RedForce|NS|TOP|Kingen|Hwang Seong-hoon|KR|TIT|89|89|1680000|26|2000-03-11|LP
-LCK|Nongshim RedForce|NS|JGL|Sponge|Bae Young-jun|KR|TIT|82|88|710000|22|2004-07-25|LP
+LCK|Nongshim RedForce|NS|JGL|Sponge|Bae Young-jun|KR|TIT|82|89|740000|22|2004-07-25|LP
 LCK|Nongshim RedForce|NS|MID|Scout|Lee Ye-chan|KR|TIT|90|90|1950000|28|1998-03-14|LP
-LCK|Nongshim RedForce|NS|ADC|Diable|Nam Dae-geun|KR|TIT|88|95|1840000|19|2007-10-17|LP
+LCK|Nongshim RedForce|NS|ADC|Diable|Nam Dae-geun|KR|TIT|88|99|2070000|19|2007-10-17|LP
 LCK|Nongshim RedForce|NS|SUP|Lehends|Son Si-woo|KR|TIT|90|90|1950000|27|1998-12-24|LP
 LCK|Nongshim RedForce|NS|COACH|DanDy|Choi In-kyu|KR|TIT||||||
-LCK|Kiwoom DRX|KRX|TOP|Frog|Lee Min-hoi|KR|TIT|80|87|540000|21|2005-06-30|LP
-LCK|Kiwoom DRX|KRX|JGL|Willer|Kim Jeong-hyeon|KR|TIT|78|82|360000|23|2003-04-24|LP
+LCK|Kiwoom DRX|KRX|TOP|Frog|Lee Min-hoi|KR|TIT|80|90|590000|21|2005-06-30|LP
+LCK|Kiwoom DRX|KRX|JGL|Willer|Kim Jeong-hyeon|KR|TIT|78|83|380000|23|2003-04-24|LP
 LCK|Kiwoom DRX|KRX|JGL|Vincenzo|Ha Seung-min|KR|SUB|75|82|250000|22|2004-04-03|LP
 LCK|Kiwoom DRX|KRX|MID|ucal|Son Woo-hyeon|KR|TIT|77|80|300000|25|2001-01-30|LP
 LCK|Kiwoom DRX|KRX|ADC|Aiming|Kim Ha-ram|KR|TIT|88|89|1500000|26|2000-07-20|LP
-LCK|Kiwoom DRX|KRX|ADC|LazyFeel|Tran Bao Minh|VN|SUB|72|81|170000|19|2007-03-19|LP
-LCK|Kiwoom DRX|KRX|SUP|Andil|Mun Gwan-bin|KR|TIT|78|80|340000|24|2002-10-05|LP
+LCK|Kiwoom DRX|KRX|ADC|LazyFeel|Tran Bao Minh|VN|SUB|72|86|200000|19|2007-03-19|LP
+LCK|Kiwoom DRX|KRX|SUP|Andil|Mun Gwan-bin|KR|TIT|78|81|350000|24|2002-10-05|LP
 LCK|Kiwoom DRX|KRX|COACH|Joker|Cho Jae-eup|KR|TIT||||||
 LCK|HANJIN BRION|BRO|TOP|Casting|Shin Min-jae|KR|TIT|82|87|690000|23|2003-10-30|LP
-LCK|HANJIN BRION|BRO|JGL|GIDEON|Kim Min-seong|KR|TIT|79|83|420000|23|2003-08-14|LP
-LCK|HANJIN BRION|BRO|MID|Roamer|Cho Woo-jin|KR|TIT|82|86|670000|23|2003-08-03|LP
+LCK|HANJIN BRION|BRO|JGL|GIDEON|Kim Min-seong|KR|TIT|79|84|440000|23|2003-08-14|LP
+LCK|HANJIN BRION|BRO|MID|Roamer|Cho Woo-jin|KR|TIT|82|87|690000|23|2003-08-03|LP
 LCK|HANJIN BRION|BRO|ADC|Teddy|Park Jin-seong|KR|TIT|84|84|780000|28|1998-03-15|LP
-LCK|HANJIN BRION|BRO|SUP|Namgung|Namgung Seong-hoon|KR|TIT|78|82|360000|23|2003-10-04|LP
+LCK|HANJIN BRION|BRO|SUP|Namgung|Namgung Seong-hoon|KR|TIT|78|83|380000|23|2003-10-04|LP
 LCK|HANJIN BRION|BRO|COACH|SSONG|Kim Sang-soo|KR|TIT||||||
 LCK|DN SOOPers|DNS|TOP|DuDu|Lee Dong-ju|KR|TIT|77|80|300000|25|2001-03-08|LP
-LCK|DN SOOPers|DNS|JGL|Sharvel|Kim Dan-woo|KR|TIT|79|87|480000|19|2007-08-26|LP
-LCK|DN SOOPers|DNS|MID|Clozer|Lee Ju-hyun|KR|TIT|80|84|490000|23|2003-07-27|LP
+LCK|DN SOOPers|DNS|JGL|Sharvel|Kim Dan-woo|KR|TIT|79|95|600000|19|2007-08-26|LP
+LCK|DN SOOPers|DNS|MID|Clozer|Lee Ju-hyun|KR|TIT|80|85|510000|23|2003-07-27|LP
 LCK|DN SOOPers|DNS|ADC|deokdam|Seo Dae-gil|KR|TIT|77|78|280000|26|2000-02-25|LP
 LCK|DN SOOPers|DNS|SUP|Peter|Jeong Yoon-su|KR|TIT|76|81|280000|23|2003-04-28|LP
 LCK|DN SOOPers|DNS|COACH|oDin|Ju Young-dal|KR|TIT||||||
@@ -191,20 +191,20 @@ LPL|Anyone's Legend|AL|TOP|Breathe|Chen Chen|CN|TIT|90|91|2030000|25|2001-02-19|
 LPL|Anyone's Legend|AL|JGL|Tarzan|Lee Seung-yong|KR|TIT|95|97|4530000|27|1999-08-23|LP
 LPL|Anyone's Legend|AL|MID|Shanks|Cui Xiao-Jun|CN|TIT|93|94|3210000|25|2001-05-13|LP
 LPL|Anyone's Legend|AL|ADC|Hope|Wang Jie|CN|TIT|93|93|3090000|26|2000-09-29|LP
-LPL|Anyone's Legend|AL|SUP|Kael|Kim Jin-hong|KR|TIT|93|98|3710000|22|2004-02-11|LP
+LPL|Anyone's Legend|AL|SUP|Kael|Kim Jin-hong|KR|TIT|93|99|3830000|22|2004-02-11|LP
 LPL|Anyone's Legend|AL|COACH|BigWei||CN|TIT||||||
 LPL|Bilibili Gaming|BLG|TOP|Bin|Chen Ze-Bin|CN|TIT|97|99|6140000|23|2003-09-28|LP
 LPL|Anyone's Legend|AL|TOP|Flandre|Li Xuan-jun|CN|SUB|90|90|1950000|28|1998-08-28|LP
-LPL|Bilibili Gaming|BLG|TOP|Wenbo|Yang Wen-Bo|CN|SUB|83|93|940000|19|2007-04-01|LP
+LPL|Bilibili Gaming|BLG|TOP|Wenbo|Yang Wen-Bo|CN|SUB|83|99|1100000|19|2007-04-01|LP
 LPL|Bilibili Gaming|BLG|JGL|Xun|Peng Li-Xun|CN|TIT|94|97|4030000|24|2002-02-05|LP
 LPL|Bilibili Gaming|BLG|MID|Knight|Zhuo Ding|CN|TIT|98|99|6890000|26|2000-05-22|LP
 LPL|Bilibili Gaming|BLG|ADC|Viper|Park Do-hyeon|KR|TIT|98|99|6890000|26|2000-10-19|LP
 LPL|Bilibili Gaming|BLG|SUP|ON|Luo Wen-Jun|CN|TIT|94|99|4320000|23|2003-05-12|LP
 LPL|Bilibili Gaming|BLG|COACH|Daeny||KR|TIT||||||
-LPL|Top Esports|TES|TOP|ZUIAN|Cheng Zi-Hao|CN|TIT|91|97|2820000|21|2005-05-23|LP
+LPL|Top Esports|TES|TOP|ZUIAN|Cheng Zi-Hao|CN|TIT|91|99|3000000|21|2005-05-23|LP
 LPL|Top Esports|TES|TOP|369|Bai Jia-Hao|CN|SUB|91|91|2280000|25|2001-07-12|LP
 LPL|Top Esports|TES|JGL|Tian|Gao Tian-Liang|CN|TIT|90|90|1950000|26|2000-07-24|LP
-LPL|Top Esports|TES|MID|Creme|Lin Jian|CN|TIT|92|97|3180000|22|2003-12-14|LP
+LPL|Top Esports|TES|MID|Creme|Lin Jian|CN|TIT|92|99|3390000|22|2003-12-14|LP
 LPL|Top Esports|TES|ADC|JackeyLove|Yu Wen-Bo|CN|TIT|94|95|3740000|25|2000-11-18|LP
 LPL|Top Esports|TES|SUP|Zhuo|Wang Xu-Zhuo|CN|TIT|92|92|2650000|25|2001-02-13|LP
 LPL|Top Esports|TES|COACH|Poppy||TW|TIT||||||
@@ -215,94 +215,94 @@ LPL|Invictus Gaming|IG|ADC|JiaQi|Zi Jia-Qi|CN|TIT|89|96|2150000|22|2004-05-31|LP
 LPL|Invictus Gaming|IG|ADC|Assum|Zou Wei|CN|SUB|86|93|1360000|22|2003-11-30|LP
 LPL|Invictus Gaming|IG|SUP|Meiko|Tian Ye|CN|TIT|93|93|3090000|28|1998-06-06|LP
 LPL|Invictus Gaming|IG|COACH|Kezman||?|TIT||||||
-LPL|JD Gaming|JDG|TOP|Xiaoxu|Xu Xing-Zu|CN|TIT|89|93|1950000|23|2003-09-11|LP
+LPL|JD Gaming|JDG|TOP|Xiaoxu|Xu Xing-Zu|CN|TIT|89|94|2010000|23|2003-09-11|LP
 LPL|JD Gaming|JDG|JGL|JunJia|Yu Chun-Chia|TW|TIT|90|93|2190000|24|2002-06-10|LP
-LPL|JD Gaming|JDG|JGL|Xiaofang|Fang Zhe-Yu|CN|SUB|85|90|1090000|22|2004-07-06|LP
-LPL|JD Gaming|JDG|MID|HongQ|Tsai Ming-Hong|TW|TIT|91|98|2910000|19|2007-07-02|LP
+LPL|JD Gaming|JDG|JGL|Xiaofang|Fang Zhe-Yu|CN|SUB|85|92|1170000|22|2004-07-06|LP
+LPL|JD Gaming|JDG|MID|HongQ|Tsai Ming-Hong|TW|TIT|91|99|3000000|19|2007-07-02|LP
 LPL|JD Gaming|JDG|ADC|GALA|Chen Wei|CN|TIT|92|93|2760000|25|2001-02-14|LP
-LPL|JD Gaming|JDG|SUP|Vampire|Zhao Zhe-Can|CN|TIT|88|94|1780000|21|2005-08-24|LP
+LPL|JD Gaming|JDG|SUP|Vampire|Zhao Zhe-Can|CN|TIT|88|98|2020000|21|2005-08-24|LP
 LPL|JD Gaming|JDG|COACH|Tabe|Wong Pak Kan|HK|TIT||||||
 LPL|Team WE|WE|TOP|Cube|Dai Yi|CN|TIT|87|90|1380000|24|2002-07-14|LP
-LPL|Team WE|WE|JGL|Monki|Wang Meng-Qi|CN|TIT|83|88|800000|22|2004-02-16|LP
-LPL|Team WE|WE|MID|Karis|Kim Hong-jo|KR|TIT|83|87|780000|23|2003-05-21|LP
-LPL|Team WE|WE|ADC|About|Moon Hyeong-seok|KR|TIT|85|92|1170000|21|2005-04-17|LP
-LPL|Team WE|WE|SUP|Erha|Shi Xu-Ye|CN|TIT|84|88|910000|23|2003-09-28|LP
+LPL|Team WE|WE|JGL|Monki|Wang Meng-Qi|CN|TIT|83|90|860000|22|2004-02-16|LP
+LPL|Team WE|WE|MID|Karis|Kim Hong-jo|KR|TIT|83|88|800000|23|2003-05-21|LP
+LPL|Team WE|WE|ADC|About|Moon Hyeong-seok|KR|TIT|85|95|1270000|21|2005-04-17|LP
+LPL|Team WE|WE|SUP|Erha|Shi Xu-Ye|CN|TIT|84|89|940000|23|2003-09-28|LP
 LPL|Team WE|WE|COACH|JinJin|Jin Guang-Hua|CN|TIT||||||
-LPL|LGD Gaming|LGD|TOP|Burdol|Noh Tae-yoon|KR|TIT|87|92|1480000|22|2003-12-25|LP
+LPL|LGD Gaming|LGD|TOP|Burdol|Noh Tae-yoon|KR|TIT|87|94|1580000|22|2003-12-25|LP
 LPL|LGD Gaming|LGD|JGL|Heng|Yang Cui-Heng|CN|TIT|86|86|1060000|25|2001-07-16|LP
-LPL|LGD Gaming|LGD|MID|Tangyuan|Lin Yu-Hong|CN|TIT|85|90|1090000|22|2004-01-30|LP
+LPL|LGD Gaming|LGD|MID|Tangyuan|Lin Yu-Hong|CN|TIT|85|92|1170000|22|2004-01-30|LP
 LPL|LGD Gaming|LGD|ADC|Shaoye|Qiu Guo-Bin|CN|TIT|84|85|810000|25|2001-09-14|LP
 LPL|LGD Gaming|LGD|SUP|Crisp|Liu Qing-Song|CN|TIT|85|85|910000|28|1998-08-20|LP
 LPL|LGD Gaming|LGD|COACH|1874||CN|TIT||||||
-LPL|ThunderTalk Gaming|TT|TOP|Keshi|Li Qing-Hua|CN|FA|79|86|470000|20|2006-03-02|LP
-LPL|ThunderTalk Gaming|TT|JGL|Junhao|Luo Jun-Hao|CN|FA|83|88|800000|22|2004-05-13|LP
-LPL|ThunderTalk Gaming|TT|MID|Heru|Kim Min-seong|KR|FA|83|90|860000|20|2006-08-21|LP
+LPL|ThunderTalk Gaming|TT|TOP|Keshi|Li Qing-Hua|CN|FA|79|92|550000|20|2006-03-02|LP
+LPL|ThunderTalk Gaming|TT|JGL|Junhao|Luo Jun-Hao|CN|FA|83|90|860000|22|2004-05-13|LP
+LPL|ThunderTalk Gaming|TT|MID|Heru|Kim Min-seong|KR|FA|83|96|1020000|20|2006-08-21|LP
 LPL|ThunderTalk Gaming|TT|ADC|Ahn|An Shan-Ye|CN|FA|79|79|360000|25|2001-03-15|LP
-LPL|ThunderTalk Gaming|TT|SUP|Feather|Wang Tian-Ci-Fu|CN|TIT|82|86|670000|23|2003-08-01|LP
+LPL|ThunderTalk Gaming|TT|SUP|Feather|Wang Tian-Ci-Fu|CN|TIT|82|87|690000|23|2003-08-01|LP
 LPL|ThunderTalk Gaming|TT|COACH|Benny||?|TIT||||||
 LPL|EDward Gaming|EDG|TOP|Zdz|Zhu De-Zhang|CN|TIT|81|84|550000|24|2001-12-03|LP
 LPL|EDward Gaming|EDG|JGL|Jiejie|Zhao Li-Jie|CN|TIT|86|89|1190000|25|2001-10-27|LP
-LPL|EDward Gaming|EDG|MID|BuLLDoG|Lee Tae-young|KR|TIT|79|85|450000|21|2005-04-15|LP
+LPL|EDward Gaming|EDG|MID|BuLLDoG|Lee Tae-young|KR|TIT|79|89|510000|21|2005-04-15|LP
 LPL|EDward Gaming|EDG|MID|Sinian||CN|SUB|74|78|200000|||
 LPL|EDward Gaming|EDG|ADC|Leave|Hu Hong-Chao|CN|TIT|78|81|350000|24|2002-09-29|LP
-LPL|EDward Gaming|EDG|SUP|Parukia|Wang Ping-Yang|CN|TIT|80|88|560000|19|2006-12-30|LP
+LPL|EDward Gaming|EDG|SUP|Parukia|Wang Ping-Yang|CN|TIT|80|96|700000|19|2006-12-30|LP
 LPL|EDward Gaming|EDG|COACH|Maokai||CN|TIT||||||
 LPL|Ninjas in Pyjamas|NIP|TOP|HOYA|Yoon Yong-ho|KR|TIT|85|85|910000|26|2000-08-25|LP
 LPL|Ninjas in Pyjamas|NIP|JGL|Guwon|Koo Kwan-mo|KR|TIT|85|92|1170000|22|2003-12-19|LP
 LPL|Ninjas in Pyjamas|NIP|MID|Care|Yang Jie|CN|TIT|83|90|860000|22|2004-02-28|LP
 LPL|Ninjas in Pyjamas|NIP|ADC|Photic|Ying Qi-Shen|CN|TIT|85|88|1020000|24|2002-10-11|LP
-LPL|Ninjas in Pyjamas|NIP|SUP|Fengyue|Wang Run-Lai|CN|TIT|86|94|1400000|21|2005-11-06|LP
+LPL|Ninjas in Pyjamas|NIP|SUP|Fengyue|Wang Run-Lai|CN|TIT|86|96|1480000|21|2005-11-06|LP
 LPL|Ninjas in Pyjamas|NIP|COACH|maizijian||CN|TIT||||||
-LPL|Weibo Gaming|WBG|TOP|Zika|Tang Hua-Yu|CN|TIT|82|85|640000|23|2003-07-07|LP
+LPL|Weibo Gaming|WBG|TOP|Zika|Tang Hua-Yu|CN|TIT|82|87|690000|23|2003-07-07|LP
 LPL|Weibo Gaming|WBG|JGL|Xiaohao|Peng Hao|CN|TIT|80|83|480000|24|2002-07-19|LP
 LPL|Weibo Gaming|WBG|MID|Xiaohu|Li Yuan-Hao|CN|TIT|87|87|1240000|28|1998-01-28|LP
 LPL|Weibo Gaming|WBG|ADC|Elk|Zhao Jia-Hao|CN|TIT|90|93|2190000|25|2001-09-29|LP
-LPL|Weibo Gaming|WBG|SUP|Jwei|Sun Jun-Wei|CN|TIT|83|87|780000|23|2003-01-05|LP
-LPL|Weibo Gaming|WBG|SUP|Moham|Jeong Jae-hun|CN|SUB|78|80|340000|24|2002-08-08|LP
+LPL|Weibo Gaming|WBG|SUP|Jwei|Sun Jun-Wei|CN|TIT|83|88|800000|23|2003-01-05|LP
+LPL|Weibo Gaming|WBG|SUP|Moham|Jeong Jae-hun|CN|SUB|78|81|350000|24|2002-08-08|LP
 LPL|Weibo Gaming|WBG|COACH|Clearlove||CN|TIT||||||
-LPL|LNG Esports|LNG|TOP|Sheer|Xu Wen-Jie|CN|TIT|78|85|400000|20|2005-12-06|LP
+LPL|LNG Esports|LNG|TOP|Sheer|Xu Wen-Jie|CN|TIT|78|91|480000|20|2005-12-06|LP
 LPL|LNG Esports|LNG|JGL|Weiwei|Wei Bo-Han|CN|TIT|77|78|280000|26|2000-08-14|LP
-LPL|LNG Esports|LNG|MID|Nia|Zou Guang-Lu|CN|TIT|79|86|470000|20|2006-08-27|LP
-LPL|LNG Esports|LNG|ADC|1xn|Li Sau Nam|HK|TIT|76|82|290000|22|2004-05-01|LP
+LPL|LNG Esports|LNG|MID|Nia|Zou Guang-Lu|CN|TIT|79|92|550000|20|2006-08-27|LP
+LPL|LNG Esports|LNG|ADC|1xn|Li Sau Nam|HK|TIT|76|83|290000|22|2004-05-01|LP
 LPL|LNG Esports|LNG|SUP|ycx|Zhao Wen-Hao|CN|TIT|76|77|240000|26|2000-08-11|LP
 # --- Eliminees avant le Split 3 (rosters de debut 2026, a verifier) ---
 LPL|Oh My God|OMG|TOP|Hery|Wang He-Yong|CN|DEBUT2026|79|81|390000|25|2001-09-29|LP
 LPL|Oh My God|OMG|JGL|Juhan|Lee Ju-han|KR|DEBUT2026|77|79|290000|25|2001-08-31|LP
-LPL|Oh My God|OMG|MID|haichao|Zhang Hai-Chao|CN|DEBUT2026|75|78|220000|23|2003-04-17|LP
-LPL|Oh My God|OMG|ADC|Starry|Lei Ming|CN|DEBUT2026|77|83|330000|22|2004-10-14|LP
+LPL|Oh My God|OMG|MID|haichao|Zhang Hai-Chao|CN|DEBUT2026|75|80|240000|23|2003-04-17|LP
+LPL|Oh My God|OMG|ADC|Starry|Lei Ming|CN|DEBUT2026|77|84|340000|22|2004-10-14|LP
 LPL|Ultra Prime|UP|TOP|Liangchen||CN|DEBUT2026|75|78|220000|||
-LPL|Ultra Prime|UP|JGL|Grizzly|Jo Seung-hoon|KR|DEBUT2026|78|84|390000|21|2005-05-25|LP
-LPL|Ultra Prime|UP|MID|Saber|Song Dai-Lin|CN|DEBUT2026|77|84|340000|21|2005-08-20|LP
-LPL|Ultra Prime|UP|SUP|Xiaoxia|Xia Jing-Yao|CN|DEBUT2026|77|81|310000|22|2004-02-19|LP
+LPL|Ultra Prime|UP|JGL|Grizzly|Jo Seung-hoon|KR|DEBUT2026|78|88|440000|21|2005-05-25|LP
+LPL|Ultra Prime|UP|MID|Saber|Song Dai-Lin|CN|DEBUT2026|77|87|380000|21|2005-08-20|LP
+LPL|Ultra Prime|UP|SUP|Xiaoxia|Xia Jing-Yao|CN|DEBUT2026|77|84|340000|22|2004-02-19|LP
 
 # ============================================================
 # LCS (Amerique du Nord) - 8 equipes - rosters Summer 2026
 # ============================================================
 LCS|Team Liquid|TL|TOP|Morgan|Park Ru-han|KR|TIT|86|87|1100000|25|2001-09-26|LP
 LCS|Team Liquid|TL|JGL|Josedeodo|Brandon Joel Villegas|AR|TIT|83|83|670000|26|2000-05-22|LP
-LCS|Team Liquid|TL|MID|Quid|Lim Hyeon-seung|KR|TIT|87|92|1480000|22|2004-04-27|LP
+LCS|Team Liquid|TL|MID|Quid|Lim Hyeon-seung|KR|TIT|87|94|1580000|22|2004-04-27|LP
 LCS|Team Liquid|TL|ADC|Yeon|Sean Sung|US|TIT|82|83|600000|25|2001-01-07|LP
 LCS|Team Liquid|TL|SUP|CoreJJ|Jo Yong-in|KR|TIT|86|86|1060000|32|1994-06-22|LP
 LCS|Team Liquid|TL|COACH|Spawn||AU|TIT||||||
 LCS|LYON|LYON|TOP|Dhokla|Niship Doshi|US|TIT|85|85|910000|29|1997-07-17|LP
 LCS|LYON|LYON|JGL|Inspired|Kacper Sloma|PL|TIT|89|92|1880000|24|2002-01-24|LP
-LCS|LYON|LYON|MID|Saint|Kang Sung-in|KR|TIT|85|91|1130000|21|2005-01-01|LP
-LCS|LYON|LYON|ADC|Berserker|Kim Min-cheol|KR|TIT|91|95|2640000|23|2003-05-25|LP
+LCS|LYON|LYON|MID|Saint|Kang Sung-in|KR|TIT|85|95|1270000|21|2005-01-01|LP
+LCS|LYON|LYON|ADC|Berserker|Kim Min-cheol|KR|TIT|91|96|2730000|23|2003-05-25|LP
 LCS|LYON|LYON|SUP|Isles|Jonah Rosario|US|TIT|86|87|1100000|25|2001-03-07|LP
 LCS|LYON|LYON|COACH|Reignover||KR|TIT||||||
 LCS|Cloud9|C9|TOP|Thanatos|Park Seung-gyu|KR|TIT|86|93|1360000|22|2004-05-01|LP
 LCS|Cloud9|C9|JGL|Blaber|Robert Huang|US|TIT|87|87|1240000|26|2000-01-04|LP
-LCS|Cloud9|C9|MID|Loki|Lee Sang-min|KR|TIT|85|93|1200000|21|2005-03-26|LP
+LCS|Cloud9|C9|MID|Loki|Lee Sang-min|KR|TIT|85|95|1270000|21|2005-03-26|LP
 LCS|Cloud9|C9|MID|APA|Eain Stearns|US|SUB|80|83|480000|24|2002-03-05|LP
 LCS|Cloud9|C9|ADC|Tactical|Edward Ra|US|TIT|84|84|780000|26|2000-08-18|LP
 LCS|Cloud9|C9|ADC|Zven|Jesper Svenningsen|DK|SUB|78|78|310000|29|1997-06-24|LP
 LCS|Cloud9|C9|SUP|Vulcan|Philippe Laflamme|CA|TIT|85|85|910000|27|1999-04-20|LP
 LCS|Cloud9|C9|COACH|IWDominate|Christian Rivera|US|TIT||||||
-LCS|FlyQuest|FLY|TOP|Gakgos|Ibrahim Samet Bulut|TR|TIT|80|89|580000|18|2008-01-04|LP
-LCS|FlyQuest|FLY|JGL|Gryffinn|Johnson Le|US|TIT|81|87|610000|20|2006-09-07|LP
+LCS|FlyQuest|FLY|TOP|Gakgos|Ibrahim Samet Bulut|TR|TIT|80|99|750000|18|2008-01-04|LP
+LCS|FlyQuest|FLY|JGL|Gryffinn|Johnson Le|US|TIT|81|94|750000|20|2006-09-07|LP
 LCS|FlyQuest|FLY|MID|Quad|Song Su-hyeong|KR|TIT|79|82|410000|24|2002-08-25|LP
-LCS|FlyQuest|FLY|ADC|Massu|Fahad Abdulmalek|CA|TIT|82|88|710000|21|2004-11-28|LP
-LCS|FlyQuest|FLY|SUP|Cryogen|Michael Luu|US|TIT|81|90|670000|19|2007-01-20|LP
+LCS|FlyQuest|FLY|ADC|Massu|Fahad Abdulmalek|CA|TIT|82|92|810000|21|2004-11-28|LP
+LCS|FlyQuest|FLY|SUP|Cryogen|Michael Luu|US|TIT|81|97|810000|19|2007-01-20|LP
 LCS|FlyQuest|FLY|COACH|Thinkcard||CA|TIT||||||
 LCS|Sentinels|SEN|TOP|Impact|Jeong Eon-young|KR|TIT|84|84|780000|31|1995-03-07|LP
 LCS|Sentinels|SEN|JGL|HamBak|Ham Yoo-jin|KR|TIT|81|84|550000|24|2002-08-28|LP
@@ -312,14 +312,14 @@ LCS|Sentinels|SEN|SUP|huhi|Choi Jae-hyun|KR|TIT|81|81|490000|31|1995-04-03|LP
 LCS|Sentinels|SEN|COACH|Goldenglue|Greyson Gilmer|US|TIT||||||
 LCS|Shopify Rebellion|SR|TOP|Fudge|Ibrahim Allami|AU|TIT|77|81|310000|24|2002-05-23|LP
 LCS|Shopify Rebellion|SR|JGL|Contractz|Juan Arturo Garcia|US|TIT|74|74|170000|27|1999-08-25|LP
-LCS|Shopify Rebellion|SR|MID|Zinie|Yoo Baek-jin|KR|TIT|73|79|180000|21|2005-08-31|LP
+LCS|Shopify Rebellion|SR|MID|Zinie|Yoo Baek-jin|KR|TIT|73|82|200000|21|2005-08-31|LP
 LCS|Shopify Rebellion|SR|ADC|Bvoy|Ju Yeong-hoon|KR|TIT|75|75|200000|28|1997-12-18|LP
 LCS|Shopify Rebellion|SR|SUP|Zeyzal|Tristan Stidam|US|TIT|74|74|170000|27|1999-07-07|LP
 LCS|Shopify Rebellion|SR|COACH|Reven||US|TIT||||||
 LCS|Disguised|DSG|TOP|Srtty|Jett Michael Joye|US|TIT|71|74|120000|24|2002-01-12|LP
-LCS|Disguised|DSG|JGL|KryRa|Christian Rahaian|CA|TIT|74|81|220000|21|2005-08-14|LP
+LCS|Disguised|DSG|JGL|KryRa|Christian Rahaian|CA|TIT|74|84|240000|21|2005-08-14|LP
 LCS|Disguised|DSG|MID|Callme|Oh Ji-hoon|KR|TIT|71|76|130000|23|2003-05-30|LP
-LCS|Disguised|DSG|ADC|sajed|Sajed Ziade|US|TIT|70|74|110000|22|2004-04-10|LP
+LCS|Disguised|DSG|ADC|sajed|Sajed Ziade|US|TIT|70|75|110000|22|2004-04-10|LP
 LCS|Disguised|DSG|SUP|Lyonz|Pedro Luis Peralta|AR|TIT|71|73|120000|24|2001-11-29|LP
 LCS|Disguised|DSG|COACH|ido||?|TIT||||||
 LCS|Dignitas|DIG|TOP|Denathor||US|TIT|70|74|110000|||
@@ -332,34 +332,34 @@ LCS|Dignitas|DIG|SUP|IgNar|Lee Dong-geun|KR|TIT|70|70|90000|29|1996-11-20|LP
 # LCP (Asie-Pacifique) - 8 equipes - rosters Split 3 2026
 # ============================================================
 LCP|Team Secret Whales|TSW|TOP|Pun|Nguyen Dang Khoa|VN|TIT|84|87|880000|24|2002-07-29|LP
-LCP|Team Secret Whales|TSW|JGL|Hizto|Le Van Hoang Hai|VN|TIT|86|95|1440000|19|2007-09-15|LP
-LCP|Team Secret Whales|TSW|MID|Dire|Tran Duy Duc|VN|TIT|83|92|910000|19|2006-11-22|LP
-LCP|Team Secret Whales|TSW|ADC|Eddie|Hoang Cong Nghia|VN|TIT|85|89|1060000|23|2003-06-17|LP
+LCP|Team Secret Whales|TSW|JGL|Hizto|Le Van Hoang Hai|VN|TIT|86|99|1610000|19|2007-09-15|LP
+LCP|Team Secret Whales|TSW|MID|Dire|Tran Duy Duc|VN|TIT|83|99|1100000|19|2006-11-22|LP
+LCP|Team Secret Whales|TSW|ADC|Eddie|Hoang Cong Nghia|VN|TIT|85|90|1090000|23|2003-06-17|LP
 LCP|Team Secret Whales|TSW|SUP|Bie|Tran Duc Hieu|VN|TIT|86|86|1060000|26|1999-12-09|LP
 LCP|Team Secret Whales|TSW|COACH|WarHorse||?|TIT||||||
 LCP|CTBC Flying Oyster|CFO|TOP|Rest|Hsu Shih-Chieh|TW|TIT|82|82|580000|27|1998-12-11|LP
 LCP|CTBC Flying Oyster|CFO|JGL|Shad0w|Zhao Zhiqiang|IT|TIT|82|82|580000|25|2001-02-25|LP
-LCP|CTBC Flying Oyster|CFO|MID|Pout|Han In-woong|KR|TIT|84|88|910000|23|2003-10-03|LP
-LCP|CTBC Flying Oyster|CFO|ADC|Doggo|Chiu Tzu-chuan|TW|TIT|86|90|1230000|23|2003-01-14|LP
+LCP|CTBC Flying Oyster|CFO|MID|Pout|Han In-woong|KR|TIT|84|89|940000|23|2003-10-03|LP
+LCP|CTBC Flying Oyster|CFO|ADC|Doggo|Chiu Tzu-chuan|TW|TIT|86|91|1270000|23|2003-01-14|LP
 LCP|CTBC Flying Oyster|CFO|SUP|Kino|Chu Wu Hsin-Jung|TW|TIT|85|85|910000|28|1998-04-12|LP
 LCP|CTBC Flying Oyster|CFO|COACH|Chawy||SG|TIT||||||
-LCP|MVK Esports|MVK|TOP|Kratos|Ngo Duc Khanh|VN|TIT|76|82|290000|21|2005-04-22|LP
-LCP|MVK Esports|MVK|JGL|Gury|Luong Hai Long|VN|TIT|75|79|230000|23|2003-10-28|LP
-LCP|MVK Esports|MVK|MID|Chika|Vo Le Nhan|VN|TIT|75|83|260000|20|2006-01-26|LP
-LCP|MVK Esports|MVK|ADC|Harky|Nguyen Van Huu|VN|TIT|75|81|250000|21|2005-08-21|LP
-LCP|MVK Esports|MVK|SUP|SiuLoong|Nguyen Hoang Lam|VN|TIT|75|81|250000|21|2005-09-15|LP
+LCP|MVK Esports|MVK|TOP|Kratos|Ngo Duc Khanh|VN|TIT|76|86|320000|21|2005-04-22|LP
+LCP|MVK Esports|MVK|JGL|Gury|Luong Hai Long|VN|TIT|75|80|240000|23|2003-10-28|LP
+LCP|MVK Esports|MVK|MID|Chika|Vo Le Nhan|VN|TIT|75|88|300000|20|2006-01-26|LP
+LCP|MVK Esports|MVK|ADC|Harky|Nguyen Van Huu|VN|TIT|75|85|280000|21|2005-08-21|LP
+LCP|MVK Esports|MVK|SUP|SiuLoong|Nguyen Hoang Lam|VN|TIT|75|85|280000|21|2005-09-15|LP
 LCP|MVK Esports|MVK|COACH|SofM||VN|TIT||||||
 LCP|Fukuoka SoftBank HAWKS gaming|SHG|TOP|Evi|Shunsuke Murase|JP|TIT|76|76|230000|30|1995-11-15|LP
-LCP|Fukuoka SoftBank HAWKS gaming|SHG|JGL|Van1|Kim Seung-hoo|KR|TIT|78|84|390000|22|2003-11-21|LP
+LCP|Fukuoka SoftBank HAWKS gaming|SHG|JGL|Van1|Kim Seung-hoo|KR|TIT|78|85|400000|22|2003-11-21|LP
 LCP|Fukuoka SoftBank HAWKS gaming|SHG|MID|Aria|Lee Ga-eul|KR|TIT|76|78|250000|26|2000-10-14|LP
 LCP|Fukuoka SoftBank HAWKS gaming|SHG|ADC|Marble|Rei Shimaya|JP|TIT|77|80|300000|24|2002-08-28|LP
 LCP|Fukuoka SoftBank HAWKS gaming|SHG|SUP|Vsta|Oh Hyo-seong|KR|TIT|76|77|240000|26|2000-10-03|LP
 LCP|Fukuoka SoftBank HAWKS gaming|SHG|COACH|CorGi||TW|TIT||||||
 LCP|GAM Esports|GAM|TOP|Kiaya|Tran Duy Sang|VN|TIT|78|78|310000|25|2001-05-17|LP
-LCP|GAM Esports|GAM|JGL|Draktharr|Le Ngoc Toan|VN|TIT|74|78|200000|23|2003-03-10|LP
+LCP|GAM Esports|GAM|JGL|Draktharr|Le Ngoc Toan|VN|TIT|74|79|200000|23|2003-03-10|LP
 LCP|GAM Esports|GAM|MID|Gloryy|Le Ngoc Vinh|VN|TIT|77|80|300000|24|2002-01-12|LP
 LCP|GAM Esports|GAM|ADC|Artemis|Tran Quoc Hung|VN|TIT|75|76|210000|25|2001-02-24|LP
-LCP|GAM Esports|GAM|SUP|Taki|Dinh Anh Tai|VN|TIT|74|78|200000|23|2003-06-30|LP
+LCP|GAM Esports|GAM|SUP|Taki|Dinh Anh Tai|VN|TIT|74|79|200000|23|2003-06-30|LP
 LCP|GAM Esports|GAM|COACH|Naul||VN|TIT||||||
 LCP|Ground Zero Gaming|GZ|TOP|1Jiang|Chen Yi-Chin|TW|TIT|75|80|240000|23|2003-10-22|LP
 LCP|Ground Zero Gaming|GZ|JGL|Husha|Huang Tzu-Wei|TW|TIT|75|76|210000|25|2001-04-04|LP
@@ -367,13 +367,13 @@ LCP|Ground Zero Gaming|GZ|MID|Uniboy|Chen Chang-Chu|TW|TIT|73|75|160000|25|2001-
 LCP|Ground Zero Gaming|GZ|ADC|Betty|Lu Yu-Hung|TW|TIT|73|74|150000|26|2000-01-16|LP
 LCP|Ground Zero Gaming|GZ|SUP|Kaiwing|Ling Kai Wing|HK|TIT|75|75|200000|30|1996-10-27|LP
 LCP|Ground Zero Gaming|GZ|COACH|Skywalk||HK|TIT||||||
-LCP|Deep Cross Gaming|DCG|TOP|Flauren|Lo Chak Kin|HK|TIT|75|83|260000|20|2006-10-30|LP
-LCP|Deep Cross Gaming|DCG|JGL|Pop9|Wu Yi-Han|TW|TIT|75|79|230000|23|2003-03-24|LP
+LCP|Deep Cross Gaming|DCG|TOP|Flauren|Lo Chak Kin|HK|TIT|75|88|300000|20|2006-10-30|LP
+LCP|Deep Cross Gaming|DCG|JGL|Pop9|Wu Yi-Han|TW|TIT|75|80|240000|23|2003-03-24|LP
 LCP|Deep Cross Gaming|DCG|MID|HongSuo|Guo Bei-Yi|TW|TIT|74|79|200000|23|2003-03-18|LP
 LCP|Deep Cross Gaming|DCG|ADC|Feng|Chen Chun-Feng|TW|TIT|75|80|240000|23|2003-08-13|LP
 LCP|Deep Cross Gaming|DCG|SUP|ShiauC|Liu Chia-Hao|TW|TIT|75|75|200000|27|1999-07-12|LP
 LCP|Deep Cross Gaming|DCG|COACH|REFRA1N||?|TIT||||||
-LCP|DetonatioN FocusMe|DFM|TOP|Momo|Sora Tobita|JP|TIT|71|76|130000|22|2004-02-26|LP
+LCP|DetonatioN FocusMe|DFM|TOP|Momo|Sora Tobita|JP|TIT|71|77|130000|22|2004-02-26|LP
 LCP|DetonatioN FocusMe|DFM|JGL|Citrus|Byeon Ji-woong|KR|TIT|71|74|120000|25|2001-04-14|LP
 LCP|DetonatioN FocusMe|DFM|MID|Fisher|Lee Jeong-tae|KR|TIT|70|75|110000|22|2004-07-05|LP
 LCP|DetonatioN FocusMe|DFM|ADC|Kakkun|Kamon Nomoto|JP|TIT|71|74|120000|24|2002-02-05|LP
@@ -383,46 +383,46 @@ LCP|DetonatioN FocusMe|DFM|COACH|Paz||JP|TIT||||||
 # ============================================================
 # CBLOL (Bresil) - 8 equipes - rosters Split 2 2026
 # ============================================================
-CBLOL|LOS|LOS|TOP|Zest|Kim Dong-min|KR|TIT|78|82|360000|23|2003-11-05|LP
-CBLOL|LOS|LOS|JGL|Curse|Rai Yamada|BR|TIT|76|84|300000|21|2005-05-18|LP
+CBLOL|LOS|LOS|TOP|Zest|Kim Dong-min|KR|TIT|78|83|380000|23|2003-11-05|LP
+CBLOL|LOS|LOS|JGL|Curse|Rai Yamada|BR|TIT|76|86|320000|21|2005-05-18|LP
 CBLOL|LOS|LOS|MID|Feisty|Jeong Seong-hoon|KR|TIT|79|86|470000|22|2003-12-19|LP
-CBLOL|LOS|LOS|ADC|Duduhh|Wallyson Francisco|BR|TIT|80|89|580000|18|2008-04-18|LP
-CBLOL|LOS|LOS|SUP|Ackerman|Gabriel Aparicio|AR|TIT|78|82|360000|23|2002-11-29|LP
+CBLOL|LOS|LOS|ADC|Duduhh|Wallyson Francisco|BR|TIT|80|99|750000|18|2008-04-18|LP
+CBLOL|LOS|LOS|SUP|Ackerman|Gabriel Aparicio|AR|TIT|78|83|380000|23|2002-11-29|LP
 CBLOL|LOS|LOS|COACH|Enatron||?|TIT||||||
-CBLOL|FURIA|FUR|TOP|Guigo|Guilherme Ruiz|BR|TIT|77|79|290000|24|2002-01-28|LP
-CBLOL|FURIA|FUR|JGL|Tatu|Pedro Seixas|BR|TIT|75|83|260000|20|2006-06-13|LP
+CBLOL|FURIA|FUR|TOP|Guigo|Guilherme Ruiz|BR|TIT|77|80|300000|24|2002-01-28|LP
+CBLOL|FURIA|FUR|JGL|Tatu|Pedro Seixas|BR|TIT|75|88|300000|20|2006-06-13|LP
 CBLOL|FURIA|FUR|JGL|Shini|Diogo Roge Moreira|BR|SUB|69|69|80000|29|1997-07-14|LP
 CBLOL|FURIA|FUR|MID|Tutsz|Arthur Machado|BR|TIT|76|81|280000|23|2002-12-16|LP
-CBLOL|FURIA|FUR|ADC|Ayu|Andrey Saraiva|BR|TIT|77|83|330000|21|2005-10-06|LP
+CBLOL|FURIA|FUR|ADC|Ayu|Andrey Saraiva|BR|TIT|77|87|380000|21|2005-10-06|LP
 CBLOL|FURIA|FUR|SUP|JoJo|Gabriel Dzelme|BR|TIT|77|77|270000|28|1998-11-11|LP
 CBLOL|FURIA|FUR|COACH|furyz||BR|TIT||||||
-CBLOL|LOUD|LLL|TOP|xyno|Carlos Felipe Ferreira da Silva|BR|TIT|74|83|230000|19|2007-03-04|LP
-CBLOL|LOUD|LLL|JGL|Sinatra|Enzo Candido Ferreira|BR|TIT|75|83|260000|19|2007-05-06|LP
-CBLOL|LOUD|LLL|MID|Kaze|Lucas Sebastian Fe|AR|TIT|74|81|220000|20|2006-01-11|LP
-CBLOL|LOUD|LLL|ADC|Rabelo|Guilherme Rabelo Muniz|BR|TIT|74|79|200000|22|2004-08-21|LP
-CBLOL|LOUD|LLL|SUP|uZent|Matheus Ferreira Melo|BR|TIT|76|82|290000|21|2005-04-21|LP
+CBLOL|LOUD|LLL|TOP|xyno|Carlos Felipe Ferreira da Silva|BR|TIT|74|89|270000|19|2007-03-04|LP
+CBLOL|LOUD|LLL|JGL|Sinatra|Enzo Candido Ferreira|BR|TIT|75|91|320000|19|2007-05-06|LP
+CBLOL|LOUD|LLL|MID|Kaze|Lucas Sebastian Fe|AR|TIT|74|86|250000|20|2006-01-11|LP
+CBLOL|LOUD|LLL|ADC|Rabelo|Guilherme Rabelo Muniz|BR|TIT|74|81|220000|22|2004-08-21|LP
+CBLOL|LOUD|LLL|SUP|uZent|Matheus Ferreira Melo|BR|TIT|76|86|320000|21|2005-04-21|LP
 CBLOL|LOUD|LLL|COACH|Raise||?|TIT||||||
 CBLOL|Vivo Keyd Stars|VKS|TOP|zekas|Cesar Berteli Franca|BR|TIT|74|77|190000|24|2002-06-11|LP
-CBLOL|Vivo Keyd Stars|VKS|JGL|Disamis|Pedro Arthur Goncalves|BR|TIT|74|78|200000|23|2003-08-03|LP
+CBLOL|Vivo Keyd Stars|VKS|JGL|Disamis|Pedro Arthur Goncalves|BR|TIT|74|79|200000|23|2003-08-03|LP
 CBLOL|Vivo Keyd Stars|VKS|MID|Mireu|Jeong Jo-bin|KR|TIT|75|75|200000|25|2001-09-20|LP
 CBLOL|Vivo Keyd Stars|VKS|ADC|Jeskla|Jesper Klarin Stromberg|SE|TIT|76|76|230000|26|2000-07-08|LP
 CBLOL|Vivo Keyd Stars|VKS|SUP|scamber|Pedro Lemos Soares Maximiniano|BR|TIT|74|74|170000|26|2000-06-27|LP
 CBLOL|Vivo Keyd Stars|VKS|COACH|Smiley||?|TIT||||||
-CBLOL|RED Canids Kalunga|RED|TOP|zynts|Matheus Emanuel Silva|BR|TIT|71|80|150000|19|2006-12-08|LP
-CBLOL|RED Canids Kalunga|RED|JGL|STEPZ|Eloy Rodriguez|VE|TIT|73|79|180000|20|2006-07-01|LP
+CBLOL|RED Canids Kalunga|RED|TOP|zynts|Matheus Emanuel Silva|BR|TIT|71|84|160000|19|2006-12-08|LP
+CBLOL|RED Canids Kalunga|RED|JGL|STEPZ|Eloy Rodriguez|VE|TIT|73|85|220000|20|2006-07-01|LP
 CBLOL|RED Canids Kalunga|RED|MID|Fuuu|Gabriel Toshio Furuuti|BR|TIT|71|75|120000|23|2003-07-31|LP
 CBLOL|RED Canids Kalunga|RED|ADC|Morttheus|Matheus Motta|BR|TIT|74|78|200000|24|2002-06-18|LP
-CBLOL|RED Canids Kalunga|RED|SUP|Manel|Emanoel Lopes Arcanjo|BR|TIT|73|81|190000|20|2006-09-02|LP
+CBLOL|RED Canids Kalunga|RED|SUP|Manel|Emanoel Lopes Arcanjo|BR|TIT|73|85|220000|20|2006-09-02|LP
 CBLOL|RED Canids Kalunga|RED|SUP|frosty|Jose Eduardo Leal Pacheco|BR|SUB|67|73|70000|22|2004-10-13|LP
 CBLOL|RED Canids Kalunga|RED|COACH|tockers||BR|TIT||||||
-CBLOL|paiN Gaming|PNG|TOP|Boal|Felipe Boal|BR|TIT|74|78|200000|23|2002-12-04|LP
+CBLOL|paiN Gaming|PNG|TOP|Boal|Felipe Boal|BR|TIT|74|79|200000|23|2002-12-04|LP
 CBLOL|paiN Gaming|PNG|JGL|CarioK|Marcos Santos de Oliveira Junior|BR|TIT|72|72|130000|26|2000-01-31|LP
-CBLOL|paiN Gaming|PNG|MID|Namiru|Daniel Lisboa Tonelli|BR|TIT|76|84|300000|19|2007-02-06|LP
+CBLOL|paiN Gaming|PNG|MID|Namiru|Daniel Lisboa Tonelli|BR|TIT|76|92|380000|19|2007-02-06|LP
 CBLOL|paiN Gaming|PNG|MID|Keine|Kim Joon-cheol|KR|SUB|71|71|110000|27|1999-11-08|LP
 CBLOL|paiN Gaming|PNG|ADC|Hena|Park Jeung-hwan|KR|TIT|74|74|170000|27|1999-10-08|LP
 CBLOL|paiN Gaming|PNG|SUP|Ceos|Denilson Oliveira Goncalves|BR|TIT|76|76|230000|28|1998-08-08|LP
-CBLOL|Leviatan|LEV|TOP|Devost|Julian Santiago Orozco Chaves|CO|TIT|71|83|160000|18|2008-01-24|LP
-CBLOL|Leviatan|LEV|JGL|Booki|Piero Aldo Medina Galarza|PE|TIT|72|84|190000|19|2007-03-27|LP
+CBLOL|Leviatan|LEV|TOP|Devost|Julian Santiago Orozco Chaves|CO|TIT|71|87|180000|18|2008-01-24|LP
+CBLOL|Leviatan|LEV|JGL|Booki|Piero Aldo Medina Galarza|PE|TIT|72|86|200000|19|2007-03-27|LP
 CBLOL|Leviatan|LEV|MID|Enga|Eneas Protti|AR|TIT|69|70|80000|26|2000-01-24|LP
 CBLOL|Leviatan|LEV|ADC|Strensh|Cristopher Gustavo Gonzalez Plaza|CL|TIT|69|75|100000|22|2004-07-21|LP
 CBLOL|Leviatan|LEV|SUP|Shiku|Carlo Andre Carrion Zapata|PE|TIT|68|74|80000|22|2004-04-28|LP
@@ -454,13 +454,13 @@ CBLOL|Fluxo W7M|FX7M|COACH|Guchi|Andres Enrique Castro|?|TIT||||||
 LFL|Solary|SLY|TOP|Kryze|Felix Hellstrom|SE|TIT|68|68|70000|27|1999-07-01|LP
 LFL|Solary|SLY|JGL|Zicssi|Lanzo Ciajolo|FR|TIT|72|75|140000|24|2002-05-16|LP
 LFL|Solary|SLY|MID|Jool|Kang Dong-su|KR|TIT|72|75|140000|24|2001-12-30|LP
-LFL|Solary|SLY|ADC|Aetinoth|Berat Tiknazoglu|TR|TIT|70|76|110000|21|2005-10-10|LP
+LFL|Solary|SLY|ADC|Aetinoth|Berat Tiknazoglu|TR|TIT|70|78|120000|21|2005-10-10|LP
 LFL|Solary|SLY|SUP|Piero|Kim Jung-hun|KR|TIT|68|71|80000|24|2002-07-15|LP
 LFL|Solary|SLY|COACH|Dan Dan||?|TIT||||||
-LFL|Galions|GL|TOP|Carlsen|Carl Ulsted Carlsen|DK|TIT|72|79|160000|20|2005-12-15|LP
+LFL|Galions|GL|TOP|Carlsen|Carl Ulsted Carlsen|DK|TIT|72|83|180000|20|2005-12-15|LP
 LFL|Galions|GL|JGL|Thayger|Francisco Mazo Sanchez|ES|TIT|70|74|110000|24|2002-01-27|LP
 LFL|Galions|GL|MID|OMON|Simon Rihacek|CZ|TIT|72|76|150000|23|2003-07-02|LP
-LFL|Galions|GL|ADC|HARPOON|Franciszek Gryszkiewicz|PL|TIT|72|79|160000|21|2005-04-18|LP
+LFL|Galions|GL|ADC|HARPOON|Franciszek Gryszkiewicz|PL|TIT|72|80|170000|21|2005-04-18|LP
 LFL|Galions|GL|SUP|Zoelys|Theo Le Scornec|FR|TIT|71|76|130000|23|2003-05-16|LP
 LFL|Galions|GL|COACH|xani||HR|TIT||||||
 LFL|Karmine Corp Blue|KCB|TOP|Tao|Xu Hongtao Alessandro|IT|TIT|66|73|60000|||
@@ -514,23 +514,23 @@ LFL|Esprit Shonen|ES|SUP|Gordinho|Simao Valente|PT|TIT|55|62|10000|21|2005-08-24
 # ============================================================
 # LCK CL (Coree, academies) - 10 equipes - rosters Rounds 3-4 2026
 # ============================================================
-LCKCL|T1 Esports Academy|T1A|TOP|Haetae|Sim Su-hyeon|KR|TIT|73|81|190000|20|2006-02-11|LP
-LCKCL|T1 Esports Academy|T1A|JGL|Painter|Kim Eun-hoo|KR|TIT|76|85|310000|19|2007-09-16|LP
+LCKCL|T1 Esports Academy|T1A|TOP|Haetae|Sim Su-hyeon|KR|TIT|73|85|220000|20|2006-02-11|LP
+LCKCL|T1 Esports Academy|T1A|JGL|Painter|Kim Eun-hoo|KR|TIT|76|92|380000|19|2007-09-16|LP
 LCKCL|T1 Esports Academy|T1A|JGL|Guardian|Seong Tae-hyo|KR|SUB|68|73|80000|22|2004-07-16|LP
-LCKCL|T1 Esports Academy|T1A|MID|Guti|Moon Jeong-hwan|KR|TIT|75|81|250000|22|2004-04-09|LP
-LCKCL|T1 Esports Academy|T1A|ADC|Eclipse|Kim Min-jun|KR|TIT|71|84|160000|17|2009-04-28|LP
+LCKCL|T1 Esports Academy|T1A|MID|Guti|Moon Jeong-hwan|KR|TIT|75|82|250000|22|2004-04-09|LP
+LCKCL|T1 Esports Academy|T1A|ADC|Eclipse|Kim Min-jun|KR|TIT|71|89|180000|17|2009-04-28|LP
 LCKCL|T1 Esports Academy|T1A|ADC|Cypher|Kim Yu-jun|KR|SUB|68|76|90000|20|2006-01-20|LP
-LCKCL|T1 Esports Academy|T1A|SUP|Cloud|Moon Hyeon-ho|KR|TIT|76|85|310000|19|2007-04-25|LP
+LCKCL|T1 Esports Academy|T1A|SUP|Cloud|Moon Hyeon-ho|KR|TIT|76|92|380000|19|2007-04-25|LP
 LCKCL|T1 Esports Academy|T1A|COACH|DooTi||KR|TIT||||||
 LCKCL|KT Rolster Challengers|KTC|TOP|Sero|An Hyo-chan|KR|TIT|69|79|110000|20|2005-11-21|LP
 LCKCL|KT Rolster Challengers|KTC|JGL|Sylvie|Lee Seung-bok|KR|TIT|69|75|100000|23|2002-12-04|LP
-LCKCL|KT Rolster Challengers|KTC|MID|Hwichan|Jeong Hwi-chan|KR|TIT|70|78|120000|20|2006-01-30|LP
-LCKCL|KT Rolster Challengers|KTC|SUP|Pollu|Oh Dong-gyu|KR|TIT|70|77|120000|20|2006-01-07|LP
-LCKCL|Dplus KIA Challengers|DKC|TOP|Jaehyuk|Kwon Jae-hyuk|KR|TIT|71|79|140000|19|2007-08-28|LP
-LCKCL|Dplus KIA Challengers|DKC|JGL|Solid|Nam Hyeon-seo|KR|TIT|70|84|140000|16|2009-11-19|LP
-LCKCL|Dplus KIA Challengers|DKC|MID|Garden|Seol Jeong-won|KR|TIT|72|85|190000|18|2007-11-15|LP
+LCKCL|KT Rolster Challengers|KTC|MID|Hwichan|Jeong Hwi-chan|KR|TIT|70|80|130000|20|2006-01-30|LP
+LCKCL|KT Rolster Challengers|KTC|SUP|Pollu|Oh Dong-gyu|KR|TIT|70|80|130000|20|2006-01-07|LP
+LCKCL|Dplus KIA Challengers|DKC|TOP|Jaehyuk|Kwon Jae-hyuk|KR|TIT|71|84|160000|19|2007-08-28|LP
+LCKCL|Dplus KIA Challengers|DKC|JGL|Solid|Nam Hyeon-seo|KR|TIT|70|88|160000|16|2009-11-19|LP
+LCKCL|Dplus KIA Challengers|DKC|MID|Garden|Seol Jeong-won|KR|TIT|72|89|210000|18|2007-11-15|LP
 LCKCL|Dplus KIA Challengers|DKC|ADC|Wayne|Hwang Seo-hyeon|KR|TIT|74|79|200000|23|2003-05-27|LP
-LCKCL|Dplus KIA Challengers|DKC|SUP|Loopy|Kim Dong-hyeon|KR|TIT|72|77|150000|22|2004-06-09|LP
+LCKCL|Dplus KIA Challengers|DKC|SUP|Loopy|Kim Dong-hyeon|KR|TIT|72|78|160000|22|2004-06-09|LP
 LCKCL|DN SOOPers Challengers|DNSC|TOP|Lancer|Han Jeong-heum|KR|TIT|68|77|90000|22|2004-08-11|LP
 LCKCL|DN SOOPers Challengers|DNSC|JGL|DDoiV|Bang Moon-yeong|KR|TIT|69|75|100000|23|2003-10-21|LP
 LCKCL|DN SOOPers Challengers|DNSC|MID|Flip|Kim Sang-wook|KR|TIT|65|80|70000|18|2008-05-26|LP
@@ -548,7 +548,7 @@ LCKCL|Kiwoom DRX Challengers|KRXC|MID|AKaJe|Choi Soo-hyuk|KR|TIT|68|81|100000|18
 LCKCL|Kiwoom DRX Challengers|KRXC|SUP|Minous|Kang Min-woo|KR|TIT|64|73|50000|22|2004-05-03|LP
 LCKCL|Kiwoom DRX Challengers|KRXC|COACH|Frozen||KR|TIT||||||
 LCKCL|BNK FEARX Youth|BFXY|TOP|Kangin|Choi Gang-in|KR|TIT|66|70|60000|23|2003-01-14|LP
-LCKCL|BNK FEARX Youth|BFXY|JGL|Grizzly|Jo Seung-hoon|KR|TIT|72|79|160000|21|2005-05-25|LP
+LCKCL|BNK FEARX Youth|BFXY|JGL|Grizzly|Jo Seung-hoon|KR|TIT|72|80|170000|21|2005-05-25|LP
 LCKCL|BNK FEARX Youth|BFXY|JGL|Zephyr|Hwang Hyeok-soo|KR|SUB|58|70|20000|19|2007-01-08|LP
 LCKCL|BNK FEARX Youth|BFXY|MID|MG|Lee Ji-hoon|KR|TIT|66|68|50000|24|2002-06-03|LP
 LCKCL|BNK FEARX Youth|BFXY|ADC|Slayer|Kim Jin-young|KR|TIT|64|69|40000|23|2003-04-15|LP
@@ -677,7 +677,7 @@ FA|Sans equipe|FA|MID|Aress|Hồ Văn Vĩ Đại|VN|FA|61|65|30000|22|2004-09-24
 FA|Sans equipe|FA|MID|p1ng|Kazuhira Arihara|JP|FA|59|60|20000|||
 FA|Sans equipe|FA|TOP|advance|Lee Jung-young|KR|FA|59|60|20000|||
 FA|Sans equipe|FA|ADC|suyahime|Hwang Seong-jin|KR|FA|59|60|20000|||
-FA|Sans equipe|FA|TOP|Hasu7|Hong Bing-You|TW|FA|59|62|20000|20|2006-10-20|LP
+FA|Sans equipe|FA|TOP|Hasu7|Hong Bing-You|TW|FA|59|64|20000|20|2006-10-20|LP
 FA|Sans equipe|FA|TOP|Weizhe|Lin Wei-Zhe|TW|FA|60|61|20000|25|2001-09-23|LP
 FA|Sans equipe|FA|MID|Humanoid|Marek Brázda|CZ|FA|75|85|280000|26|2000-03-14|LP
 FA|Sans equipe|FA|SUP|Keres|Law Chi Kit|HK|FA|60|61|20000|27|1999-09-15|LP
@@ -752,7 +752,7 @@ FA|Sans equipe|FA|SUP|CBL|Nguyễn Võ Thành Luân|VN|FA|63|64|30000|28|1998-10
 FA|Sans equipe|FA|TOP|Coated|Đinh Văn Tráng|VN|FA|62|63|30000|26|2000-05-01|LP
 FA|Sans equipe|FA|JGL|HotPot|Shih Yi-Chieh|TW|FA|57|59|10000|24|2002-03-09|LP
 FA|Sans equipe|FA|TOP|Likai|Liao Li-Kai|TW|FA|63|66|40000|24|2002-09-11|LP
-FA|Sans equipe|FA|MID|Ka1ser|Hsu Yi-De|TW|FA|57|60|10000|20|2006-06-21|LP
+FA|Sans equipe|FA|MID|Ka1ser|Hsu Yi-De|TW|FA|57|62|20000|20|2006-06-21|LP
 FA|Sans equipe|FA|SUP|ppgod|Guo Peng|CN|FA|73|74|150000|26|2000-03-31|LP
 FA|Sans equipe|FA|ADC|vital|Ha In-seong|KR|FA|59|61|20000|24|2002-09-16|LP
 FA|Sans equipe|FA|JGL|beishang|Jiang Zhi-Peng|CN|FA|67|68|60000|26|2000-10-15|LP
@@ -794,7 +794,7 @@ FA|Sans equipe|FA|JGL|Meteor|Zeng Guo-Hao|CN|FA|66|67|50000|26|1999-12-26|LP
 FA|Sans equipe|FA|SUP|Cha9|Cha Shao-Chun|TW|FA|56|57|10000|26|2000-10-21|LP
 FA|Sans equipe|FA|JGL|Meliodas|Hoàng Tiến Nhật|VN|FA|59|64|20000|26|2000-09-28|LP
 FA|Sans equipe|FA|MID|neny|Zhao Zhi-Hao|CN|FA|57|59|10000|23|2003-09-28|LP
-FA|Sans equipe|FA|JGL|GLFS|Li Hao|CN|FA|56|59|10000|20|2006-04-06|LP
+FA|Sans equipe|FA|JGL|GLFS|Li Hao|CN|FA|56|61|10000|20|2006-04-06|LP
 FA|Sans equipe|FA|SUP|Nia|Woo Jun-sung|KR|FA|56|57|10000|26|2000-01-02|LP
 FA|Sans equipe|FA|TOP|Lonely|Han Gyu-joon|KR|FA|59|61|20000|26|2000-08-29|LP
 FA|Sans equipe|FA|ADC|huanfeng|Tang Huan-Feng|CN|FA|67|70|70000|25|2001-05-20|LP
