@@ -2018,6 +2018,7 @@ body[data-scr=menu]::after,body[data-scr=start]::after{background:linear-gradien
 @media(max-width:1000px){.bd-main{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.bd-grid{flex:none;height:48vh;max-height:none}.bd-recs{flex-wrap:wrap}.bd-roles{overflow-x:auto;max-width:100%;scrollbar-width:none}.bd-tools{flex-wrap:wrap}.bd-tools input{flex-basis:100%}}
 @media(max-width:560px){.bd-rec{padding:4px 10px 4px 4px}.bd-rec img,.bd-rec svg{width:26px!important;height:26px!important}.bd-tm small{display:none}.bd-tm{padding:8px}.bd-tm img,.bd-tm svg{width:28px!important;height:28px!important}}
 @media(max-width:1000px){.bd>*{flex:none}.bd-main{flex:none;min-height:auto;grid-template-rows:auto auto}.bd-center,.bd-col{min-height:auto}}
+.sf-from{color:#f5c451!important}
 </style>
 </head>
 <body>
@@ -2172,7 +2173,7 @@ function sideScores(d,side){let e=0,m=0,l=0;const cnt=styleCount(d,side);
     e+=(s.lan*.55+s.mec*.45)*f+mb;m+=(s.mac*.6+s.mec*.4)*f+mb;l+=(s.tf*.6+s.mac*.4)*f+mb});
   e/=5;m/=5;l/=5;e+=cnt.E*.8-cnt.S*.5;m+=cnt.P*.7+cnt.C*.4;l+=cnt.S*.9+cnt.C*.5-cnt.E*.3;
   const id=Object.keys(cnt).find(k=>cnt[k]>=3)||null;if(id){e+=.8;m+=.8;l+=.8}
-  if(d.teams[side]===S.U){const ab=analystBonus()+(typeof lifeBonus==='function'?lifeBonus(d,side):0);e+=ab;m+=ab;l+=ab}
+  if(d.teams[side]===S.U){const ab=analystBonus()+(typeof lifeBonus==='function'?lifeBonus(d,side):0);e+=ab;m+=ab;l+=ab}else if(typeof coachOf==='function'){const c=coachOf(S.teams[d.teams[side]]);if(c){const cb=clamp((c.q-72)*.03,-.6,.6);e+=cb;m+=cb;l+=cb}}
   if(typeof synPairs==='function'){const sy=synPairs(d.picks[side]).length*1.1;e+=sy;m+=sy;l+=sy}
   return{e,m,l,id,cnt}}
 const DRAGONS=['infernal','des océans','des montagnes','des nuages','Hextech','techno-chimique'];
@@ -2344,7 +2345,7 @@ function stfName(){return pick(['Marcus','Elena','Joon','Wei','Sven','Mateo','Le
 function genStaff(role,q){q=Math.round(clamp(q,35,92));
   const fromFile=role==='coach'&&S.coachNames&&S.coachNames.length&&Math.random()<.7;
   return{id:S.sid++,role,src:fromFile?'file':'gen',name:fromFile?S.coachNames.splice(ri(0,S.coachNames.length-1),1)[0]:stfName(),q,age:ri(28,58),salary:Math.round((1+Math.pow(Math.max(0,q-38),1.35)*.075)*10)/10,contract:ri(1,3)}}
-function staffFee(x){return Math.round(x.salary*5)}
+function staffFee(x){return x.fee!=null?x.fee:Math.round(x.salary*5)}
 function refreshStaffPool(){const base=LG[S.lg].lvl-18;S.staffPool=[];['coach','coach','coach','analyst','analyst','analyst','psy','psy'].forEach(r=>S.staffPool.push(genStaff(r,base+rnd(-14,16))))}
 function hireStaff(id){const x=S.staffPool.find(y=>y.id===id);if(!x||S.budget<staffFee(x))return false;S.budget-=staffFee(x);S.staffPool=S.staffPool.filter(y=>y!==x);
   const old=S.staff[x.role];if(old)news(old.name+' ('+STAFF[x.role].n.toLowerCase()+') quitte le club.');S.staff[x.role]=x;news(x.name+' rejoint le staff comme '+STAFF[x.role].n.toLowerCase()+'.');staffTweet(x);SFX.cash();toast(x.name+' rejoint le staff.');return true}
@@ -3200,6 +3201,12 @@ setTimeout(()=>{
   const _vq=vQG;vQG=function(){const h=_vq();const jn=S.jobNext!=null&&S.teams[S.jobNext]?'<section class="db-rep">'+crest(S.teams[S.jobNext],26)+'<b>Pré-accord signé</b><span class="muted">Vous rejoindrez '+esc(S.teams[S.jobNext].name)+' ('+esc(S.teams[S.jobNext].lg)+') au début de la saison prochaine.</span></section>':'';return jn+h.replace('<div class="db-r2">',bobjPanel()+'<div class="db-r2">')};
   const _sns=startNextSeason;startNextSeason=function(){if(S.phase==='offseason'&&S.jobNext!=null&&S.teams[S.jobNext]){const id=S.jobNext;S.jobNext=null;takeJob(id)}return _sns.apply(this,arguments)};
   const _vc=vClub;vClub=function(){const h=_vc();const k=h.indexOf('</section>');return k>0?h.slice(0,k+10)+coachPanel()+h.slice(k+10):h};
+  const _in=importNames;importNames=function(){const r=_in.apply(this,arguments);try{coachDataSync()}catch(e){}return r};
+  const _rsp=refreshStaffPool;refreshStaffPool=function(){_rsp();try{realCoachCands()}catch(e){}};
+  const _hs=hireStaff;hireStaff=function(id){const x=S.staffPool.find(y=>y.id===id),from=x&&x.from;const ok=_hs(id);if(ok&&from!=null&&S.teams[from]){const t=S.teams[from];S.tco=S.tco||{};S.tco[from]={name:stfName(),q:clamp(x.q-8,40,90),pot:clamp(x.q-4,40,92),age:ri(30,48),src:'gen'};news(x.name+' quitte '+t.name+' pour devenir votre entraîneur principal.');if(typeof addTweet==='function')addTweet({who:t.name,handle:'@'+String(t.tag).replace(/\W/g,''),tid:t.id,ver:1,kind:'off',long:1,mine:1,txt:'📢 COMMUNIQUÉ\n\n'+t.name+' annonce le départ de son entraîneur principal '+x.name+', qui rejoint '+me().name+'.\n\nMerci pour ton travail et bonne continuation, coach 🙏'})}return ok};
+  const _sns2=staffNewSeason;staffNewSeason=function(){const x=S.staff&&S.staff.coach;if(x&&x.pot>x.q&&x.age<50)x.q=Math.min(x.pot,x.q+ri(1,3));_sns2.apply(this,arguments)};
+  const _sg2=ACT.startgame;ACT.startgame=a=>{_sg2(a);try{if(S&&!S.pv){S.coachNames=[];RCOD=null;const rc=realStaffFor(me());if(rc){S.staff.coach=rc;news(rc.name+' est votre entraîneur principal (qualité '+rc.q+').')}refreshStaffPool()}}catch(e){console.error(e)}};
+  const _vt=vTeam;vTeam=function(id){const h=_vt(id),t=S.teams[id];if(!t)return h;const c=id===S.U?S.staff.coach:coachOf(t);const box='<section class="panel tv-coach"><div class="row sp"><h2>Staff</h2></div>'+(c?'<div class="row" style="gap:12px;flex-wrap:nowrap">'+sface({name:c.name,age:c.age||35,role:'coach',src:c.src},48)+'<div><b>'+esc(c.name)+'</b>'+genTag({src:c.src||'gen'})+'<div class="muted small">Entraîneur principal · '+(c.age?c.age+' ans · ':'')+'qualité '+c.q+(c.pot&&c.pot>c.q?' · potentiel '+c.pot:'')+'</div></div><b class="num" style="margin-left:auto;font-size:1.6rem">'+c.q+'</b></div>':'<div class="muted small">Coach non renseigné.</div>')+'</section>';const k=h.indexOf('</section>');return k>0?h.slice(0,k+10)+box+h.slice(k+10):box+h};
   const _vm=vMonde;vMonde=function(){const h=_vm();const k=h.indexOf('</section>');return k>0?h.slice(0,k+10)+worldPanel()+h.slice(k+10):worldPanel()+h};
   const _ve=vEff;vEff=function(){const h=_ve(),t=me(),p=S.players[U.effSel]&&S.players[U.effSel].team===S.U?S.players[U.effSel]:null,sel=p||t.roster.map(id=>S.players[id]).find(q=>t.lineup[q.role]===q.id);if(!sel)return h;
     const extra=relBox(sel)+learnBox(sel)+'<div class="rs-kv rs-cl"><span>Clause de départ</span><b>'+ke(clauseOf(sel))+'</b></div>';return h.replace('<div class="rs-dbtn">',extra+'<div class="rs-dbtn">')};
@@ -3224,7 +3231,7 @@ function vStaff(){const R=['coach','analyst','psy'],f=n=>n.toLocaleString('fr-FR
       '<div class="rs-acts"><span class="sf-ct'+(y.contract<=1?' w':'')+'">'+y.contract+' s.</span></div><div class="rs-face">'+sface(y,150)+'</div><div class="rs-info"><small>'+STAFF[r].n+'</small><b>'+esc(y.name)+genTag({src:y.src||'gen'})+'</b><span>'+y.age+' ans · '+f(y.salary)+' k€/sem.</span><span class="rs-bars"><i style="width:'+y.q+'%;background:'+C+'"></i></span></div></div>'};
   const L=S.staffPool.filter(y=>y.role===role).sort((a,b)=>b.q-a.q);
   const cand=L.length?L.map(y=>{const d=x?y.q-x.q:null,fee=staffFee(y);
-    return '<div class="sf-c" style="--rc:'+c+'">'+sface(y,56)+'<div class="sf-ci"><b>'+esc(y.name)+genTag({src:y.src||'gen'})+'</b><small>'+y.age+' ans · '+f(y.salary)+' k€/sem. · '+y.contract+' saison'+(y.contract>1?'s':'')+'</small><small class="muted">'+esc(I.eff(y.q))+'</small></div><div class="sf-cq"><b class="num">'+y.q+'</b><span class="num '+(d==null||d>0?'good':d<0?'bad':'muted')+'">'+(d==null?'nouveau':(d>0?'+':'')+d)+'</span></div><button class="btn sm'+(d==null||d>0?' pri':'')+'" data-act="sthire" data-arg="'+y.id+'"'+(S.budget<fee?' disabled':'')+'>Recruter · '+ke(fee)+'</button></div>'}).join(''):'<div class="muted">Aucun candidat pour ce poste cette saison.</div>';
+    return '<div class="sf-c" style="--rc:'+c+'">'+sface(y,56)+'<div class="sf-ci"><b>'+esc(y.name)+genTag({src:y.src||'gen'})+'</b><small>'+y.age+' ans · '+f(y.salary)+' k€/sem. · '+y.contract+' saison'+(y.contract>1?'s':'')+(y.pot&&y.pot>y.q?' · potentiel '+y.pot:'')+'</small>'+(y.from!=null&&S.teams[y.from]?'<small class="sf-from">Sous contrat chez '+esc(T(y.from).name)+' : indemnité de départ incluse</small>':'')+'<small class="muted">'+esc(I.eff(y.q))+'</small></div><div class="sf-cq"><b class="num">'+y.q+'</b><span class="num '+(d==null||d>0?'good':d<0?'bad':'muted')+'">'+(d==null?'nouveau':(d>0?'+':'')+d)+'</span></div><button class="btn sm'+(d==null||d>0?' pri':'')+'" data-act="sthire" data-arg="'+y.id+'"'+(S.budget<fee?' disabled':'')+'>Recruter · '+ke(fee)+'</button></div>'}).join(''):'<div class="muted">Aucun candidat pour ce poste cette saison.</div>';
   const kv=(l,v)=>'<div class="rs-kv"><span>'+l+'</span><b>'+v+'</b></div>';
   const detail='<section class="rs-panel rs-det" style="--rc:'+c+'">'+(x?'<div class="rs-dh"><div><h2>'+esc(x.name)+genTag({src:x.src||'gen'})+'</h2><small>'+I.n+'</small></div><div class="rs-big"><b class="num">'+x.q+'</b><small>QUALITÉ</small></div></div>'+
       '<div class="rs-kvs">'+kv('Âge',x.age+' ans')+kv('Salaire',f(x.salary)+' k€/sem.')+kv('Contrat',x.contract+' saison'+(x.contract>1?'s':''))+'</div>'+
@@ -3237,7 +3244,7 @@ function vStaff(){const R=['coach','analyst','psy'],f=n=>n.toLocaleString('fr-FR
   return '<div class="rs">'+head+'<div class="rs-grid"><section class="rs-panel"><div class="rs-cards sf-cards">'+R.map(card).join('')+'</div><div class="muted small">Le staff agit chaque semaine : progression des joueurs, préparation des matchs, moral et récupération. Cliquez sur un poste pour voir sa fiche et ses candidats.</div></section>'+detail+'</div></div>'}
 
 /* ---------- Version et mise à jour ---------- */
-const QV='2026.11.24-15';
+const QV='2026.11.25-1';
 async function checkUpdate(){try{if(location.protocol==='file:'&&!window.__desktop)return;const base=window.__desktop&&typeof PACK_BASE!=='undefined'?PACK_BASE:'';const r=await fetch(base+'index.html?v='+Date.now(),{cache:'no-store'});if(!r.ok)return;const t=await r.text(),m=t.match(/const QV='([^']+)'/);
   if(m&&m[1]!==QV&&!document.querySelector('.upd')){document.body.insertAdjacentHTML('beforeend','<div class="upd" role="status">Nouvelle version disponible ('+m[1]+')<button class="btn sm pri" id="updGo">Mettre à jour</button></div>');
     document.getElementById('updGo').onclick=async()=>{try{if(typeof save==='function'&&S)save()}catch(e){}if(window.__desktop){try{const x=await fetch('/__refresh',{cache:'no-store'});if(x.ok){location.reload();return}}catch(e){}document.open();document.write(t.replace('<meta charset="utf-8">','<meta charset="utf-8">\n<script>window.__desktop=1<\/script>'));document.close();return}
@@ -3403,6 +3410,23 @@ function jobDecide(m,c,done){const x=S.teams[m.tid];if(!x){done('Le club a retir
 /* Sponsor principal par défaut : nouveau club, ou réparation d'une partie sans aucun sponsor */
 function defaultSponsor(){S.sponsor=sponsorOffers()[1];S.spid=(S.spid||1)+1;S.spReq=[];S.spons=[{id:S.spid,slot:'main',name:S.sponsor.name,kind:S.sponsor.kind,weekly:S.sponsor.weekly,win:S.sponsor.win,title:S.sponsor.title,len:1,left:1,sat:50,f0:S.fans,adv:0,asked:{},req:{fans:0,rank:99,conf:0},obj:null}];S.spOffers=genSpOffers();recalcSponsor()}
 function repairEconomy(){if(!S||S.pv||!S.teams||S.U==null)return;if(!S.spons||!S.spons.some(x=>x.slot==='main')){defaultSponsor();if(!S.fixSp){S.fixSp=1;const floor=Math.round(startBudget(S.lg)*.5);if(S.budget<floor){const add=floor-S.budget;S.budget=floor;news('La direction renfloue les caisses de '+ke(add)+' et signe un nouveau sponsor principal ('+S.sponsor.name+').')}else news('Nouveau sponsor principal : '+S.sponsor.name+'.')}}}
+
+/* ---------- Coachs réels du fichier (note, potentiel, valeur, âge) ---------- */
+let RCO=null,RCOD=null;
+function realCoaches(){const D=typeof DATA==='string'?DATA:'';if(RCOD===D&&RCO)return RCO;RCOD=D;RCO={};
+  D.split(/\r?\n/).forEach(l=>{if(!l||l.trim().startsWith('#'))return;const f=l.split('|');if(f.length<9||(f[3]||'').trim()!=='COACH')return;
+    const q=+f[8],pot=+f[9],val=+f[10],age=+f[11],tag=(f[2]||'').trim().toUpperCase();if(!tag)return;
+    RCO[tag]={name:f[4].trim().slice(0,22),lg:(f[0]||'').trim(),q:q>=30&&q<=99?q:null,pot:pot>=30&&pot<=99?pot:null,val:val>0?val:null,age:age>=18&&age<=75?age:null}});return RCO}
+const stSal=q=>Math.round((1+Math.pow(Math.max(0,q-38),1.35)*.075)*10)/10;
+function coachOf(t){if(!t)return null;S.tco=S.tco||{};if(S.tco[t.id])return S.tco[t.id];const r=realCoaches()[String(t.tag).toUpperCase()];return r&&r.q?{name:r.name,q:r.q,pot:Math.max(r.pot||r.q,r.q),age:r.age||30,src:'file',val:r.val}:null}
+function realStaffFor(t){const c=coachOf(t);return c?{id:S.sid++,role:'coach',src:'file',name:c.name,q:c.q,pot:c.pot,age:c.age,salary:stSal(c.q),contract:2}:null}
+function realCoachCands(){if(!S||!S.staffPool)return;const cur=S.staff.coach?S.staff.coach.q:LG[S.lg].lvl-20,mine=S.staff.coach?S.staff.coach.name:'';
+  S.staffPool=S.staffPool.filter(x=>x.from==null);
+  const L=S.teams.filter(t=>t.id!==S.U).map(t=>({t,c:coachOf(t)})).filter(x=>x.c&&x.c.src==='file'&&x.c.name!==mine&&x.c.q>=cur-8&&x.c.q<=cur+14).sort(()=>Math.random()-.5).slice(0,3);
+  L.forEach(({t,c})=>S.staffPool.push({id:S.sid++,role:'coach',src:'file',name:c.name,q:c.q,pot:c.pot,age:c.age,salary:Math.round(stSal(c.q)*1.15*10)/10,contract:2,from:t.id,fee:Math.max(Math.round(stSal(c.q)*5),Math.round((c.val||0)/1000*.5))}))}
+function coachDataSync(){if(!S||S.pv)return;RCOD=null;const R=realCoaches(),byName={};Object.values(R).forEach(c=>byName[c.name]=c);const x=S.staff&&S.staff.coach;
+  if(x&&byName[x.name]&&byName[x.name].q){const c=byName[x.name];x.q=c.q;x.pot=Math.max(c.pot||c.q,c.q);if(c.age)x.age=c.age;x.src='file'}
+  if(S.staffPool&&!S.staffPool.some(y=>y.from!=null))realCoachCands()}
 /* ---------- Partie en continu : chrono, déplacements des 10 joueurs ---------- */
 const SECMIN=1.1,NEXT_T=[4,8,11,13.5,16,19,21.5,23.5,26,29.5,32],DEC_T=[0,6.6,9.6,12.2,14.6,17.6,20.1,22.1,24.6,28.1,30.6];
 const FOUNT={b:[.06,.94],r:[.94,.06]},CAMPS_B=[[.24,.42],[.22,.57],[.36,.6],[.55,.75],[.63,.85],[.44,.81]];
